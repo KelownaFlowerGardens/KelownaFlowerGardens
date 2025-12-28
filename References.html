@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
+    <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
+    <a href="Members.html">Members</a>
+    <a href="Contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <div class="content">
+        <h1>Citations</h1>
+        <p> 200-åriga Rosendalsvasen Firades av Prinsessan Sofia. Till Kungahusets startsida. (n.d.). https://www.kungahuset.se/arkiv/nyheter/2025-12-03-200-ariga-rosendalsvasen-firades-av-prinsessan-sofia </p>
+        <p>Admin. (2022, June 21). Garden history: What did the medieval gardens look like?. Star of Nature. https://starofnature.org/garden-history-what-did-medieval-gardens-look-like/</p> 
+<div>
+<p>Arch 314: History of world landscapes at UIUC | architecturecourses.org. (n.d.-a). https://www.architecturecourses.org/learn/arch-314-history-world-landscapes-uiuc </p>
+
+<p>Augarten Vienna: Street of emperors and kings. web package. (n.d.). https://www.strassederkaiserundkoenige.com/en/location/augarten-wien/ </p>
+<p>The baroque garden. (n.d.-d). https://www.rct.uk/collection/exhibitions/painting-paradise/the-queens-gallery-palace-of-holyroodhouse/explore-the-exhibition/the-baroque-garden </p>
+<p>Botanic Garden. Botanic garden - History of Early American Landscape Design. (n.d.). https://heald.nga.gov/mediawiki/index.php/Botanic_garden </p>
+<p> Beautiful open gardens to visit in the UK: Public gardens / RHS. Beautiful open gardens to visit in the UK | Public gardens / RHS. (n.d.). https://www.rhs.org.uk/gardens/gardendetails/blenheim-palace </p>
+<p>Botanical Gardens. City of Bonn. (n.d.). https://www.bonn.de/bonn-erleben/aktiv-und-unterwegs/parks-und-gaerten/botanische-gaerten.php?loc=en 
+Creating a colonial garden. Penn State Extension. (n.d.). https://extension.psu.edu/creating-a-colonial-garden </p>
+<p>Crow, R. (2022, August 23). How to design a Parterre Garden – key points to consider. Homes and Gardens. https://www.homesandgardens.com/advice/how-to-design-a-parterre-garden </p>
+<p>The Daily Gardener. (2025, September 21). The master of ephemeral arts: Fletcher Steele’s Garden Legacy. https://thedailygardener.org/otc20190607/ </p>
+<p>Ebert, J., & Crow, R. (2022, May 25). How to create a mediterranean garden – planting, landscaping and design advice. Homes and Gardens. https://www.homesandgardens.com/advice/how-to-create-a-mediterranean-garden </p>
+<p>Elgin Botanic Garden. Elgin Botanic Garden - History of Early American Landscape Design. (n.d.). https://heald.nga.gov/mediawiki/index.php/Elgin_Botanic_Garden </p>
+<p>Elizabeth Park Rose Garden. TCLF. (2009, October 16). https://www.tclf.org/elizabeth-park-rose-garden 
+The evidence of American garden history. The Evidence of American Garden History - History of Early American Landscape Design. (n.d.). https://heald.nga.gov/mediawiki/index.php/The_Evidence_of_American_Garden_History </p>
+<p>Foundation, T. C. L. (n.d.). The Landscape Architecture Legacy of Dan Kiley: The Cultural Landscape Foundation. The Landscape Architecture Legacy of Dan Kiley | The Cultural Landscape Foundation. https://www.tclf.org/sites/default/files/microsites/kiley-legacy/gallery.html </p>
+<p>Frederick Law Olmsted | Central Park, works, Chicago, Landscape Architecture, & Facts | Britannica. (n.d.-b). https://www.britannica.com/biography/Frederick-Law-Olmsted </p>
+<p>Garden and landscape design - french, 17th & 18th century | britannica. (n.d.-b). https://www.britannica.com/art/garden-and-landscape-design/17th-and-18th-century-French </p>
+<p>Garden design through the ages. National Trust. (n.d.-a). https://www.nationaltrust.org.uk/discover/history/gardens-landscapes/garden-design-through-the-ages </p>
+<p>Garden. Strawberry Hill House & Garden. (2025, June 9). https://www.strawberryhillhouse.org.uk/the-house/the-garden/ </p>
+<p>Gardens of Lombardia. in. (n.d.). https://www.in-lombardia.it/en/search/site/gardens?page=5 </p>
+<p>The gardens of the met cloisters. The Metropolitan Museum of Art. (2022, November 16). https://www.metmuseum.org/about-the-met/collection-areas/medieval-art-and-the-cloisters/met-cloisters-gardens </p>
+<p>Gardens, parks and tree-lined avenues. Gardens, parks and tree-lined avenues - Bad Arolsen. (n.d.). https://www.bad-arolsen.org/de/tourismus/kontakt-und-information/uebersetzung/englisch/gaerten-parks-und-alleen-en.php#anchor_82a76ef9_Accordion-Castle-pond </p>
+<p>Gardens. Old Westbury Gardens. (2025, May 21). https://www.oldwestburygardens.org/gardens/ </p>
+<p>History of English Landscape Gardens. National Trust. (n.d.-b). https://www.nationaltrust.org.uk/discover/history/gardens-landscapes/how-has-the-english-landscape-garden-developed </p>
+<p>History of English Landscape Gardens. National Trust. (n.d.-c). https://www.nationaltrust.org.uk/discover/history/gardens-landscapes/how-has-the-english-landscape-garden-developed </p>
+<p>History: Claremont Landscape Garden. National Trust. (n.d.-b). https://www.nationaltrust.org.uk/visit/surrey/claremont-landscape-garden/the-history-of-claremont-landscape-garden </p>
+<p>Holiday Manor House Tours. Bayard Cutting Arboretum. (n.d.). https://bayardcuttingarboretum.com/ </p>
+<p>How Central Park was designed as a park for the people. Central Park Conservancy. (n.d.-a). https://www.centralparknyc.org/articles/peoples-park-design </p>
+<p>How Central Park was designed as a park for the people. Central Park Conservancy. (n.d.-b). https://www.centralparknyc.org/articles/peoples-park-design </p>
+<p>Hux, K. (2025, September 24). Visit itinerary: Garden lover’s guide to biltmore. Biltmore. https://www.biltmore.com/blog/visit-itinerary-garden-lovers-guide-to-biltmore/ </p>
+<p>Kensington Palace Gardens | kensington palace | historic royal palaces. (n.d.-d). https://www.hrp.org.uk/kensington-palace/whats-on/the-palace-gardens/ </p>
+<p>Kew Gardens | description, history, Herbarium, Seed Bank, & facts | britannica. (n.d.-d). https://www.britannica.com/place/Kew-Gardens </p>
+<p>Krochmal, C. (n.d.). Charlemagnes Herb Garden. BellaOnline. https://www.bellaonline.com/articles/art40713.asp </p>
+<p>Looking good herb list: Over 400 culinary & medicinal herbs. Jekka’s. (n.d.). https://www.jekkas.com/pages/jekkas-looking-good-herb-list </p>
+<p>The making of a medieval monastic “garden” - Zoe Zimmer. The Making of a Medieval Monastic “Garden” - School of Art History - University of St Andrews. (n.d.). https://www.st-andrews.ac.uk/art-history/research/assistantships/the-making-of-a-medieval-monastic-garden/ </p>
+<p>Medieval and Castle Gardens. (n.d.). http://www.marysbloomers.com/GardenTypes/1medieval.html </p>
+<p>Medievalists.net. (2025, March 22). Tiny Edens: What grew in a medieval monastery’s garden. https://www.medievalists.net/2025/03/what-grew-medieval-monastery-garden/ </p>
+<p>Mishra, A. (2022, December 12). The art of indian garden design: Creating beautiful and Serene Spaces. Studio ISA. https://www.isaprojects.com/post/the-art-of-indian-garden-design </p>
+<p>Monticello. Monticello - History of Early American Landscape Design. (n.d.). https://heald.nga.gov/mediawiki/index.php/Monticello</p> 
+<p>Museum campus. Florence Griswold Museum. (2025, November 3). https://florencegriswoldmuseum.org/visit/museum-campus/#Gardens_and_Grounds </p>
+<p>National mall. National Mall - History of Early American Landscape Design. (n.d.). https://heald.nga.gov/mediawiki/index.php/National_Mall </p>
+<p>New England Botanic Garden at Tower Hill. (2025, December 11). https://nebg.org/ </p>
+<p>Nordkirchen Castle Park. Home. (n.d.). https://www.muensterland.com/en/tourism/topics/adventure-region/gardens-and-parks/nordkirchen-castle-park/ </p>
+<p>Nurzhynskyy, A. (2024, January 16). Medieval byzantine mosaics: A confluence of art, religion, and politics. Knights Templar . https://knightstemplar.co/medieval-byzantine-mosaics-a-confluence-of-art-religion-and-politics/ </p>
+<p>The Palace Park. De Kungliga Slotten. (n.d.-b). https://www.kungligaslotten.se/english/royal-palaces-and-sites/stromsholm-palace/the-palace-park.html </p>
+<p>Parc et Jardin du Château de Brantes - Vaucluse. CPJF. (n.d.). https://www.parcsetjardins.fr/jardins/324-parc-et-jardin-du-chateau-de-brantes </p>
+<p>Planting fields arboretum state historic park. Parks, Recreation and Historic Preservation. (n.d.). https://parks.ny.gov/visit/historic-sites/planting-fields-arboretum-state-historic-park#about</p> 
+<p>Planting strategy and landscape management objectives. (n.d.-c). https://www.gardenvisit.com/history_theory/garden_landscape_design_articles/design_methods/planting_strategy_landscape_management </p>
+<p>Rahman. (1970, January 1). Gardens and landscapes in the residential architecture of Le Corbusier. eScholarship@McGill. https://escholarship.mcgill.ca/concern/papers/k0698776m </p>
+<p>Regis Historic Gardens Network. ReGiS - Historical gardens network. (2017, February 15). http://www.retegiardinistorici.com/en/regis-2/ </p>
+<p>Rosendalsvasen 200 år. De Kungliga Slotten. (n.d.-a). https://www.kungligaslotten.se/artiklar-film-360/rosendals-slott/2025-12-02-rosendalsvasen-200-ar.html </p>
+<p>Royal Palace of madrid gardens: Explore the green walkways. https://www.royalpalacemadridtickets.com. (n.d.). https://www.royalpalacemadridtickets.com/gardens </p>
+<p>The splendor of Baroque Gardens – history and design: Casa padrino. Casa Padrino Luxus Barock Möbel, Stühle, Sessel & Deko. (n.d.-a). https://www.casa-padrino.de/en/casa-padrino/content/the-splendor-of-baroque-gardens-a-journey-through-history-and-design
+The splendor of Baroque Gardens – history and design: Casa padrino. Casa Padrino Luxus Barock Möbel, Stühle, Sessel & Deko. (n.d.-b). https://www.casa-padrino.de/en/casa-padrino/content/</p>
+the-splendor-of-baroque-gardens-a-journey-through-history-and-design</p><p> 
+The splendor of Baroque Gardens – history and design: Casa padrino. Casa Padrino Luxus Barock Möbel, Stühle, Sessel & Deko. (n.d.-c). https://www.casa-padrino.de/en/casa-padrino/content/the-splendor-of-baroque-gardens-a-journey-through-history-and-design</p> 
+<p>Springettsbury. Springettsbury - History of Early American Landscape Design. (n.d.). https://heald.nga.gov/mediawiki/index.php/Springettsbury </p>
+<p>Swithinbank, A., & Rutter, T. (2024, July 25). Best climbing roses – 12 romantic varieties to add scent and color to any outside space. Homes and Gardens. https://www.homesandgardens.com/gardens/best-climbing-roses </p>
+<p>Tosic, N. (2022, November 24). Le Corbusier’s roof gardens – geoplast - sustainable construction solutions. Geoplast. https://www.geoplastglobal.com/en/blog/roof-gardens-modern-trend-already-theorized-by-le-corbusier-its-five-points-towards-new-architecture/ </p>
+<p>UNESCO World Heritage Centre - World Heritage List. (n.d.-e). https://whc.unesco.org/en/list/ </p>
+<p>Urban planning | definition, history, examples, importance, & facts | britannica. (n.d.-f). https://www.britannica.com/topic/urban-planning 
+</p>
+<p>The English Garden in Germany. White Rose University press. White Rose University Press. (n.d.). https://universitypress.whiterose.ac.uk/ </p>
+<p>Windsor Castle Gardens. (n.d.-j). https://www.rct.uk/collection/stories/royal-gardens/windsor-castle-gardens </p>
+</div>
+    </div>
+  <aside class="sidebar" id="sidebar">
+
+   <h5>Time</h5>
+
+                <!-- Dropdown 1 -->
+                <!-- Dropdown 1 -->
+        <button class="dropdown-btn">Ancient</button>
+        <div class="dropdown-container">
+            <a href="Egyptian.html">Egyptian</a>
+            <a href="Assyrian.html">Assyrian, Babylon, Persian</a>
+            <a href="GreekandHellenistic.html">Greek and Hellenistic</a>
+            <a href="AncientRoman.html">Roman</a>
+        </div>
+
+        <!-- Dropdown 2 -->
+        <button class="dropdown-btn">Middle Ages</button>
+        <div class="dropdown-container">
+            <a href="Byzantine.html">Byzantine</a>
+          </div>
+
+        <!-- Dropdown 3 -->
+        <button class="dropdown-btn">Classical</button>
+        <div class="dropdown-container">
+            <a href="ClassicGreek.html">Greek</a>
+            <a href="ClassicRoman.html">Roman</a>
+        </div>
+
+        <!-- Dropdown 4 -->
+        <button class="dropdown-btn">Medieval</button>
+        <div class="dropdown-container">
+            <a href="Monastic.html">Monastic</a>
+            <a href="MoorishSpain.html">Moorish Spain</a>
+            <a href="Charlemagne.html">Charlemagne</a>
+            <a href="MedievalEnglish.html">English</a>
+        </div>
+
+   <!-- Dropdown 5 -->
+        <button class="dropdown-btn">Renaissance</button>
+        <div class="dropdown-container">
+            <a href="Versailles.html">Versailles</a>
+            <a href="Formal.html">Formal</a>
+            <a href="Baroque.html">Baroque</a>
+             <a href="Tudor.html">Tudor</a>
+         
+        </div>
+
+                <!-- Dropdown 6 -->
+        <button class="dropdown-btn">18th Century</button>
+        <div class="dropdown-container">
+            <a href="Sweden.html">Sweden</a>
+            <a href="English18.html">English</a>
+            <a href="USA18.html">USA</a>
+            <a href="Netherlands.html">Netherlands</a>
+            <a href="Germany.html">Germany</a>
+            <a href="Austria.html">Austria</a>
+            <a href="Spain.html">Spain</a>
+      
+        </div>
+
+                <!-- Dropdown 7 -->
+        <button class="dropdown-btn">Modern</button>
+        <div class="dropdown-container">
+            <a href="Contemporary.html">Contemporary</a>
+            <a href="Bauhaus.html">Bauhaus</a>
+            <a href="Corbusier.html">Le Corbusier</a>
+            <a href="FletcherSteele.html">Fletcher Steele</a>
+            <a href="DanKiley.html">Dan Kiley</a>
+        </div>
+
+        <h5> Regional </h5>
+                <!-- Dropdown 9 -->
+        <button class="dropdown-btn">Italian</button>
+        <div class="dropdown-container">
+            <a href="Sicillian.html">Sicillian</a>
+            <a href="Roman.html">Roman</a>
+            <a href="Florentine.html">Florentine</a>
+            <a href="Lombardian.html">Lombardian</a>
+      
+        </div>
+
+        <!-- Dropdown 10 -->
+        <button class="dropdown-btn">English</button>
+        <div class="dropdown-container">
+        <a href="Georgian.html">Georgian</a>
+               <a href="MedievalEnglish.html">Medieval</a>
+            <a href="Stuart.html">Stuart</a>
+            <a href="Victorian.html">Victorian</a>
+            <a href="twentiethcentury.html">20th Century</a>
+        </div>
+
+        <!-- Dropdown 11 -->
+        <button class="dropdown-btn">French</button>
+        <div class="dropdown-container">
+                  <a href="Provence.html">Provence</a>
+            <a href="Versailles.html">Versailles</a>
+        </div>
+
+        <!-- Dropdown 12 -->
+                <button class="dropdown-btn">Eastern</button>
+        <div class="dropdown-container">
+            <a href="Chinese.html">Chinese</a>
+            <a href="Japan.html">Japan</a>
+            <a href="India.html">India</a>
+        </div>
+
+        <!-- Dropdown 13 -->
+                <button class="dropdown-btn">USA</button>
+        <div class="dropdown-container">
+            <a href="CentralPark.html">Central Park</a>
+              <a href="Rosegardens.html">Rose Gardens</a>
+            <a href="NewEngland.html">New England</a>
+            <a href="Biltmore.html">Biltmore Estate</a>
+            <a href="USACapital.html">U.S. Capital Grounds</a>
+
+        </div>
+        <a href="contact.html">Contact</a>
+        <a href="References.html">References</a>
+
+  </aside>
+
+</div>
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
+
+
