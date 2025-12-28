@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
+    <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
+    <a href="Members.html">Members</a>
+    <a href="Contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <div class="content">
+        <h1>18th Century German Garden Design</h1>
+        <p> <h2>Scloss Augustusburg</h2>
+              <img src="Augustusburg.jpg"alt=centered width="500" height="350"</p>
+            This Unesco World Heritage site is an idyllic 18th century Rococo architecture landscape. In 1725, Clemens Augustus of Bavaria set the standard when building this residence, along with the Falkenlust hunting lodge on the estate. Domique Girard (1680-1738) designed the symmetrical flowerbeds, and many multiplying ramps. On the garden's south side lays the embriodery parterres, with fountains and mirrored pools and cascading water structures all originating from a circular basin with an outstanding water fountain. A semi-circle park joins the gardens and is lined with a wall. 
+        </p>
+       
+        <p> <h2>Schloss Nymphenburg </h2> <img src="Park_Nymphenburg.jpg"alt=centered width="500" height="350"</p> 
+            Inspiration for the Baroque gardens are largely based on Vaux-le-Vicomte and Versailles, occupying 444 acres of the total 565 acres. The Formal English country park remains a spectacle in itself. The east park joins the palace buildings, the Grand Circle (Schlossrondell) and a Botanical Garden. The Central Canal divides the property by the north and south sections. The West Parterre gardens have large rectangular segments are surrounded with canals. The French Garden has a 2.5 km canal that is fed by the tributary, Wurm River, ending at the Great Cascade. Rows of trees and arcades are planted dividing the park.
+        </p>
+          <img src="Nymphenburg,_de_Geer,_um_1730.jpg"alt=centered width="500" height="350"</p> 
+         <p> <h2>Fasanerie </h2> Baroque Park style gardens, with serpentine paths, English landscaping and a Japanese teahouse. The property consists of a variety of tree species, including a section dedicated to Carl Linnaeus. 
+        </p>
+         <img src="Fasanerie.jpg" alt=centered width="500" height="350"</p> 
+        <p> <h2>Wurzburg</h2> <img src="wurzburg.jpg" alt=centered width="500" height="350"</p>The Gardens are known as "Hofgarten", with a very formal, Baroque style near the structure. As it extends outwards it transforms to a English style , romantic meadow. Originating in 1759, this has become a UNESCO World Heeritage Site. There are two monuments of greek mythology, vases, an Orangery, three gates leading to the Court Gardens, and a Pavillion.
+
+        </p>
+        <p> <h2>Stuttgart</h2>
+            <iframe width="500" height="315" src="https://www.youtube-nocookie.com/embed/UTROb4B_ZKA?si=k7BTnbhXqXxTBujt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </p>
+        <p> <h2>Karlsruhe</h2><img src="karlsruhe.jpg" alt=centered width="500" height="350"</p> The Sclossgarten was constructed in 1715 by Margrave Karl Wilhelm. The Baroque garden was planted with tulips and traditional English landscaping, along with an Orangery and a Chinese garden. A botanical garden was added in 1808 and for the 300th anniversary a wooden pavilion was constructed in 2015. The palace property is unique in that it is circular in shape, and the entire property radiates outward from the central structure, surrounded by lakes, and evergreen forests. 
+        </p>
+        
+      <p> <h2>Friedenstein</h2><img src="Schloss-Friedenstein.jpg" alt=centered width="500" height="350"</p>
+        The Baroque Gardens were added in 1708 and consisted of decorative flowers, topiary and hedges centered around a water fountain, all bordered by rows and trees. A courtyard is layed out from east-west called the Ehrenhof. 
+       
+        </p>
+        <p> <h2>Ludwigsburg </h2><img src="ludwigsburg.jpg" alt=centered width="500" height="350"</p>
+            Work on the East and South gardens were carried out throughout the 1750-1800's where a Broderie, or partterre was added replacing the italian terraces. It later became a Neoclassical styled, Mediterranean theme. It was separated into four equal lawns with paths throughout, an expansion was added eastward in English style. Finally, a medieval themed garden was added to the East Side of the estate along with two other adjacent gardens: a Fairy Tale garden and a folly. Since, the gardens have been restored with 22,000 roses and thousands more flowers in the mid 20th century. 
+        </p>
+        
+        <p> <h2>Anholt </h2><img src="anholt2.jpg" alt=centered width="500" height="350"</p>
+        Known as the Moat Castle, the gardens are surrounded by water. The parterres and intricately designed, with flower beds of roses, and statues surrounding the grounds.</p>
+  
+        </p>
+        <p> <h2>Poppelsdorf</h2><img src="Poppelsdorf.jpg" alt=centered width="500" height="350"</p>
+            Poppeldorf Palace's orangery and gardens began as early as 1650. The Baroque park was built in 1715 in the French style, with exotic trees and shrubs. Today's Botanical gardens reflect this period. In 1819, the garden was transformed to an English landscape garden.
+            <img src="Poppelsdorfbotanical.jpg" alt=centered width="500" height="350"</p>
+            
+        </p>
+        <p> <h2>Nordkirchen </h2> <img src="schloss_nordkirchen.jpg" alt=centered width="500" height="350"</p>
+            The Schloss was built between 1703 and 1734, in Westphalia, Germany. It is surrounded by woodlands and a moat around the estate. The Baroque style gardems are equipped with parterres and a formal scrolling broderie. There are multiple lifesize mamble statues, and a pavillion on each corner.
+             
+                <img src="schloss_nordkirchen2.jpg" alt=centered width="500" height="350"</p>
+        </p>
+        <p> <h2>Hohenheim</h2>
+
+            <img src="Hohenheim.jpg" alt=centered width="500" height="350"</p> Over 30 hectares of parkland are part of the Hohenheim Palace Park. There are two State Arboretum's, one Exotic and one Landscape Garden with the first originating in 1776, and the ladder in 1998. There are over 60 scenes of monuments, and sculptures of ruins of antiquity as well as Baroque representations of times past. The Botanic gardens are over a century in age, originating in 1901, and an addition was added in 1974 of "History of Vegetation and Medicinal Plant Gardens". The Collection Greenhouse has over 1000 different plants</p>
+        </p>
+        <p> <h2>Arolsen</h2> <img src="arolsen.jpg" alt=centered width="500" height="350"</p>
+            Originating in 1131, the estate became a noble residence in 1655, and was replaced in the beginning of the 18th century as a Baroque structure. The paths are lines with small hedges, and has a romantic influence with Wildflowers, Willows, Alders and a castle pond referred to as 'Arocker Spazierweg'. The Great Avenue is tree lined with Oaks, and extends 1.6 km in length. 
+        </p>
+       
+                <img src="arolsen2.jpg" alt=centered width="500" height="350"</p>
+    </div>
+
+
+  <aside class="sidebar" id="sidebar">
+
+   <h5>Time</h5>
+
+                <!-- Dropdown 1 -->
+                <!-- Dropdown 1 -->
+        <button class="dropdown-btn">Ancient</button>
+        <div class="dropdown-container">
+            <a href="Egyptian.html">Egyptian</a>
+            <a href="Assyrian.html">Assyrian, Babylon, Persian</a>
+            <a href="GreekandHellenistic.html">Greek and Hellenistic</a>
+            <a href="AncientRoman.html">Roman</a>
+        </div>
+
+        <!-- Dropdown 2 -->
+        <button class="dropdown-btn">Middle Ages</button>
+        <div class="dropdown-container">
+            <a href="Byzantine.html">Byzantine</a>
+          </div>
+
+        <!-- Dropdown 3 -->
+        <button class="dropdown-btn">Classical</button>
+        <div class="dropdown-container">
+            <a href="ClassicGreek.html">Greek</a>
+            <a href="ClassicRoman.html">Roman</a>
+        </div>
+
+        <!-- Dropdown 4 -->
+        <button class="dropdown-btn">Medieval</button>
+        <div class="dropdown-container">
+            <a href="Monastic.html">Monastic</a>
+            <a href="MoorishSpain.html">Moorish Spain</a>
+            <a href="Charlemagne.html">Charlemagne</a>
+            <a href="MedievalEnglish.html">English</a>
+        </div>
+
+        <!-- Dropdown 5 -->
+        <button class="dropdown-btn">Renaissance</button>
+        <div class="dropdown-container">
+            <a href="Formal.html">Formal</a>
+            <a href="Baroque.html">Baroque</a>
+            <a href="Versailles.html">Versailles</a>
+        </div>
+
+
+                <!-- Dropdown 6 -->
+    <button class="dropdown-btn">18th Century</button>
+        <div class="dropdown-container">
+           <a href="Sweden.html">Sweden</a>
+            <a href="English18.html">English</a>
+            <a href="USA18.html">USA</a>
+            <a href="Dutch.html">Netherlands</a>
+            <a href="Germany.html">Germany</a>
+            <a href="Austria.html">Austria</a>
+            <a href="Spain.html">Spain</a>
+       
+        </div>
+
+                <!-- Dropdown 7 -->
+        <button class="dropdown-btn">Modern</button>
+        <div class="dropdown-container">
+            <a href="Contemporary.html">Contemporary</a>
+            <a href="Bauhaus.html">Bauhaus</a>
+            <a href="Corbusier.html">Le Corbusier</a>
+            <a href="FletcherSteele.html">Fletcher Steele</a>
+            <a href="DanKiley.html">Dan Kiley</a>
+        </div>
+
+        <h5> Regional </h5>
+                <!-- Dropdown 9 -->
+        <button class="dropdown-btn">Italian</button>
+        <div class="dropdown-container">
+            <a href="Sicillian.html">Sicillian</a>
+            <a href="Roman.html">Roman</a>
+            <a href="Lombardian.html">Lombardian</a>
+            <a href="Florentine.html">Florentine</a>
+        </div>
+
+        <!-- Dropdown 10 -->
+        <button class="dropdown-btn">English</button>
+        <div class="dropdown-container">
+            <a href="Medieval.html">Medieval</a>
+            <a href="Tudor.html">Tudor</a>
+            <a href="Stuart.html">Stuart</a>
+            <a href="Georgian.html">Georgian</a>
+            <a href="Victorian.html">Victorian</a>
+            <a href="twentiethcentury.html">20th Century</a>
+        </div>
+
+        <!-- Dropdown 11 -->
+        <button class="dropdown-btn">French</button>
+        <div class="dropdown-container">
+            <a href="OurTeam.html">Versailles</a>
+            <a href="Mission.html">Provence</a>
+        </div>
+
+        <!-- Dropdown 12 -->
+                <button class="dropdown-btn">Eastern</button>
+        <div class="dropdown-container">
+            <a href="Chinese.html">Chinese</a>
+            <a href="Japan.html">Japan</a>
+            <a href="India.html">India</a>
+        </div>
+
+        <!-- Dropdown 13 -->
+                <button class="dropdown-btn">USA</button>
+        <div class="dropdown-container">
+            <a href="CentralPark.html">Central Park</a>
+           <a href="Rosegardens.html">Rose Gardens</a>
+            <a href="NewEngland.html">New England</a>
+            <a href="Biltmore.html">Biltmore Estate</a>
+            <a href="USACapital.html">U.S. Capital Grounds</a>
+
+        </div>
+        <a href="contact.html">Contact</a>
+        <a href="Citations.html">References</a>
+  </aside>
+
+</div>
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
