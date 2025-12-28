@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <link rel="stylesheet" href="style.css" />
 <title>Garden Design | Kelowna Flower Gardens</title>
 
 <style>
@@ -108,35 +108,6 @@ nav a:hover{
   border-radius:6px;
 }
 
-/* ---------- MOBILE ---------- */
-@media(max-width:900px){
-  .wrapper{
-    flex-direction:column;
-  }
-
-  .sidebar{
-    position:fixed;
-    top:0;
-    right:-280px;
-    height:100vh;
-    z-index:1500;
-    transition:.3s;
-  }
-
-  .sidebar.active{
-    right:0;
-  }
-
-  .menu-btn{
-    display:block;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <header>
   <img src="01126.jpg" alt="Flowers of the Okanagan">
@@ -232,21 +203,6 @@ nav a:hover{
 
 </main>
 
-<!-- SHARED FOOTER -->
-<div id="footer"></div>
-
-<script>
-  fetch("header.html").then(r=>r.text()).then(t=>{
-    document.getElementById("header").innerHTML = t;
-  });
-  fetch("footer.html").then(r=>r.text()).then(t=>{
-    document.getElementById("footer").innerHTML = t;
-  });
-</script>
-
-</body>
-</html>
-    
 <footer style="text-align:center;padding:2rem;color:var(--muted)">
   © Kelowna Flower Gardens
 </footer>
@@ -266,6 +222,7 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
 
 </body>
 </html>
+
 
 
 
