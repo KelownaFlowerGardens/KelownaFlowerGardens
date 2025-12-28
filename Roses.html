@@ -217,8 +217,8 @@ nav a:hover{
     </p>
   </section>
 
-  <!-- QUICK JUMP BUTTONS -->
-  <section class="content-section centered">
+  <aside class="sidebar" id="sidebar">
+    
     <div class="button-group">
       <a href="#hybrid-teas">Hybrid Teas</a>
       <a href="#floribundas">Floribundas</a>
@@ -227,7 +227,8 @@ nav a:hover{
       <a href="#miniatures">Miniatures</a>
     </div>
   </section>
-
+  </aside>
+  
   <!-- HYBRID TEAS -->
   <section id="hybrid-teas" class="content-section">
     <h3>Hybrid Teas</h3>
@@ -395,4 +396,26 @@ nav a:hover{
 
 </body>
 </html>
+  
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
+
 
