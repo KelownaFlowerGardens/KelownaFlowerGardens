@@ -92,44 +92,6 @@ nav a:hover{
   margin:1rem 0;
 }
 
-/* ---------- SIDEBAR ---------- */
-.sidebar{
-  width:260px;
-  background:#fff;
-  border-radius:var(--radius);
-  padding:1rem;
-}
-
-.sidebar h5{
-  margin:.75rem 0;
-  color:var(--pink);
-}
-
-.sidebar a,
-.dropdown-btn{
-  display:block;
-  width:100%;
-  padding:.6rem;
-  margin:.2rem 0;
-  background:#fff;
-  color:var(--pink);
-  border:none;
-  text-align:left;
-  font-size:.95rem;
-  cursor:pointer;
-}
-
-.sidebar a:hover,
-.dropdown-btn:hover{
-  background:var(--pink);
-  color:#fff;
-}
-
-.dropdown-container{
-  display:none;
-  padding-left:1rem;
-}
-
 /* ---------- MOBILE MENU ---------- */
 .menu-btn{
   display:none;
@@ -233,7 +195,7 @@ nav a:hover{
       <p>
         Watercolour by Canadian artist Ruth Steinfatt.
       </p>
-      <img src="Irisinblue001.jpg" alt="Iris in Blue painting">
+      <img src="Iris in blue 001.jpg" alt="Iris in Blue painting">
       <a href="https://wildwoodwatercolours.blogspot.com/" target="_blank">
         View Artist
       </a>
@@ -323,4 +285,26 @@ nav a:hover{
 
 </body>
 </html>
+    
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
+
 
