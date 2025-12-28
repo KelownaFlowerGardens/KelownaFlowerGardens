@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
+    <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
+    <a href="Members.html">Members</a>
+    <a href="Contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+ <div class="content">
+        <h1>20th Century England Garden Design</h1>
+        <p> In an attempt to counter the hardships of both World Wars, the gardens during this period evoked joy, and incorporated colour, low maintenance cultivations and a filled with conifers and grasses.
+        </p>
+        <p><h2>Rooms</h2>Areas that divided the garden themes.</p>
+        <p><h2>Cottage</h2>To pay tribute to a less indusrtial age.</p>
+        <p><h2>Perfection</h2>Machniery, lawnmowers and chemicals imrpoved the results and allowed for perfectionist gardeners to thrive. </p>
+        <p><h2>Bedding</h2> The Nursery Trade optimized space, and efficiency. Bedding maximized product.</p>
+        <p><h2>Prairie</h2>Natrulistic planting</p>
+        <p><h2>Roses</h2>Were very popular during this period, a timeless classic. </p>
+          <img src="twenty.jpg" alt="centered" width="500" height="350"</p>
+    </div>
+
+  <aside class="sidebar" id="sidebar">
+
+   <h5>Time</h5>
+
+                <!-- Dropdown 1 -->
+                <!-- Dropdown 1 -->
+        <button class="dropdown-btn">Ancient</button>
+        <div class="dropdown-container">
+            <a href="Egyptian.html">Egyptian</a>
+            <a href="Assyrian.html">Assyrian, Babylon, Persian</a>
+            <a href="GreekandHellenistic.html">Greek and Hellenistic</a>
+            <a href="AncientRoman.html">Roman</a>
+        </div>
+
+        <!-- Dropdown 2 -->
+        <button class="dropdown-btn">Middle Ages</button>
+        <div class="dropdown-container">
+            <a href="Byzantine.html">Byzantine</a>
+          </div>
+
+        <!-- Dropdown 3 -->
+        <button class="dropdown-btn">Classical</button>
+        <div class="dropdown-container">
+            <a href="ClassicGreek.html">Greek</a>
+            <a href="ClassicRoman.html">Roman</a>
+        </div>
+
+        <!-- Dropdown 4 -->
+        <button class="dropdown-btn">Medieval</button>
+        <div class="dropdown-container">
+            <a href="Monastic.html">Monastic</a>
+            <a href="MoorishSpain.html">Moorish Spain</a>
+            <a href="Charlemagne.html">Charlemagne</a>
+            <a href="MedievalEnglish.html">English</a>
+        </div>
+
+   <!-- Dropdown 5 -->
+        <button class="dropdown-btn">Renaissance</button>
+        <div class="dropdown-container">
+            <a href="Versailles.html">Versailles</a>
+            <a href="Formal.html">Formal</a>
+            <a href="Baroque.html">Baroque</a>
+             <a href="Tudor.html">Tudor</a>
+         
+        </div>
+
+                <!-- Dropdown 6 -->
+        <button class="dropdown-btn">18th Century</button>
+        <div class="dropdown-container">
+            <a href="Sweden.html">Sweden</a>
+            <a href="English18.html">English</a>
+            <a href="USA18.html">USA</a>
+            <a href="Netherlands.html">Netherlands</a>
+            <a href="Germany.html">Germany</a>
+            <a href="Austria.html">Austria</a>
+            <a href="Spain.html">Spain</a>
+      
+        </div>
+
+                <!-- Dropdown 7 -->
+        <button class="dropdown-btn">Modern</button>
+        <div class="dropdown-container">
+            <a href="Contemporary.html">Contemporary</a>
+            <a href="Bauhaus.html">Bauhaus</a>
+            <a href="Corbusier.html">Le Corbusier</a>
+            <a href="FletcherSteele.html">Fletcher Steele</a>
+            <a href="DanKiley.html">Dan Kiley</a>
+        </div>
+
+        <h5> Regional </h5>
+                <!-- Dropdown 9 -->
+        <button class="dropdown-btn">Italian</button>
+        <div class="dropdown-container">
+            <a href="Sicillian.html">Sicillian</a>
+            <a href="Roman.html">Roman</a>
+            <a href="Florentine.html">Florentine</a>
+            <a href="Lombardian.html">Lombardian</a>
+      
+        </div>
+
+        <!-- Dropdown 10 -->
+        <button class="dropdown-btn">English</button>
+        <div class="dropdown-container">
+        <a href="Georgian.html">Georgian</a>
+               <a href="MedievalEnglish.html">Medieval</a>
+            <a href="Stuart.html">Stuart</a>
+            <a href="Victorian.html">Victorian</a>
+            <a href="twentiethcentury.html">20th Century</a>
+        </div>
+
+        <!-- Dropdown 11 -->
+        <button class="dropdown-btn">French</button>
+        <div class="dropdown-container">
+                  <a href="Provence.html">Provence</a>
+            <a href="Versailles.html">Versailles</a>
+        </div>
+
+        <!-- Dropdown 12 -->
+                <button class="dropdown-btn">Eastern</button>
+        <div class="dropdown-container">
+            <a href="Chinese.html">Chinese</a>
+            <a href="Japan.html">Japan</a>
+            <a href="India.html">India</a>
+        </div>
+
+        <!-- Dropdown 13 -->
+                <button class="dropdown-btn">USA</button>
+        <div class="dropdown-container">
+            <a href="CentralPark.html">Central Park</a>
+              <a href="Rosegardens.html">Rose Gardens</a>
+            <a href="NewEngland.html">New England</a>
+            <a href="Biltmore.html">Biltmore Estate</a>
+            <a href="USACapital.html">U.S. Capital Grounds</a>
+
+        </div>
+        <a href="contact.html">Contact</a>
+        <a href="References.html">References</a>
+
+  </aside>
+
+</div>
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
+
+
