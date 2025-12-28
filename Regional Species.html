@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
 
 <title>Garden Design | Kelowna Flower Gardens</title>
 
@@ -344,5 +345,26 @@ nav a:hover{
 
 </body>
 </html>
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
 
 
