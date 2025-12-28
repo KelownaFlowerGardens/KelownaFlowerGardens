@@ -1,530 +1,212 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Roses</title>
-  <style>
-.centered {
-text-align: center; /* Centers text horizontally */
-}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roses | Kelowna Flower Gardens</title>
 
-</style>
-  </head>
-  <body>
-  <h1>The Central Okanagan Flower & Garden Society</h1>
-  <p>Kelowna's Garden Club</p> 
-  <style>
-
-/* ====== CSS VARIABLES (THEME) ====== */
-:root{
---bg: ##F695B5; /* pink */
---card: #0b1220; /* card bg */
---muted: #94a3b8; /* muted text */
---accent: ##F68686; /* coral accent */
---accent-2: ##FDD7D7; /* cream accent */
---glass: rgba(255,255,255,0.04);
---radius: 14px;
---max-width: 1100px;
---gap: 1.25rem;
---shadow: 0 6px 20px rgba(2,6,23,0.6);
---fw-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-margin:0;
-font-family:var(--fw-sans);
-background:linear-gradient(180deg,var(--bg) 0%, #071029 100%);
-color:##E8EFF8;
-line-height:1.45;
-padding:2rem 1rem;
-}
-
-
-.wrap{
-max-width:var(--max-width);
-margin:0 auto;
-display:flex;
-flex-direction:column;
-gap:var(--gap);
-}
-
-
-header{
-position:relative;
-width:100vw;
-left:50%;
-right:50%;
-margin-left:-50vw;
-margin-right:-50vw;
-overflow:hidden;
-height:50vh; /* cropped to about 1/2 screen height */
-}
-
-header img.hero-header {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-  background-image: file:///C:/Users/geosi/OneDrive/Documents/Code/Flowers/Images/0011_26.jpg('0011_26.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-}
-@media (max-width: 768px) {
-  .hero-header {
-    height: 250px;
-    padding: 50px 15px;
-  }
-
-  .hero-header h1 {
-    font-size: 24px;
-  }
-
-  .hero-header p {
-    font-size: 16px;
-  }
-}
-
-.header-text{
-text-align:center;
-color:black;
-}
-
-
-.header-text h1{
-font-size:clamp(1.8rem,4vw,3rem);
-margin:0;
-}
-
-
-.header-text p{
-font-size:1.1rem;
-color:var(--muted);
-}
-
-
-nav{display:flex;gap:1rem;align-items:center;justify-content:center;margin-top:1rem;}
-nav a{
-color:var(--muted);
-text-decoration:none;
-padding:.35rem .6rem;
-border-radius:8px;
-font-weight:600;
-font-size:.95rem;
-}
-nav a:hover{color:var(--accent);background:rgba(124,58,237,0.06)}
-
-
-main{margin-top:2rem;}
-
-
-footer{padding:1rem 0;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
-.centered {
-text-align: center; /* Centers text horizontally */
-}
-</style>
-</style>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
+
 <body>
-<div class="wrap">
 
+<!-- SHARED HEADER -->
+<div id="header"></div>
 
-<header>
-<img src="file:///C:/Users/geosi/OneDrive/Documents/Code/Flowers/Images/01126.jpg" alt="Flowers of the Okanagan" class="header-image" 
-<div class="header-text">
-<h1>Gardens of Kelowna</h1>
-<p>Beautiful Gardens</p>
-</div>
-</header>
+<main class="page-content">
 
+  <!-- INTRO -->
+  <section class="content-section centered">
+    <h2>The Story of Roses</h2>
+    <p>
+      Original cultivation of European roses predates Christ, beginning with
+      <em>Rosa gallica</em>, the “apothecary’s rose”. Over centuries, roses evolved
+      through Damasks, Albas, Centifolias, China roses, Hybrid Teas, Floribundas,
+      Grandifloras, Shrubs, and Miniatures.
+      <br><br>
+      References:
+      <a href="https://harknessroses1879.com/" target="_blank">Harkness Roses</a>,
+      <a href="https://rose.org/" target="_blank">American Rose Society</a>,
+      <a href="https://canadianrosesociety.org/" target="_blank">Canadian Rose Society</a>
+    </p>
+  </section>
 
-<nav>
-<a href="Home.html">Home</a>
-<a href="Gardens of Kelowna.html">Gardens of Kelowna</a>
-<a href="About.html">About</a>
-<a href="Regional Species.html">Regional Species</a>
-<a href="Awards.html">Awards</a>
-<a href="Resources.html">Resources</a>
-<a href="Roses.html">Roses</a>
-<a href="Valley Art.html">Valley Art</a>
-<a href="#Bridal Bouquets.html">Bridal Bouquets</a>
-<a href="#Calendar.html">Calendar</a>
-<a href="#Members.html">Members</a>
-<a href="#Contact.html">Contact</a>
-</nav>
+  <!-- QUICK JUMP BUTTONS -->
+  <section class="content-section centered">
+    <div class="button-group">
+      <a href="#hybrid-teas">Hybrid Teas</a>
+      <a href="#floribundas">Floribundas</a>
+      <a href="#grandifloras">Grandifloras</a>
+      <a href="#climbers">Climbers</a>
+      <a href="#miniatures">Miniatures</a>
+    </div>
+  </section>
 
+  <!-- HYBRID TEAS -->
+  <section id="hybrid-teas" class="content-section">
+    <h3>Hybrid Teas</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th><th>Color</th><th>Flower</th><th>Growth</th><th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>First Love (1951)</td>
+            <td>Rose–Pink</td>
+            <td>6–9 cm, double, light fragrance</td>
+            <td>Vigorous, disease resistant</td>
+            <td><img src="firstlove.jpg" alt="First Love rose"></td>
+          </tr>
+          <tr>
+            <td>Confidence (1951)</td>
+            <td>Light Yellow</td>
+            <td>Large double, moderate fragrance</td>
+            <td>Dark foliage, bushy</td>
+            <td><img src="confidence.jpg" alt="Confidence rose"></td>
+          </tr>
+          <tr>
+            <td>Red Masterpiece (1974)</td>
+            <td>Dark Red</td>
+            <td>15 cm, heavy fragrance</td>
+            <td>Profuse blooming</td>
+            <td><img src="redmasterpeice.jpg" alt="Red Masterpiece rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-<main>
-<section>
-          <h2 id="features">Roses</h2>
-         <p>
-          <a href=" https://harknessroses1879.com/"> Harkness Roses </a> , <a href="https://rose.org/"> American Rose Society </a>, <a href="https://canadianrosesociety.org/"> Canadian Rose Society </a> 
-         </p>
+  <!-- FLORIBUNDAS -->
+  <section id="floribundas" class="content-section">
+    <h3>Floribundas</h3>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <td>Bon Bon (1974)</td>
+            <td>Rose–White</td>
+            <td>8.9 cm, moderate fragrance</td>
+            <td>Very prolific</td>
+            <td><img src="bonbon.jpg" alt="Bon Bon rose"></td>
+          </tr>
+          <tr>
+            <td>Garnet (1951)</td>
+            <td>Garnet Red</td>
+            <td>Small, long lasting</td>
+            <td>Susceptible to mildew</td>
+            <td><img src="garnet.jpg" alt="Garnet rose"></td>
+          </tr>
+          <tr>
+            <td>Vogue (1951)</td>
+            <td>Cherry Coral</td>
+            <td>Large, moderate fragrance</td>
+            <td>Vigorous, bushy</td>
+            <td><img src="vogue.jpg" alt="Vogue rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-<h2></h2>
-  <p> <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chart Table</title>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      text-align: center;
-      padding: 8px;
-    }
-    th {
-      background-color: #f4f4f4;
-    }
-    .bar {
-      height: 20px;
-      background-color: #4CAF50;
-    }
-  </style>
-</head>
-<body>
-  <h1>Hybrid Teas</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Color</th>
-        <th>Flower Description</th>
-        <th>Foliage and growth Habits</th>
-        <th>Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>First Love (1951)</td>
-        <td>Rose to Pink</td>
-        <td>6.35 - 8.9 cms Double (20-30 petals), slight fragrence</td>
-        <td> Leathery, light green, very vigorous, disease resistant</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\firstlove.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-        <td>Confidence (1951)</td>
-        <td>Light to Yellow</td>
-         <td>Large Double (28 - 38 petals), moderate fragrence</td>
-        <td> Dark, leathery, vigorous, bushy</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\confidence.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      <tr>
-        <td>Red Masterpeice (1974)</td>
-        <td>Dark Red</td>
-         <td>15.25 cm Double (35-40 petals), heavy fragrence</td>
-        <td> Dark, leathery, mildews, profuse blooming</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\redmasterpeice.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-    </tbody>
-  </table>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chart Table</title>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      text-align: center;
-      padding: 8px;
-    }
-    th {
-      background-color: #f4f4f4;
-    }
-    .bar {
-      height: 20px;
-      background-color: #4CAF50;
-    }
-  </style>
-</head>
-<body>
-  <h1>Floribundas</h1>
-  <table>
-    <thead>
-      <tr>
-         <th>Name</th>
-        <th>Color</th>
-        <th>Flower Description</th>
-        <th>Foliage and growth Habits</th>
-        <th>Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-  <td>Bon Bon (1974)</td>
-        <td>Deep rose- white</td>
-         <td>8.89 cm Double (25 petals), moderate fragrence</td>
-        <td> Glossy, grey-green; very prolific blooming</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\bonbon.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      <tr>
-       <td>Garnet (1951)</td>
-        <td>Garnet-red/yellow</td>
-         <td> 2.5-5.1 cm Double (50 petals), slight fragrence, long lasting flowers</td>
-        <td> Dark, leathery, susceptible to mildews</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\garnet.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-  <tr>
-       <td>Vogue (1951)</td>
-        <td>Cherry Coral</td>
-         <td>8.89 - 10.25 cm Double (30-35 petals), moderate fragerance</td>
-        <td> Glossy, leathery; vigorous, upright, bushy</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\vogue.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-    </tbody>
-  </table>
-</body>
-</html> 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chart Table</title>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      text-align: center;
-      padding: 8px;
-    }
-    th {
-      background-color: #f4f4f4;
-    }
-    .bar {
-      height: 20px;
-      background-color: #4CAF50;
-    }
-  </style>
-</head>
-<body>
-  <h1>Grandifloras</h1>
-  <table>
-    <thead>
-      <tr> <th>Name</th>
-        <th>Color</th>
-        <th>Flower Description</th>
-        <th>Foliage and growth Habits</th>
-        <th>Image</th>
-       
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-         <td>Arizona (1975)</td>
-        <td>Golden copper</td>
-         <td>10.25 cm Double (35-40 petals), moderate fragrence</td>
-        <td> Dark, semi-glossy, tall</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\arizona.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-       <td>Mount Shasta (1963)</td>
-        <td>White</td>
-         <td>10.25 - 12.6 cm cm Double (20-26 petals), moderate fragrence</td>
-        <td> Leathery, semi-glossy, good for cool climates</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\mountshasta.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-       <td>Queen Elizabeth (1954)</td>
-        <td>Carmine-rose  to dawn-pink</td>
-         <td>8.89 - 10.25 cm Double (45-55 petals), moderate fragrence</td>
-        <td> Glossy, vigorous, prolific</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\queenelizabeth.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-    </tbody>
-  </table>
-</body>
-</html> 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chart Table</title>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      text-align: center;
-      padding: 8px;
-    }
-    th {
-      background-color: #f4f4f4;
-    }
-    .bar {
-      height: 20px;
-      background-color: #4CAF50;
-    }
-  </style>
-</head>
-<body>
-  <h1>Climbers</h1>
-  <table>
-    <thead>
-      <tr>
-         <th>Name</th>
-        <th>Color</th>
-        <th>Flower Description</th>
-        <th>Foliage and growth Habits</th>
-        <th>Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Blossomtime (1951)</td>
-        <td>Pink</td>
-         <td>10.25 cm Double (35-40 petals), heavy fragrence</td>
-        <td> Dark, large-flowered climber, low-growing</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\blossomtime.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-        <td>Coral Satin (1960)</td>
-        <td>Coral</td>
-         <td>8.89 - 10.25 cm Double (25 petals), moderate fragrence</td>
-        <td> Glossy, leathery, Large-flowered climber, profuse bloom</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\coralsatin.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-        <td>Golden Showers (1956)</td>
-        <td>Daffodil-yellow</td>
-         <td>12.6 cm Double (20-35 petals), moderate fragrence</td>
-        <td> Dark, glossy, Large-flowered climber;long almost thornless stems</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\goldenshowers.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-    </tbody>
-  </table>
-</body>
-</html> 
+  <!-- GRANDIFLORAS -->
+  <section id="grandifloras" class="content-section">
+    <h3>Grandifloras</h3>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <td>Arizona (1975)</td>
+            <td>Golden Copper</td>
+            <td>Large double</td>
+            <td>Tall growth</td>
+            <td><img src="arizona.jpg" alt="Arizona rose"></td>
+          </tr>
+          <tr>
+            <td>Mount Shasta (1963)</td>
+            <td>White</td>
+            <td>Large, moderate fragrance</td>
+            <td>Cold hardy</td>
+            <td><img src="mountshasta.jpg" alt="Mount Shasta rose"></td>
+          </tr>
+          <tr>
+            <td>Queen Elizabeth (1954)</td>
+            <td>Rose Pink</td>
+            <td>Large clusters</td>
+            <td>Very vigorous</td>
+            <td><img src="queenelizabeth.jpg" alt="Queen Elizabeth rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chart Table</title>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      text-align: center;
-      padding: 8px;
-    }
-    th {
-      background-color: #f4f4f4;
-    }
-    .bar {
-      height: 20px;
-      background-color: #4CAF50;
-    }
-  </style>
-</head>
-<body>
-  <h1>Miniatures</h1>
-  <table>
-    <thead>
-      <tr>
-         <th>Name</th>
-        <th>Color</th>
-        <th>Flower Description</th>
-        <th>Foliage and growth Habits</th>
-        <th>Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-       <td>Beauty Secret (1965)</td>
-        <td>Cardinal Red</td>
-         <td> 2.5 - 3.9 cm Double, heavy fragrence</td>
-        <td> Glossy, leathery, abundant bloom</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\beautysecret.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-        <td>Fire Princess (1969)</td>
-        <td>Orange-red</td>
-         <td>4.5 cm Double, no fragrence</td>
-        <td> Glossy, leathery, vigorous, bushy</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\Fireprincess.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-        <td>Judy Fisher (1968)</td>
-        <td>Rose-pink</td>
-         <td>3.9 cm Double, no fragrence</td>
-        <td> Glossy, leathery, Large-flowered climber, profuse bloom</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\judyfisher.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-        <td>Lavendar Lace (1968)</td>
-        <td>Lavendar</td>
-         <td>3.9 cm Double, moderate fragrence</td>
-        <td> Glossy, vigorous and bushy</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\lavendarlace.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-        <td>Over the Rainbow (1974)</td>
-        <td>Red and yellow</td>
-         <td>4.5 cm Double, no fragrence</td>
-        <td> Leathery, medium green; abundant, continuous bloom</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\overtherainbow.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-      </tr>
-      <tr>
-        <td>Windy City (1974)</td>
-        <td>Pink</td>
-         <td>2.5 cm cm Double, slight fragrence, long lasting</td>
-        <td> Bronzy; disease resistant</td>
-        <td> <img src="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Images\Roses\windycity.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
-    </tbody>
-  </table>
-</body>
-</html> 
- </p>
+  <!-- CLIMBERS -->
+  <section id="climbers" class="content-section">
+    <h3>Climbers</h3>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <td>Blossomtime (1951)</td>
+            <td>Pink</td>
+            <td>Large, fragrant</td>
+            <td>Low-growing climber</td>
+            <td><img src="blossomtime.jpg" alt="Blossomtime rose"></td>
+          </tr>
+          <tr>
+            <td>Golden Showers (1956)</td>
+            <td>Yellow</td>
+            <td>Large blooms</td>
+            <td>Almost thornless</td>
+            <td><img src="goldenshowers.jpg" alt="Golden Showers rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
-<body>
- 
+  <!-- MINIATURES -->
+  <section id="miniatures" class="content-section">
+    <h3>Miniatures</h3>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <td>Beauty Secret (1965)</td>
+            <td>Cardinal Red</td>
+            <td>Very fragrant</td>
+            <td>Abundant bloom</td>
+            <td><img src="beautysecret.jpg" alt="Beauty Secret rose"></td>
+          </tr>
+          <tr>
+            <td>Windy City (1974)</td>
+            <td>Pink</td>
+            <td>Small, long lasting</td>
+            <td>Disease resistant</td>
+            <td><img src="windycity.jpg" alt="Windy City rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-</section>
 </main>
 
+<!-- SHARED FOOTER -->
+<div id="footer"></div>
 
-<footer>
-  <img src="file:///C:/Users/geosi/OneDrive/Documents/Code/Flowers/Images/01126.jpg" alt="Flowers of the Okanagan" class="footer-image" 
-<div class="header-text">
-</div>
-<div class="muted"></div>
-<div class="muted"></div>
-</footer>
-
-
-</div>
+<script>
+  fetch("header.html").then(r=>r.text()).then(t=>{
+    document.getElementById("header").innerHTML = t;
+  });
+  fetch("footer.html").then(r=>r.text()).then(t=>{
+    document.getElementById("footer").innerHTML = t;
+  });
+</script>
 
 </body>
 </html>
