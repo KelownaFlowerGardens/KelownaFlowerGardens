@@ -138,24 +138,68 @@ nav a:hover{
 </nav>
 
 <section>
-  <h2>Contact </h2>
+ <section style="max-width:500px;margin:auto;">
+  <h2>Contact Us</h2>
 
-  <form action="mailto:kelownaflowergardens@gmail.com" method="post" enctype="text/plain">
-    <label>Name</label>
-    <input type="text" name="name" required>
-  </form>
-  <form
-    <label>Email</label>
-    <input type="email" name="email" required>
-  </form>
-  <form
-    <label>Message</label>
-    <textarea name="message" rows="5" required></textarea>
-  </form>
-  <form
-    <button type="submit">Send Message</button>
+  <form action="https://formsubmit.co/kelownaflowergardens@gmail.com" method="POST">
+
+    <!-- Security -->
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_subject" value="New Contact Message — Kelowna Flower Gardens">
+
+    <!-- Name -->
+    <label for="name">Name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      placeholder="Your name"
+      style="width:100%;padding:10px;margin-bottom:15px;"
+    >
+
+    <!-- Email -->
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      placeholder="your@email.com"
+      style="width:100%;padding:10px;margin-bottom:15px;"
+    >
+
+    <!-- Message -->
+    <label for="message">Message</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="5"
+      required
+      placeholder="Write your message here..."
+      style="width:100%;padding:10px;margin-bottom:20px;"
+    ></textarea>
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      style="
+        background:#F68686;
+        color:white;
+        border:none;
+        padding:12px 25px;
+        border-radius:25px;
+        font-weight:bold;
+        cursor:pointer;
+      "
+    >
+      Send Message
+    </button>
+
   </form>
 </section>
+
 
  <!-- INSTAGRAM -->
  <p>
@@ -177,4 +221,5 @@ nav a:hover{
 
 </body>
 </html>
+
 
