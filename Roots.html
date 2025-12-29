@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --max:1100px;
+  --radius:14px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+.wrap{
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+}
+
+header img{
+  width:100%;
+  max-height:380px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+.header-text h1{
+  margin:1rem 0 0;
+  color:var(--pink);
+}
+
+.header-text p{
+  margin:.5rem 0;
+  color:var(--muted);
+}
+
+/* ---------- NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  border-radius:20px;
+  background:#fff;
+  color:var(--pink);
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- MAIN ---------- */
+main img{
+  max-width:100%;
+  height:auto;
+  display:block;
+  margin:auto;
+}
+
+.centered{text-align:center}
+
+.member-button{
+  display:inline-block;
+  margin:1.5rem 0;
+  padding:14px 26px;
+  background:var(--pink);
+  color:#fff;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+}
+
+.member-button:hover{
+  background:#f46d6d;
+}
+
+/* ---------- SCROLL GALLERY ---------- */
+.scroll-container{
+  background:var(--light);
+  overflow-x:auto;
+  white-space:nowrap;
+  padding:1rem;
+}
+
+.scroll-container img{
+  max-width:90%;
+  margin:.5rem;
+  border-radius:12px;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  margin-top:3rem;
+  text-align:center;
+  padding:1rem 0;
+  color:var(--muted);
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:768px){
+  header img{max-height:240px}
+  nav a{font-size:.85rem;padding:.45rem .7rem}
+}
+
+    /* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+    /* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <div class="header-text">
+    <h1>Kelowna Flower Gardens</h1>
+    <p>Kelowna’s Flower Garden Club</p>
+  </div>
+
+  <nav>
+   <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
+    <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
+    <a href="Members.html">Members</a>
+    <a href="Contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
+<h1> Root Care </h1>
+<section>
+  <p> Planting generally takes place in the spring, soon after the last frost. Sowing depth and spacing entirely depends on plant and design type. We will get into depth once the first key points are established. 
+    <h3> Planting Roses</h3>
+    <p>
+    <h5> 1. Sites: </h5> Roses require full exposure to sun, throughout the day. A mininum of six hours, will be satisfactory, where morning sun is crutial. 
+    -Air movement flows wihtin the foliage keeps them dyr, reducings mildew and disease. 
+    -
+    </p>
+    <p>  
+    <h5>2. Drainage </h5> Add several cm's of volcanic cinder or gravel about 30 cm depth below the garden soil. Allow for water to drain into this, and then into a prepared trench with a drain pipe that has roofing paper over it to create strucural integrity, and so that the soil doesn't wash away. The pipe should be at a low laying angle, less than 15 degree slope. 
+    <p>
+    <h5>3. Raising the Beds </h5> In moist conditions, build up the soil 25-40 cms and place outer framing of stone, wood, or brick.
+  </p>
+    <p>
+    <h5>4. Erosion</h5>  Consider where erosion may occur on steeply dipping slopes, and anything thats more the 20 degrees, build a terrace that will prevent slumping. 
+</p>
+<p> <h5>5. Ranges of Soils </h5> Roses do well in high hummus soils, as well as loam. The ideal recipe for growing is: 50 cms depth of; 5 parts (by volume) of loam, 4 parts organic matter (composte, manure, peat moss, shredds of bark), 1 part builders sand.
+</p>
+<p> <h5>6. Acidity </h5> Slightly acidic soils best suit roses at 6.0 - 6.5 pH. Adding agricultural sulfur may help in alkaline soils.
+  
+  </p>  
+<p>
+    <table border="1" cellpadding="8" cellspacing="0">
+  <tr>
+    <th>Elements</th>
+    <th>Contributions</th>
+    <th>Signs of Malnutrition</th>
+  </tr>
+
+  <tr><td><h5> Primary Elements</h5>Nitrogen</td><td>Promotes growth of stems, leaves</td><td>Yellow Leaves, No new growth, bud failures, pale flowers</td></tr>
+  <tr><td>Phosphorus</td><td>Strong root growth, and flowers</td><td>Dull foliage, falling leaves, weak stems, damaged roots, slow-to-open buds</td></tr>
+  <tr><td>Potassium</td><td>Vigorous growth</td><td>Yellow leaf margins, turning brown, weak stems, underdevelopped buds</td></tr>
+  <tr><td><h5> Secondary Elements</h5> Calcium</td><td>Growth of plant cells and strong roots</td><td>Deformed growth, damaged roots</td></tr>
+  <tr><td>Magnesium</td><td>Good growth</td><td>Mature yellow leaves</td></tr>
+  <tr><td>Sulfur</td><td>Green growth</td><td>Yellowing of new leaves</td></tr>
+  <tr><td><h5>Trace Elements</h5> Boron</td><td>Good form</td><td>Small, curled or scortched leaves, dead terminal buds</td></tr>
+  <tr><td>Chlorine</td><td>Good growth</td><td>Foliage damaged</td></tr>
+    <tr><td>Copper</td><td>Good growth</td><td>Poorly developed tips</td></tr>
+  <tr><td>Iron</td><td>Keeps plants green</td><td>Yellow foliage</td></tr>
+  <tr><td>Magnesium</td><td>Increases nitrogen</td><td>Pale mottling of leaves</td></tr>
+  <tr><td>Molybdenum</td><td>Good growth</td><td>Poorly developed leaves</td></tr>
+  <tr><td>Zinc</td><td>Good growth</td><td>Deformed growth</td></tr>
+
+</table>
+
+<h3> Systemic Root Care </h3> Spread the recommended amount of granules around the bush and work it into the soil. The nutrients and insecticides are dispersed systemically throughout the entire plant. The new growth will be protected against sucking insects as it develops.
+<h3> Rose Plant Watering </h3> PVC pipe can be laid troughout the rose bushes, dispensing water right near the stem. Best practise is to dig small basins about 5 cm in depth, 10 cm in width, that fill with water. Roses can't get too much water, but they will not tolerate wet feet! Therefore, drainage must be excellent. 
+</p>
+<p> 
+  <table border="1" cellpadding="8" cellspacing="0">
+  <tr><h3> Mulch </h3>
+    <th>Material</th>
+    <th>Comments</th></tr>
+
+  <tr><td>Bark</td><td>Chip or fine ground, long-lasting</td></tr>
+  <tr><td>Buckwheat</td><td>Attractive, but scatters in windy conditions</td></tr>
+  <tr><td>Cotton screenings, peanut hulls, shredded stems</td><td>Durable, improves soils structure, Obtainable from processing plants, or mills</td></tr>
+  <tr><td>Grass clippings, straw</td><td>Most available, Dry out before spreading, repeat use to build up reservoir of minerals that lasts years</td></tr>
+  <tr><td>Gravel or stone chips</td><td>Not attractive with roses, extremely durable, holds down weeds, does not supply plant nutrients or humus</td></tr>
+  <tr><td>Ground corn cobs</td><td>Excellent for improving soil structure</td></tr>
+  <tr><td>Mushroom Composte</td><td>Available where commercial mushrooms are produced, blends into landscape</td></tr>
+  <tr><td>Newspaper</td><td>Readily available, shredded or in sheets, hold in place with rocks, bricks or soil. Cover with more attractive material, builds humus.</td></tr>
+  <tr><td>Peat moss</td><td>Attractive, availble at expense. Compacts and sheds rain water, should be kept moist at all times.</td></tr>
+  <tr><td>Pecan hulls</td><td>Extremely durable, limited availability</td></tr>
+  <tr><td>Rotted manure</td><td>May contain weed seeds</td></tr>
+  <tr><td>Sawdust, woodchips, or shavings</td><td>Low in plant nutrients, decomposes slowly, element correction required if yellowing, add nitrogen. </td></tr>
+  <tr><td>Leaves</td><td>Excellent source of humus, high in nutrients.</td></tr>
+
+
+</table></p>
+  <div class="centered">
+<p><h3>Canadian Gardens to Visit</h3></div>
+
+<h3>British Columbia</h3>
+Victoria, The Butchart Gardens
+
+<h3>Ontario</h3>
+Windsor, Jackson Park Rose Garden
+
+<h3>Quebec</h3>
+Montreal, Connaught Park Rose Garden and Memorial Park Rose Garden</p>
+</div>
+</section>
+</main>
+
+<div class="scroll-container">
+  <img src="Rose-The-Fairy.jpg" alt="Rose">
+</div>
+  <aside class="sidebar" id="sidebar">
+         <a href="Gardens of Kelowna.html">Gardens of Kelowna</a>
+      <a href="climate.html">Climate</a>
+            <a href="Roots.html">Roots</a>
+  </aside>
+</main>
+
+<footer>
+  © Kelowna Flower Gardens
+</footer>
+
+</div>
+
+<script async src="https://www.instagram.com/embed.js"></script>
+
+</body>
+</html>
