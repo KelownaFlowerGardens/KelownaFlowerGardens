@@ -380,7 +380,60 @@ nav a:hover{
       </table>
     </div>
   </section>
+<style> /* ===== ROSES TABLE MOBILE FIX ===== */
 
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 12px;
+}
+
+/* Force table to exceed viewport width */
+.table-wrap table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+/* Prevent image column from collapsing */
+.table-wrap td:last-child,
+.table-wrap th:last-child {
+  min-width: 180px;
+  text-align: center;
+}
+
+/* Force images to stay visible */
+.table-wrap img {
+  width: 160px;
+  max-width: none;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Improve scroll bar visibility (optional) */
+.table-wrap::-webkit-scrollbar {
+  height: 8px;
+}
+.table-wrap::-webkit-scrollbar-thumb {
+  background: #F68686;
+  border-radius: 8px;
+}
+
+/* Mobile swipe hint */
+@media (max-width: 768px) {
+  .table-wrap::after {
+    content: "← swipe to see more roses →";
+    display: block;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 6px;
+  }
+}
+</style>
 </main>
 
 
@@ -403,6 +456,7 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
 
 </body>
 </html>
+
 
 
 
