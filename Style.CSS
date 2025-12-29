@@ -48,12 +48,12 @@ body{
 
 .header-text h1{
   margin:.5rem 0 0;
-  color:var(--pink);
+  color:var(white);
 }
 
 .header-text p{
   margin:0;
-  color:var(--muted);
+  color:var(white);
 }
 
 .main-nav{
