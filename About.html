@@ -145,7 +145,7 @@ nav a:hover{
   color:#fff;
   border-radius:6px;
 }
-    
+
 /* ---------- MOBILE ---------- */
 @media(max-width:900px){
   .wrapper{
@@ -169,13 +169,12 @@ nav a:hover{
     display:block;
   }
 }
-
-
 </style>
 </head>
 
 <body>
 
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <header>
   <img src="01126.jpg" alt="Flowers of the Okanagan">
@@ -201,9 +200,6 @@ nav a:hover{
 <div class="wrapper">
 
   <main class="content">
-<main class="page-content">
-
-  <section class="content-section centered">
     <h2>About</h2>
 
     <p>
@@ -242,7 +238,6 @@ nav a:hover{
 <footer style="text-align:center;padding:2rem;color:var(--muted)">
   © Kelowna Flower Gardens
 </footer>
-
 <script>
 function toggleMenu(){
   document.getElementById("sidebar").classList.toggle("active");
@@ -260,6 +255,7 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
 </html>
 
       
+
 
 
 
