@@ -3,166 +3,183 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact | Kelowna Flower Gardens</title>
+  <link rel="stylesheet" href="style.css" />
+
+<title>Conact</title>
 
 <style>
 :root{
   --pink:#F68686;
-  --cream:#FDD7D7;
-  --dark:#333;
-  --muted:#6b7280;
+  --light:#FDD7D7;
+  --muted:#666;
   --radius:14px;
-  --max:1100px;
-  --font:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  --max:1200px;
 }
 
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family:var(--font);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
   background:linear-gradient(180deg,var(--pink),#fff);
-  color:var(--dark);
+  color:#333;
 }
 
-.wrapper{
-  max-width:var(--max);
-  margin:auto;
-  padding:1.5rem;
-}
-
+/* ---------- HEADER ---------- */
 header{
   text-align:center;
+  padding:1rem;
 }
 
 header img{
   width:100%;
-  max-height:420px;
+  max-height:360px;
   object-fit:cover;
   border-radius:var(--radius);
 }
 
-h1,h2,h3{
+header h1{
   color:var(--pink);
+  margin:1rem 0 .25rem;
 }
 
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
 nav{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:.6rem;
-  margin:1.5rem 0;
+  gap:.5rem;
+  margin:1rem 0;
 }
 
 nav a{
   text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
   color:var(--pink);
-  padding:.5rem 1rem;
   border-radius:20px;
   font-weight:600;
+  font-size:.95rem;
 }
 
 nav a:hover{
-  background:var(--cream);
+  background:var(--pink);
+  color:#fff;
 }
 
-section{
-  margin:2.5rem 0;
-}
-
-form{
-  max-width:500px;
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
   margin:auto;
-  background:var(--cream);
-  padding:1.5rem;
-  border-radius:var(--radius);
-}
-
-label{
-  font-weight:600;
-}
-
-input,textarea{
-  width:100%;
-  padding:.6rem;
-  margin:.4rem 0 1rem;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-
-button{
-  background:var(--pink);
-  color:#fff;
-  border:none;
-  padding:.7rem 1.4rem;
-  border-radius:20px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-button:hover{
-  opacity:.9;
-}
-
-.instagram{
-  text-align:center;
-}
-
-.instagram a{
-  display:inline-block;
-  margin:1rem 0;
-  padding:.7rem 1.4rem;
-  background:var(--pink);
-  color:#fff;
-  text-decoration:none;
-  border-radius:30px;
-  font-weight:600;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:12px;
-  margin-top:1.5rem;
-}
-
-.grid img{
-  width:100%;
-  aspect-ratio:1/1;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-.scroll-container{
-  background:var(--cream);
   padding:1rem;
-  text-align:center;
-  border-radius:var(--radius);
+  gap:1.5rem;
 }
 
-.scroll-container img{
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
   max-width:100%;
   height:auto;
   border-radius:var(--radius);
+  margin:1rem 0;
 }
 
-footer{
-  text-align:center;
-  padding:2rem 1rem;
-  color:var(--muted);
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
   <h1>Kelowna Flower Gardens</h1>
   <p>Kelowna’s Flower Garden Club</p>
-  <img src="01126.jpg" alt="Flowers of the Okanagan">
-</header>
 
 <nav>
   <a href="Home.html">Main</a>
@@ -180,7 +197,7 @@ footer{
 </nav>
 
 <section>
-  <h2>Contact Us</h2>
+  <h2>Contact </h2>
 
   <form action="mailto:kelownaflowergardens@gmail.com" method="post" enctype="text/plain">
     <label>Name</label>
@@ -225,3 +242,4 @@ footer{
 
 </body>
 </html>
+
