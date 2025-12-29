@@ -3,122 +3,183 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Resources | Kelowna Flower Gardens</title>
+  <link rel="stylesheet" href="style.css" />
 
-<link rel="stylesheet" href="style2.css">
+<title>Resources</title>
 
 <style>
 :root{
   --pink:#F68686;
-  --cream:#FDD7D7;
-  --muted:#6b7280;
-  --max:1100px;
+  --light:#FDD7D7;
+  --muted:#666;
   --radius:14px;
-  --font:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  --max:1200px;
 }
 
 *{box-sizing:border-box}
+
 body{
   margin:0;
-  font-family:var(--font);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
   background:linear-gradient(180deg,var(--pink),#fff);
   color:#333;
 }
 
-.wrapper{
-  max-width:var(--max);
-  margin:auto;
-  padding:1.5rem;
-}
-
+/* ---------- HEADER ---------- */
 header{
   text-align:center;
+  padding:1rem;
 }
 
 header img{
   width:100%;
-  max-height:420px;
+  max-height:360px;
   object-fit:cover;
   border-radius:var(--radius);
 }
 
-h1,h2,h3{
+header h1{
   color:var(--pink);
+  margin:1rem 0 .25rem;
 }
 
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
 nav{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
   gap:.5rem;
-  margin:1.5rem 0;
+  margin:1rem 0;
 }
 
 nav a{
   text-decoration:none;
-  color:var(--pink);
   padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
   border-radius:20px;
   font-weight:600;
+  font-size:.95rem;
 }
 
 nav a:hover{
-  background:var(--cream);
+  background:var(--pink);
+  color:#fff;
 }
 
-section{
-  margin:2.5rem 0;
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
 }
 
-iframe{
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
   max-width:100%;
   height:auto;
-  aspect-ratio:16/9;
   border-radius:var(--radius);
+  margin:1rem 0;
 }
 
+/* ---------- SIDEBAR ---------- */
 .sidebar{
-  background:var(--cream);
-  padding:1rem;
+  width:260px;
+  background:#fff;
   border-radius:var(--radius);
+  padding:1rem;
 }
 
-.sidebar a{
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
   display:block;
-  text-decoration:none;
-  color:#333;
-  padding:.35rem 0;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
 }
 
-.scroll-container{
-  background:var(--cream);
-  padding:1rem;
-  text-align:center;
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
 }
 
-.scroll-container img{
-  max-width:100%;
-  height:auto;
-  border-radius:var(--radius);
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
 }
 
-footer{
-  text-align:center;
-  padding:2rem 1rem;
-  color:var(--muted);
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
   <h1>Kelowna Flower Gardens</h1>
   <p>Kelowna’s Flower Garden Club</p>
-  <img src="01126.jpg" alt="Flowers of the Okanagan">
-</header>
 
 <nav>
   <a href="Home.html">Main</a>
@@ -191,3 +252,4 @@ footer{
 
 </body>
 </html>
+
