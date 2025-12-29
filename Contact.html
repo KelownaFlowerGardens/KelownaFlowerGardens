@@ -141,7 +141,10 @@ nav a:hover{
 <section style="max-width:500px;margin:auto;">
   <h2>Contact Us</h2>
 
-  <form action="https://formsubmit.co/kelownaflowergardens@gmail.com" method="POST">
+  <form
+    action="https://formsubmit.co/kelownaflowergardens@gmail.com"
+    method="POST"
+  >
 
     <!-- Enable CAPTCHA -->
     <input type="hidden" name="_captcha" value="true">
@@ -152,11 +155,17 @@ nav a:hover{
     <!-- Format email nicely -->
     <input type="hidden" name="_template" value="table">
 
+    <!-- Redirect back to contact page with success -->
+    <input
+      type="hidden"
+      name="_next"
+      value="https://kelownaflowergardens.github.io/KelownaFlowerGardens/Contact.html?success=true"
+    >
+
     <!-- Name -->
-    <label for="name">Name</label>
+    <label>Name</label>
     <input
       type="text"
-      id="name"
       name="name"
       required
       placeholder="Your name"
@@ -164,10 +173,9 @@ nav a:hover{
     >
 
     <!-- Email -->
-    <label for="email">Email</label>
+    <label>Email</label>
     <input
       type="email"
-      id="email"
       name="email"
       required
       placeholder="your@email.com"
@@ -175,9 +183,8 @@ nav a:hover{
     >
 
     <!-- Message -->
-    <label for="message">Message</label>
+    <label>Message</label>
     <textarea
-      id="message"
       name="message"
       rows="5"
       required
@@ -202,7 +209,25 @@ nav a:hover{
     </button>
 
   </form>
+
+  <!-- SUCCESS MESSAGE -->
+  <p
+    id="success-message"
+    style="
+      display:none;
+      margin-top:20px;
+      padding:12px;
+      background:#FDD7D7;
+      color:#333;
+      border-radius:10px;
+      text-align:center;
+      font-weight:bold;
+    "
+  >
+    🌸 Thank you! Your message has been sent successfully.
+  </p>
 </section>
+
 
  <!-- INSTAGRAM -->
  <p>
@@ -224,6 +249,7 @@ nav a:hover{
 
 </body>
 </html>
+
 
 
 
