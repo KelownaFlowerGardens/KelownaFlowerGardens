@@ -259,7 +259,7 @@ function renderShop() {
       <div id="paypal-${index}"></div>
     `;
     shop.appendChild(div);
-
+  
     paypal.Buttons({
       createOrder: (data, actions) => {
         return actions.order.create({
@@ -326,6 +326,7 @@ renderShop();
       "type": "INDIVIDUAL",
       "subtype": "ASSO_TYPE_INCORPORATED"
     },
+  }
     "business_industry": {
       "category": "1004",
       "mcc_code": "8931",
@@ -1430,7 +1431,8 @@ h1 {
   .column {
     width: 100%;
   }
-}</style>
+}
+</style>
 <!-- END MAIN -->
 </div>
 
@@ -1443,7 +1445,7 @@ div.scroll-container img {
   padding: 10px;</style>
   
 <div class="scroll-container">
-
+</style>
 <style> 
   div.scroll-container {
   background-color: #FDD7D7;
@@ -1545,9 +1547,7 @@ button {
 </style>
 </head>
 
-<body>
 
-</body>
 </html>
 
 </style>
@@ -1576,7 +1576,3 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
 
 </body>
 </html>
-
-
-
-
