@@ -138,15 +138,19 @@ nav a:hover{
 </nav>
 
 <section>
- <section style="max-width:500px;margin:auto;">
+<section style="max-width:500px;margin:auto;">
   <h2>Contact Us</h2>
 
   <form action="https://formsubmit.co/kelownaflowergardens@gmail.com" method="POST">
 
-    <!-- Security -->
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="table">
+    <!-- Enable CAPTCHA -->
+    <input type="hidden" name="_captcha" value="true">
+
+    <!-- Email subject -->
     <input type="hidden" name="_subject" value="New Contact Message — Kelowna Flower Gardens">
+
+    <!-- Format email nicely -->
+    <input type="hidden" name="_template" value="table">
 
     <!-- Name -->
     <label for="name">Name</label>
@@ -200,7 +204,6 @@ nav a:hover{
   </form>
 </section>
 
-
  <!-- INSTAGRAM -->
  <p>
 <blockquote class="instagram-media" 
@@ -221,5 +224,6 @@ nav a:hover{
 
 </body>
 </html>
+
 
 
