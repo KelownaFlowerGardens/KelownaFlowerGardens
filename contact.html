@@ -1,207 +1,225 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact</title>
-  <style>
-.centered {
-text-align: center; /* Centers text horizontally */
-}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact | Kelowna Flower Gardens</title>
 
-</style>
-  </head>
-  <body>
-  <h1>The Central Okanagan Flower & Garden Society</h1>
-  <p>Kelowna's Garden Club</p> 
-  <style>
-
-/* ====== CSS VARIABLES (THEME) ====== */
+<style>
 :root{
---bg: ##F695B5; /* pink */
---card: #0b1220; /* card bg */
---muted: #94a3b8; /* muted text */
---accent: ##F68686; /* coral accent */
---accent-2: ##FDD7D7; /* cream accent */
---glass: rgba(255,255,255,0.04);
---radius: 14px;
---max-width: 1100px;
---gap: 1.25rem;
---shadow: 0 6px 20px rgba(2,6,23,0.6);
---fw-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --pink:#F68686;
+  --cream:#FDD7D7;
+  --dark:#333;
+  --muted:#6b7280;
+  --radius:14px;
+  --max:1100px;
+  --font:system-ui,-apple-system,Segoe UI,Roboto,Arial;
 }
+
 *{box-sizing:border-box}
-html,body{height:100%}
+
 body{
-margin:0;
-font-family:var(--fw-sans);
-background:linear-gradient(180deg,var(--bg) 0%, #071029 100%);
-color:##E8EFF8;
-line-height:1.45;
-padding:2rem 1rem;
+  margin:0;
+  font-family:var(--font);
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:var(--dark);
 }
 
-
-.wrap{
-max-width:var(--max-width);
-margin:0 auto;
-display:flex;
-flex-direction:column;
-gap:var(--gap);
+.wrapper{
+  max-width:var(--max);
+  margin:auto;
+  padding:1.5rem;
 }
-
 
 header{
-position:relative;
-width:100vw;
-left:50%;
-right:50%;
-margin-left:-50vw;
-margin-right:-50vw;
-overflow:hidden;
-height:50vh; /* cropped to about 1/2 screen height */
+  text-align:center;
 }
 
-header img.hero-header {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-  background-image: file:///C:/Users/geosi/OneDrive/Documents/Code/Flowers/Images/0011_26.jpg('0011_26.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-}
-@media (max-width: 768px) {
-  .hero-header {
-    height: 250px;
-    padding: 50px 15px;
-  }
-
-  .hero-header h1 {
-    font-size: 24px;
-  }
-
-  .hero-header p {
-    font-size: 16px;
-  }
+header img{
+  width:100%;
+  max-height:420px;
+  object-fit:cover;
+  border-radius:var(--radius);
 }
 
-.header-text{
-text-align:center;
-color:black;
+h1,h2,h3{
+  color:var(--pink);
 }
 
-
-.header-text h1{
-font-size:clamp(1.8rem,4vw,3rem);
-margin:0;
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.6rem;
+  margin:1.5rem 0;
 }
 
-
-.header-text p{
-font-size:1.1rem;
-color:var(--muted);
-}
-
-
-nav{display:flex;gap:1rem;align-items:center;justify-content:center;margin-top:1rem;}
 nav a{
-color:var(--muted);
-text-decoration:none;
-padding:.35rem .6rem;
-border-radius:8px;
-font-weight:600;
-font-size:.95rem;
+  text-decoration:none;
+  color:var(--pink);
+  padding:.5rem 1rem;
+  border-radius:20px;
+  font-weight:600;
 }
-nav a:hover{color:var(--accent);background:rgba(124,58,237,0.06)}
 
-
-main{margin-top:2rem;}
-
-
-footer{padding:1rem 0;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
-.centered {
-text-align: center; /* Centers text horizontally */
+nav a:hover{
+  background:var(--cream);
 }
-</style>
+
+section{
+  margin:2.5rem 0;
+}
+
+form{
+  max-width:500px;
+  margin:auto;
+  background:var(--cream);
+  padding:1.5rem;
+  border-radius:var(--radius);
+}
+
+label{
+  font-weight:600;
+}
+
+input,textarea{
+  width:100%;
+  padding:.6rem;
+  margin:.4rem 0 1rem;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  background:var(--pink);
+  color:#fff;
+  border:none;
+  padding:.7rem 1.4rem;
+  border-radius:20px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+.instagram{
+  text-align:center;
+}
+
+.instagram a{
+  display:inline-block;
+  margin:1rem 0;
+  padding:.7rem 1.4rem;
+  background:var(--pink);
+  color:#fff;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+  margin-top:1.5rem;
+}
+
+.grid img{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.scroll-container{
+  background:var(--cream);
+  padding:1rem;
+  text-align:center;
+  border-radius:var(--radius);
+}
+
+.scroll-container img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+}
+
+footer{
+  text-align:center;
+  padding:2rem 1rem;
+  color:var(--muted);
+}
 </style>
 </head>
-<body>
-<div class="wrap">
 
+<body>
+
+<div class="wrapper">
 
 <header>
-<img src="file:///C:/Users/geosi/OneDrive/Documents/Code/Flowers/Images/01126.jpg" alt="Flowers of the Okanagan" class="header-image" 
-<div class="header-text">
-<h1>Gardens of Kelowna</h1>
-<p>Beautiful Gardens</p>
-</div>
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
 </header>
 
-
 <nav>
-<a href="Home.html">Home</a>
-<a href="Gardens of Kelowna.html">Gardens of Kelowna</a>
-<a href="About.html">About</a>
-<a href="Regional Species.html">Regional Species</a>
-<a href="Awards.html">Awards</a>
-<a href="Resources.html">Resources</a>
-<a href="Roses.html">Roses</a>
-<a href="Valley Art.html">Valley Art</a>
-<a href="Bridal Bouquets.html">Bridal Bouquets</a>
-<a href="Calendar.html">Calendar</a>
-<a href="Members.html">Members</a>
-<a href="Contact.html">Contact</a>
+  <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
+    <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
+    <a href="Members.html">Members</a>
+    <a href="Contact.html">Contact</a>
 </nav>
 
-
-<main>
 <section>
-          <h2 id="features">Contact</h2>
-         <p></p>
+  <h2>Contact Us</h2>
 
-<h2></h2>
-  <p> 
-    <form action="mailto:kelownaflowergardens@gmail.com" method="post" enctype="text/plain">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name" required><br><br>
-  
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required><br><br>
-  
-  <label for="message">Message:</label><br>
-  <textarea id="message" name="message" rows="4" cols="30" required></textarea><br><br>
-  
-  <button type="submit">Send Email</button>
-</form>
+  <form action="mailto:kelownaflowergardens@gmail.com" method="post" enctype="text/plain">
+    <label>Name</label>
+    <input type="text" name="name" required>
 
-</p>
+    <label>Email</label>
+    <input type="email" name="email" required>
 
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
-<body>
- 
+    <label>Message</label>
+    <textarea name="message" rows="5" required></textarea>
 
+    <button type="submit">Send Message</button>
+  </form>
 </section>
-</main>
 
+<section class="instagram">
+  <h2>Follow Kelowna Flower Gardens</h2>
+
+  <a href="https://www.instagram.com/kelownaflowergardens/" target="_blank">
+    📸 @kelownaflowergardens
+  </a>
+
+  <div class="grid">
+    <img src="firstlove.jpg" alt="">
+    <img src="confidence.jpg" alt="">
+    <img src="queenelizabeth.jpg" alt="">
+    <img src="5D06CA3.jpeg" alt="">
+    <img src="CSC_0319.jpg" alt="">
+    <img src="EAA1.jpeg" alt="">
+  </div>
+</section>
+
+<section class="scroll-container">
+  <img src="IMG_2962.jpeg" alt="Garden Image">
+</section>
 
 <footer>
-  <img src="file:///C:/Users/geosi/OneDrive/Documents/Code/Flowers/Images/01126.jpg" alt="Flowers of the Okanagan" class="footer-image" 
-<div class="header-text">
-</div>
-<div class="muted"></div>
-<div class="muted"></div>
+  <p>© Kelowna Flower Gardens</p>
 </footer>
-
 
 </div>
 
