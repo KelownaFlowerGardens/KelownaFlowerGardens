@@ -339,6 +339,19 @@ Montreal, Connaught Park Rose Garden and Memorial Park Rose Garden</p>
 </div>
 
 <script async src="https://www.instagram.com/embed.js"></script>
+    
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
 
 </body>
 </html>
