@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
+    <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
+    <a href="Members.html">Members</a>
+    <a href="Contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <main class="content">
+<main class="page-content">
+
+
+<p>Carl Linnaeus (1707-1778) was a Swedish botanist and physician, who studied at Lund University and then continued with medicine at Uppsala University. He wrote his doctoral thesis, Systema Naturae; the creation of Binomial Nomenclature, one of the pivotal works ever written in scientific literature. This document organized the Kingdoms of Nature, in a table structure and allowed for classification of plants, flowers and species of all types, including minerals and animals. This created the opportunity to further develop and to be studied intensely. He traverses from Uppsala to Stockholm, Vaxjo, Stenbrohult, Lund, Hamburg, Harderwijk, Amsterdam, Haarlem, Leiden, London and Oxford where he worked and studied. He became a professor in Botany at Uppsala University in 1741.
+  <a href="https://www.linnean.org/learning/who-was-linnaeus/career-and-legacy">The Linean Society of London </a>
+
+</p>
+
+  <div class="centered">
+<h5> Carl Linnaeus’s Systema Naturae </h5>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kVD6PP61A28?si=iPaVXE-V1rEXIYmB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+<div class="split left">
+  <div class="centered">
+<h5> Linnean Lens: Carl Linnaeus' Species Plantarum and Naming Nature </h5>
+ <iframe width="560" height="315" src="https://www.youtube.com/embed/l3vB6ZjkBMA?si=YjSDVBCv6LVZXVVV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</div>
+
+  <div class="centered">
+<h5> Linnean Lens: Carl Linnaeus' Student Manuscript </h5>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/L6ZMtdOuZNo?si=5LBhvgTMzmeO60Ee" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<div class="split right">
+  <div class="centered">
+
+    </div>
+  </section>
+
+
+
+</main>
+
+
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
