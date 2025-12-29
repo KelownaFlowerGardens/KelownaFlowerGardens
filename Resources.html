@@ -1,202 +1,191 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Resources</title>
-  <style>
-.centered {
-text-align: center; /* Centers text horizontally */
-}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources | Kelowna Flower Gardens</title>
 
-</style>
-  </head>
-  <body>
-  <h1>The Central Okanagan Flower & Garden Society</h1>
-  <p>Kelowna's Garden Club</p> 
-  <style>
+<link rel="stylesheet" href="style2.css">
 
-/* ====== CSS VARIABLES (THEME) ====== */
+<style>
 :root{
---bg: ##F695B5; /* pink */
---card: #0b1220; /* card bg */
---muted: #94a3b8; /* muted text */
---accent: ##F68686; /* coral accent */
---accent-2: ##FDD7D7; /* cream accent */
---glass: rgba(255,255,255,0.04);
---radius: 14px;
---max-width: 1100px;
---gap: 1.25rem;
---shadow: 0 6px 20px rgba(2,6,23,0.6);
---fw-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --pink:#F68686;
+  --cream:#FDD7D7;
+  --muted:#6b7280;
+  --max:1100px;
+  --radius:14px;
+  --font:system-ui,-apple-system,Segoe UI,Roboto,Arial;
 }
+
 *{box-sizing:border-box}
-html,body{height:100%}
 body{
-margin:0;
-font-family:var(--fw-sans);
-background:linear-gradient(180deg,var(--bg) 0%, #071029 100%);
-color:##E8EFF8;
-line-height:1.45;
-padding:2rem 1rem;
+  margin:0;
+  font-family:var(--font);
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
 }
 
-
-.wrap{
-max-width:var(--max-width);
-margin:0 auto;
-display:flex;
-flex-direction:column;
-gap:var(--gap);
+.wrapper{
+  max-width:var(--max);
+  margin:auto;
+  padding:1.5rem;
 }
-
 
 header{
-position:relative;
-width:100vw;
-left:50%;
-right:50%;
-margin-left:-50vw;
-margin-right:-50vw;
-overflow:hidden;
-height:50vh; /* cropped to about 1/2 screen height */
+  text-align:center;
 }
 
-header img.hero-header {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-  background-image: file:///C:/Users/geosi/OneDrive/Documents/Code/Flowers/Images/0011_26.jpg('0011_26.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-}
-@media (max-width: 768px) {
-  .hero-header {
-    height: 250px;
-    padding: 50px 15px;
-  }
-
-  .hero-header h1 {
-    font-size: 24px;
-  }
-
-  .hero-header p {
-    font-size: 16px;
-  }
+header img{
+  width:100%;
+  max-height:420px;
+  object-fit:cover;
+  border-radius:var(--radius);
 }
 
-.header-text{
-text-align:center;
-color:black;
+h1,h2,h3{
+  color:var(--pink);
 }
 
-
-.header-text h1{
-font-size:clamp(1.8rem,4vw,3rem);
-margin:0;
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1.5rem 0;
 }
 
-
-.header-text p{
-font-size:1.1rem;
-color:var(--muted);
-}
-
-
-nav{display:flex;gap:1rem;align-items:center;justify-content:center;margin-top:1rem;}
 nav a{
-color:var(--muted);
-text-decoration:none;
-padding:.35rem .6rem;
-border-radius:8px;
-font-weight:600;
-font-size:.95rem;
+  text-decoration:none;
+  color:var(--pink);
+  padding:.5rem .9rem;
+  border-radius:20px;
+  font-weight:600;
 }
-nav a:hover{color:var(--accent);background:rgba(124,58,237,0.06)}
 
-
-main{margin-top:2rem;}
-
-
-footer{padding:1rem 0;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
-.centered {
-text-align: center; /* Centers text horizontally */
+nav a:hover{
+  background:var(--cream);
 }
-</style>
+
+section{
+  margin:2.5rem 0;
+}
+
+iframe{
+  max-width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  border-radius:var(--radius);
+}
+
+.sidebar{
+  background:var(--cream);
+  padding:1rem;
+  border-radius:var(--radius);
+}
+
+.sidebar a{
+  display:block;
+  text-decoration:none;
+  color:#333;
+  padding:.35rem 0;
+}
+
+.scroll-container{
+  background:var(--cream);
+  padding:1rem;
+  text-align:center;
+}
+
+.scroll-container img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+}
+
+footer{
+  text-align:center;
+  padding:2rem 1rem;
+  color:var(--muted);
+}
 </style>
 </head>
-<body>
-<div class="wrap">
 
+<body>
+
+<div class="wrapper">
 
 <header>
-<img src="file:///C:/Users/geosi/OneDrive/Documents/Code/Flowers/Images/01126.jpg" alt="Flowers of the Okanagan" class="header-image" 
-<div class="header-text">
-<h1>Gardens of Kelowna</h1>
-<p>Beautiful Gardens</p>
-</div>
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
 </header>
 
-
 <nav>
-<a href="Home.html">Home</a>
-<a href="Gardens of Kelowna.html">Gardens of Kelowna</a>
-<a href="About.html">About</a>
-<a href="Regional Species.html">Regional Species</a>
-<a href="Awards.html">Awards</a>
-<a href="Resources.html">Resources</a>
-<a href="Roses.html">Roses</a>
-<a href="Valley Art.html">Valley Art</a>
-<a href="Bridal Bouquets.html">Bridal Bouquets</a>
-<a href="Calendar.html">Calendar</a>
-<a href="Members.html">Members</a>
-<a href="Contact.html">Contact</a>
+  <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
+    <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
+    <a href="Members.html">Members</a>
+    <a href="Contact.html">Contact</a>
 </nav>
 
-
-<main>
 <section>
-          <h2 id="features">Resources</h2>
-         <p>There are many local and global information sources. Here are some website's of regional organizations. 
-          <a href="https://www.westcoastseeds.com/"> West Coast Seeds </a> for examaple has an excellent guide to regional plants in British Columbia with zones, an annual calendar with recomendations on what to plant, when and where. The most outstanding nursery is <a href="https://www.bylandsgardencentre.com/"> Bylands Garden Centre, </a> in West Kelowna. It's my year-round go to, especially in the Spring when its planting season.  I was inspired when visiting Vancouver Island at the <a href="https://hcp.ca/visit/gardens/"> Horticulture Centre of the Pacific </a> and loved the walkabout sections of gardens.  The Rose, Italian, Japanese, and Sunken Gardens are spectacular at the <a href="https://butchartgardens.com/"> Butchart Gardens </a> in Saanich as well. In Kelowna, the <a href="https://www.kelowna.ca/parks-recreation/parks-beaches/parks-beaches-listing/kasugai-gardens"> Kasugai Japanese Gardens </a> are an outdoor oasis in the downtown area. A historic spot with lovely blooms is the <a href="https://www.tripadvisor.ca/Attraction_Review-g154933-d10400175-Reviews-Guisachan_Heritage_Park-Kelowna_Okanagan_Valley_British_Columbia.html"> Guishigan Heritage Park </a> For some vegetable gardening tips, you can get involved with the <a href="https://www.centralokanagancommunitygardens.com"> Central Okanagan Community Gardens </a> where there are many neighborhoods that provide greenspace for growing legumes, herbs and root vegetables in the area. 
+  <h2>References</h2>
 
-         </p>
+  <h3>Kew Royal Botanical Gardens</h3>
+  <p>
+    Inspired by <a href="https://www.kew.org/kew-gardens" target="_blank">Kew Gardens</a>,
+    founded in 1759 and now one of the world’s leading botanical research institutions.
+  </p>
 
-<h2></h2>
-  <p> Much of this organization is inspired by the <a href="https://www.kew.org/kew-gardens">The Kew Royal Botanical Gardens</a> 
- <iframe title="vimeo-player" src="https://player.vimeo.com/video/175547075?h=a208b6eb87" alt="Centered Image" style="display: block; margin: auto;" width="640" height="360" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"   allowfullscreen></iframe>
-
-
-Other helpful links:  <a href="https://obwb.ca/"> Okanagan Water Basin </a>, <a href="https://www.niagaraparks.com/visit/nature-garden/botanical-gardens-2/">Botanical Gardens Niagara </a>, <a href="https://inaturalist.ca/places/okanagan-valley-3f9403d8-d20d-4ff4-8b56-6f82a3953c05#taxon=47126">iNaturalist </a> <a href="https://gardensheritageandplanning.com/2024/10/18/planning-the-ideal-garden/
-">Planning the ideal Garden </a>
-</p>
-
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
-<body>
- 
-
+  <iframe
+    src="https://player.vimeo.com/video/175547075"
+    allowfullscreen>
+  </iframe>
 </section>
-</main>
 
+<section>
+  <h3>Recommended Reading</h3>
+  <p>
+    Design With Nature — Ian McHarg<br>
+    The Landscape Imagination — James Corner<br>
+    Genius of Place — Olmsted Biography<br>
+    Gardens of the Ancient World
+  </p>
+
+  <h3>Online Learning</h3>
+  <p>
+    Harvard GSD (edX)<br>
+    MIT OpenCourseWare<br>
+    Delft University<br>
+    ArchitectureCourses.org
+  </p>
+</section>
+
+<section class="sidebar">
+  <h3>Web Resources</h3>
+  <a href="https://www.westcoastseeds.com/">West Coast Seeds</a>
+  <a href="https://www.bylandsgardencentre.com/">Bylands Garden Centre</a>
+  <a href="https://www.centralokanagancommunitygardens.com/">Central Okanagan Community Gardens</a>
+  <a href="https://www.kew.org/kew-gardens">Kew Gardens</a>
+  <a href="https://inaturalist.ca/">iNaturalist</a>
+  <a href="https://hcp.ca/visit/gardens/">Horticulture Centre of the Pacific</a>
+  <a href="https://butchartgardens.com/">Butchart Gardens</a>
+</section>
+
+<section class="scroll-container">
+  <img src="IMG_2962.jpeg" alt="Garden Image">
+</section>
 
 <footer>
-  <img src="file:///C:/Users/geosi/OneDrive/Documents/Code/Flowers/Images/01126.jpg" alt="Flowers of the Okanagan" class="footer-image" 
-<div class="header-text">
-</div>
-<div class="muted"></div>
-<div class="muted"></div>
+  <p>© Kelowna Flower Gardens</p>
 </footer>
-
 
 </div>
 
