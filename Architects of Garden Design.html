@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+</style>
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
+    <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
+    <a href="Members.html">Members</a>
+    <a href="Contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <main class="content">
+<main class="page-content">
+
+  <section class="content-section centered">
+    <h2 id="features">Architects of Garden Design</h2>
+         <p><h3>Capability Brown</h3>
+          Capability Brown was a Royal gardener who designed for Princess Augusta, the sister of King George III. He was acknowledged in Germany for introducing the "clump, the belt drive and the serpentine bodies of water", recreating the classical landscapes of Capri and Sicily.
+          <img src="CB.jpg" alt=centered width="650" height="550"</p>
+          <a href="C:\Users\geosi\OneDrive\Documents\Code\Flowers\Documents\CapabilityBrown"><p>The English Garden in Germany</p></a>
+   
+     <p><h3>William Chambers</h3> Born February 23, 1723 in Gothenburg, Sweden. He was a architect in the Georgian period and a leading Palladian style architect. He studied in England and became British, to eventually aid the Prince of Wales, and George the III as an architect tutor. Best known works are; Somerset House, the Great Pagoda and the Kew Gardens, in Surrey (now in London).
+          </p>
+
+     <p><h3>Andrew Jackson Downing</h3>Known as the first great Landscape designer and gardener of the United States. He designed a number of houses in the Hudson River Valley in New York and Long Island. </p>
+
+    <p><h3> Dominique Girard</h3> A French landscape designer during the early 18th century (1680 – 1738), with his most notable work being the Belvedere Palace's gardens in Vienna, Austria. 
+    </p>
+ <p><h3>André Le Nôtre</h3> The renowned landscape designer of the Palace of Verailles, and may other notable worked. He worked along side Dominique Girard and represents the height of formal garden style during his life (1613-1700) in France.
+    </p>
+
+         <p><h3>Frederick Law Olmsted</h3>   Born April 26, 1822 in Hartford Connecticut. He was architect of Central Park in New York City, along with many other accomplishements in the United States. </p>
+
+<p><h3>Humphry Repton </h3>Often regarded as the successor to Capability Brown, Humphrey Repton (1752-1818), who worked on an extensive portfolio of English Landscape gardens including upgrades to Kensington Palace. </p>
+        
+        
+         <p><h3>Calvert Vaux</h3> The architect of many New York City public parks, including a planner of Central Park along Frederick Law Olmsted. 
+         </p>
+</p>
+
+</main>
+
+</body>
+</html>
+
+<aside class="sidebar" id="sidebar">
+            <a href="Index.html">Index</a>
+            <a href="Architects of Garden Design.html">Architects of Garden Design</a>
+</aside>
+</div>
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+
+</body>
+</html>
+
+    
