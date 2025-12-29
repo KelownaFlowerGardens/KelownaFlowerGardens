@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+</style>
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
+    <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
+    <a href="Members.html">Members</a>
+    <a href="Contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <main class="content">
+<main class="page-content">
+
+  <section class="content-section centered">
+   <p> <h2>The Language of Roses</h2></p>
+<p>This glossary is intended to acquaint the beginning gardener who wants to learn more about roses through the terminology involved</p>
+
+<p>Bareroot. Roses dug from commercial growing fields in late winter and early spring (wrapped to preserve moisture), and shipped to retail nurseries or directly to mail-order customers.</p>
+
+<p>Basal break. New cane or stem arising from the budhead tissue or bud at the base of an old cane.</p>
+
+<p>Basal growth. Expanded ring of tissue at the base of a cane where it connects with the budhead or another cane.</p>
+
+<p>Break. Any new growth from the buds.</p>
+
+<p>Bud. Has several meanings to the rosarian. Refers to the unopened flower. Or the eyes on the cane at the nodes, base of the cane, or the budhead. The origin of all new replacement growth.</p>
+
+<p>Budding. Process of propagating a new rose plant by taking a growth eye and grafting it to understock.</p>
+
+<p>Budhead. Enlarged expanded growth from a single bud just above the crown where a hybrid or a different variety of rose was grafted.</p>
+
+<p>Bud union. A suture line where the hybrid budhead joins the rootstock.</p>
+
+<p>Canes. Main stems of the rose plant. They bear the leaves, flowers, and fruits (hips).</p>
+
+<p>Candelabra. A strong, dominant cane with accelerated growth originating from the bud union, exploding into a candelabra of blooms.</p>
+
+<p>Clippers. Short hand tool that cuts from both sides with either curved or straight blades.</p>
+
+<p>Corky layer. Tissue which extends beyond the skin of a cane forming a thick, spongy layer over the outside of the stem.</p>
+
+<p>Crown. The point where roots and stems join. Or an expanded and enlarged area which is more stem in character than root.</p>
+
+<p>Cultivar. A term designating a plant that has been horticulturally derived in cultivation (by mutation, or hybridizing, or a breeding program). Distinguished from a natural variety that occurs in the wild or is grown in the garden.</p>
+
+<p>Disbudding. Thinning out flower buds to develop better quality in the remaining blooms.</p>
+
+<p>Dog-leg. A cane which grows outward, then upward in a deformed position.</p>
+
+<p>Dormant. The period when a plant rests and its growth processes greatly slow down. Begins as days grow shorter and temperatures begin to drop. Period ends when the plant is exposed to higher temperatures for an extended number of hours.</p>
+
+<p>Forked terminal. The end of a pruned cane having two smaller canes at its top, extending in opposite directions from one or more joints.</p>
+
+<p>Genus. A plant classification, ranking between a family and a species. Designated by Latin or Latinized and capitalized singular noun. Example: Rosa.</p>
+
+<p>Hat-rack. Dead end or stub of a cane that has been cut between buds or above stem joints.</p>
+
+<p>Hip. The fruit of the rose; a seed pod formed from pollinated flowers after the petals fade.</p>
+
+<p>Hybrid. Offspring of two plants of different species or varieties.</p>
+
+<p>Hybrid budhead. Growth where a hybrid variety has been budded to rootstock of a lesser variety, seedling, or species plant.</p>
+
+<p>Internode. Stem space between two nodes or buds. The tissue is not regenerative in this area.</p>
+
+<p>Joint. Thickened areas on canes at which buds appear and from which all replacement growth arises.</p>
+
+<p>Jointed terminal. End of a pruned cane having a smaller cane attached to it by a joint and continuing away on an angle.</p>
+
+<p>Leaf scar. A line extending around the cane and thickened just under the bud at the node of a stem.</p>
+
+<p>Lopper. Pruning shears with extended handles at least 20 inches long.</p>
+
+<p>Mulch. Any material placed on the soil to conserve soil moisture, maintain a more even temperature, and aid in weed control.</p>
+
+<p>Mutation. A change in plant gene that produces a new variety differing from the parent. Usually called a “sport.”</p>
+
+<p>Node. A joint or point where a branch, bud, or leaf meets the stem from which it develops.</p>
+
+<p>Old roses. Many species of roses and hybrids developed prior to the introduction of hybrid teas and floribundas. Quite a few are still available from specialized rose growers.</p>
+
+<p>Patented. Referring to rose varieties protected by U.S. government patent granting exclusive right for 16 years to the patent holder.</p>
+
+<p>Pesticide. A substance (most often a chemical) used to control insects and rodents.</p>
+
+<p>Plethora. Superabundance of small, undersized, low-quality buds found crowded on twigs at the top of a rose cane where careless bloom cutting has been practiced.</p>
+
+<p>Prickle. The thorn on a rose cane.</p>
+
+<p>Pruning. Cutting back or cutting off part of a rose cane for better shape and more fruitful growth.</p>
+
+<p>Replacement. A cane that grows from a bud, replacing or filling the area of old or dead canes that have been removed.</p>
+
+<p>Root connections. Root attachments to the crown or to larger roots.</p>
+
+<p>Roots. Underground part of the plant that extends from the crown.</p>
+
+<p>Rootstock. Seedling or species plant which was rooted from a cutting and on which the hybrid is budded.</p>
+
+<p>Shears. Short hand tool with one cutting blade and a hook to prevent slippage.</p>
+
+<p>Sinkage. The tendency of the rose plant to sink below the surface of the soil so that the crown, rootstock, and budhead are all below the soil’s surface.</p>
+
+<p>Species. Group of plants closely resembling each other and which interbreed freely. Designated by Latin or Latinized uncapitalized noun or adjective that follows the genus name. Rosa chinensis (species).</p>
+
+<p>Sport. See Mutation.</p>
+
+<p>Standard. Any variety of rose plant grafted to a tall main stem. Also called tree rose.</p>
+
+<p>Striations. Streaks or lines of corky tissue on old or mature canes, indicating that the blooming capacity is ended or near its end.</p>
+
+<p>Stub. Remains of a cane which has been removed, leaving basal attachment to the mother cane and a short part of the original cane.</p>
+
+<p>Sucker. Shoot or stem which arises from below the budhead, from the rootstock.</p>
+
+<p>Systemic. A pesticide that is absorbed into the system of a plant causing the plant juice to become toxic to its enemies. Often combined with plant food.</p>
+
+<p>Transverse cut. A crosswise cut made horizontal, or at right angles, to the direction of growth of a cane.</p>
+
+<p>Twig. A small stem, often many-jointed, which grows laterally to a main cane of the rosebush.</p>
+
+<p>Understock. The rose that supplies the rootstock onto which the hybrid is grafted.</p>
+
+<p>Variety. A subgroup of plants in a species (the lowest or final classification) with similar characteristics. Each variety within a species keeps.</p>
+<p>All About Roses, James K. McNair, Ortho Books, Tiffany and Company, August 1980</p> 
+</p>
+
+</main>
+
+</body>
+</html>
+
+<aside class="sidebar" id="sidebar">
+            <a href="Index.html">Index</a>
+            <a href="Architects of Garden Design.html">Architects of Garden Design</a>
+</aside>
+</div>
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+
+</body>
+</html>
+
+    
