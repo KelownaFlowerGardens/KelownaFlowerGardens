@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Member Dashboard</title>
+<?php if (!is_user_logged_in()) wp_redirect('/MembersLogin.html'); exit; ?>
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#FDD7D7;
+}
+.dashboard{
+  max-width:900px;
+  margin:auto;
+  padding:2rem;
+}
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:1.5rem;
+  margin-bottom:1rem;
+}
+h1{color:#F68686}
+a.button{
+  display:inline-block;
+  padding:.6rem 1.2rem;
+  border-radius:25px;
+  background:#F68686;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+<div class="dashboard">
+  <h1>Welcome, Member 🌸</h1>
+
+  <div class="card">
+    <h3>Member Benefits</h3>
+    <ul>
+      <li>Garden Tours</li>
+      <li>Rose Awards Voting</li>
+      <li>Member-Only Resources</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <a class="button" href="/Roses.html">View Rose Database</a>
+    <a class="button" href="/Calendar.html">Events Calendar</a>
+  </div>
+
+  <div class="card">
+    <a class="button" href="/wp-login.php?action=logout">Log Out</a>
+  </div>
+</div>
+</body>
+</html>
