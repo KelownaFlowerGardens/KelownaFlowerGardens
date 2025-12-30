@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css" />
 
-<title>Garden Design | Kelowna Flower Gardens</title>
+<title>Kelowna Flower Gardens</title>
 
 <style>
 :root{
   --pink:#F68686;
   --light:#FDD7D7;
   --muted:#666;
+  --max:1100px;
   --radius:14px;
-  --max:1200px;
 }
 
 *{box-sizing:border-box}
@@ -25,30 +25,35 @@ body{
   color:#333;
 }
 
+.wrap{
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+}
+
 /* ---------- HEADER ---------- */
 header{
   text-align:center;
-  padding:1rem;
 }
 
 header img{
   width:100%;
-  max-height:360px;
+  max-height:380px;
   object-fit:cover;
   border-radius:var(--radius);
 }
 
-header h1{
+.header-text h1{
+  margin:1rem 0 0;
   color:var(--pink);
-  margin:1rem 0 .25rem;
 }
 
-header p{
+.header-text p{
+  margin:.5rem 0;
   color:var(--muted);
-  margin:0;
 }
 
-/* ---------- TOP NAV ---------- */
+/* ---------- NAV ---------- */
 nav{
   display:flex;
   flex-wrap:wrap;
@@ -60,9 +65,9 @@ nav{
 nav a{
   text-decoration:none;
   padding:.5rem .9rem;
+  border-radius:20px;
   background:#fff;
   color:var(--pink);
-  border-radius:20px;
   font-weight:600;
   font-size:.95rem;
 }
@@ -72,28 +77,55 @@ nav a:hover{
   color:#fff;
 }
 
-/* ---------- LAYOUT ---------- */
-.wrapper{
-  display:flex;
-  max-width:var(--max);
-  margin:auto;
-  padding:1rem;
-  gap:1.5rem;
-}
-
-/* ---------- CONTENT ---------- */
-.content{
-  flex:1;
-}
-
-.content img{
+/* ---------- MAIN ---------- */
+main img{
   max-width:100%;
   height:auto;
-  border-radius:var(--radius);
-  margin:1rem 0;
+  display:block;
+  margin:auto;
 }
 
-/* ---------- SIDEBAR ---------- */
+.centered{text-align:center}
+
+.member-button{
+  display:inline-block;
+  margin:1.5rem 0;
+  padding:14px 26px;
+  background:var(--pink);
+  color:#fff;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+}
+
+.member-button:hover{
+  background:#f46d6d;
+}
+
+/* ---------- SCROLL GALLERY ---------- */
+.scroll-container{
+  background:var(--light);
+  overflow-x:auto;
+  white-space:nowrap;
+  padding:1rem;
+}
+
+.scroll-container img{
+  max-width:90%;
+  margin:.5rem;
+  border-radius:12px;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  margin-top:3rem;
+  text-align:center;
+  padding:1rem 0;
+  color:var(--muted);
+}
+
+
+    /* ---------- SIDEBAR ---------- */
 .sidebar{
   width:260px;
   background:#fff;
@@ -145,8 +177,7 @@ nav a:hover{
   color:#fff;
   border-radius:6px;
 }
-
-/* ---------- MOBILE ---------- */
+    /* ---------- MOBILE ---------- */
 @media(max-width:900px){
   .wrapper{
     flex-direction:column;
@@ -169,7 +200,6 @@ nav a:hover{
     display:block;
   }
 }
-    
     <div class="nav-auth avatar-wrap">
   <button class="avatar-btn">
     <img src="avatar-default.png" alt="Member Avatar">
@@ -262,10 +292,8 @@ document.addEventListener("click", function(e){
   }
 });
 </script>
-</style>
-</head>
 
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <body>
 
@@ -312,11 +340,17 @@ We aim to bring the community together in sharing their passion and expertise in
 </div>
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable Image</title>
+</head>
+<body>
 
         <img src="0030_5.jpg" alt="Centered Image" style="width:840px; height:auto;">
 
 <p><h5></h5>To see a World in a grain of Sand,
-and Heaven in a Wild Flower, hold infinity in the palm of your hand, And Eternity in an hour.  - William Blake (1757-1827)<h5></h5></p>
+and Heaven in a Wild Flower, hold infinity in the palm of your hand, And Eternity in an hour.  - William Blake (1757-1827)><h5></h5></p>
 
 
 <blockquote class="instagram-media" 
@@ -349,7 +383,12 @@ Montreal, Connaught Park Rose Garden and Memorial Park Rose Garden</p>
   <img src="Rose-The-Fairy.jpg" alt="Rose">
 </div>
      </main>   
-
+        
+  <aside class="sidebar" id="sidebar">
+     <a href="Gardens of Kelowna.html">Gardens of Kelowna</a>
+     <a href="Climate.html">Climate</a>
+     <a href="Roots.html">Roots</a>
+  </aside>
     </div>
 
 <footer>
@@ -359,8 +398,6 @@ Montreal, Connaught Park Rose Garden and Memorial Park Rose Garden</p>
 </div>
 
 <script async src="https://www.instagram.com/embed.js"></script>
-
-
         
 <script>
 function toggleMenu(){
@@ -377,4 +414,18 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
