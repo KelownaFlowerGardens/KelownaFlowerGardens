@@ -95,88 +95,10 @@ nav a:hover{
   margin:1rem 0;
 }
 
-/* ---------- SIDEBAR ---------- */
-.sidebar{
-  width:260px;
-  background:#fff;
-  border-radius:var(--radius);
-  padding:1rem;
-}
-
-.sidebar h5{
-  margin:.75rem 0;
-  color:var(--pink);
-}
-
-.sidebar a,
-.dropdown-btn{
-  display:block;
-  width:100%;
-  padding:.6rem;
-  margin:.2rem 0;
-  background:#fff;
-  color:var(--pink);
-  border:none;
-  text-align:left;
-  font-size:.95rem;
-  cursor:pointer;
-}
-
-.sidebar a:hover,
-.dropdown-btn:hover{
-  background:var(--pink);
-  color:#fff;
-}
-
-.dropdown-container{
-  display:none;
-  padding-left:1rem;
-}
-
-/* ---------- MOBILE MENU ---------- */
-.menu-btn{
-  display:none;
-  position:fixed;
-  top:10px;
-  right:10px;
-  z-index:2000;
-  font-size:24px;
-  padding:.4rem .7rem;
-  border:none;
-  background:var(--pink);
-  color:#fff;
-  border-radius:6px;
-}
-
-/* ---------- MOBILE ---------- */
-@media(max-width:900px){
-  .wrapper{
-    flex-direction:column;
-  }
-
-  .sidebar{
-    position:fixed;
-    top:0;
-    right:-280px;
-    height:100vh;
-    z-index:1500;
-    transition:.3s;
-  }
-
-  .sidebar.active{
-    right:0;
-  }
-
-  .menu-btn{
-    display:block;
-  }
-}
-</style>
-</head>
 
 <body>
 
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
 
 <header>
   <img src="01126.jpg" alt="Flowers of the Okanagan">
@@ -1563,18 +1485,4 @@ button {
   © Kelowna Flower Gardens
 </footer>
 
-<script>
-function toggleMenu(){
-  document.getElementById("sidebar").classList.toggle("active");
-}
 
-document.querySelectorAll(".dropdown-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const box = btn.nextElementSibling;
-    box.style.display = box.style.display === "block" ? "none" : "block";
-  });
-});
-</script>
-
-</body>
-</html>
