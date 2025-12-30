@@ -169,8 +169,110 @@ nav a:hover{
     display:block;
   }
 }
+    <!-- LOGGED IN AVATAR -->
+<div class="member-avatar">
+  <button class="avatar-btn" onclick="toggleMemberMenu()">
+    <img src="member-avatar.jpg" alt="Member Avatar">
+  </button>
+
+  <div class="member-dropdown" id="memberMenu">
+    <div class="member-name">Welcome, Member</div>
+
+    <a href="MembersDashboard.html">🌸 Dashboard</a>
+    <a href="Profile.html">👤 Profile</a>
+    <a href="Calendar.html">📅 Calendar</a>
+    <a href="Logout.html" class="logout">🚪 Log Out</a>
+  </div>
+</div>
+/* ---------- MEMBER AVATAR ---------- */
+.member-avatar{
+  position:relative;
+  margin-left:auto;
+}
+
+.avatar-btn{
+  border:none;
+  background:none;
+  cursor:pointer;
+  padding:0;
+}
+
+.avatar-btn img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #F68686;
+}
+
+/* Dropdown Menu */
+.member-dropdown{
+  display:none;
+  position:absolute;
+  right:0;
+  top:120%;
+  background:#fff;
+  width:220px;
+  border-radius:14px;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+  overflow:hidden;
+  z-index:2000;
+}
+
+.member-name{
+  padding:.75rem 1rem;
+  font-weight:600;
+  color:#F68686;
+  border-bottom:1px solid #eee;
+  text-align:center;
+}
+
+.member-dropdown a{
+  display:block;
+  padding:.7rem 1rem;
+  text-decoration:none;
+  color:#444;
+  font-size:.9rem;
+}
+
+.member-dropdown a:hover{
+  background:#F68686;
+  color:white;
+}
+
+.member-dropdown .logout{
+  color:#c0392b;
+}
+
+.member-dropdown .logout:hover{
+  background:#c0392b;
+  color:white;
+}
+
+/* Mobile Friendly */
+@media (max-width:768px){
+  .member-avatar{
+    margin:0 auto;
+  }
+}
+
 </style>
 </head>
+
+    <script>
+function toggleMemberMenu(){
+  const menu = document.getElementById("memberMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+/* Close menu when clicking elsewhere */
+document.addEventListener("click", function(e){
+  const avatar = document.querySelector(".member-avatar");
+  if (avatar && !avatar.contains(e.target)) {
+    document.getElementById("memberMenu").style.display = "none";
+  }
+});
+</script>
 
 <body>
 
@@ -196,6 +298,9 @@ nav a:hover{
     <a href="Contact.html">Contact</a>
   </nav>
 </header>
+    <div class="login-avatar">...</div>  <!-- logged out -->
+<div class="member-avatar">...</div> <!-- logged in -->
+
 
 <div class="wrapper">
 
