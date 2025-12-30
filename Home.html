@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css" />
 
-<title>Kelowna Flower Gardens</title>
+<title>Garden Design | Kelowna Flower Gardens</title>
 
 <style>
 :root{
   --pink:#F68686;
   --light:#FDD7D7;
   --muted:#666;
-  --max:1100px;
   --radius:14px;
+  --max:1200px;
 }
 
 *{box-sizing:border-box}
@@ -25,35 +25,30 @@ body{
   color:#333;
 }
 
-.wrap{
-  max-width:var(--max);
-  margin:auto;
-  padding:1rem;
-}
-
 /* ---------- HEADER ---------- */
 header{
   text-align:center;
+  padding:1rem;
 }
 
 header img{
   width:100%;
-  max-height:380px;
+  max-height:360px;
   object-fit:cover;
   border-radius:var(--radius);
 }
 
-.header-text h1{
-  margin:1rem 0 0;
+header h1{
   color:var(--pink);
+  margin:1rem 0 .25rem;
 }
 
-.header-text p{
-  margin:.5rem 0;
+header p{
   color:var(--muted);
+  margin:0;
 }
 
-/* ---------- NAV ---------- */
+/* ---------- TOP NAV ---------- */
 nav{
   display:flex;
   flex-wrap:wrap;
@@ -65,9 +60,9 @@ nav{
 nav a{
   text-decoration:none;
   padding:.5rem .9rem;
-  border-radius:20px;
   background:#fff;
   color:var(--pink);
+  border-radius:20px;
   font-weight:600;
   font-size:.95rem;
 }
@@ -77,60 +72,28 @@ nav a:hover{
   color:#fff;
 }
 
-/* ---------- MAIN ---------- */
-main img{
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
   max-width:100%;
   height:auto;
-  display:block;
-  margin:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
 }
 
-.centered{text-align:center}
-
-.member-button{
-  display:inline-block;
-  margin:1.5rem 0;
-  padding:14px 26px;
-  background:var(--pink);
-  color:#fff;
-  text-decoration:none;
-  border-radius:30px;
-  font-weight:600;
-}
-
-.member-button:hover{
-  background:#f46d6d;
-}
-
-/* ---------- SCROLL GALLERY ---------- */
-.scroll-container{
-  background:var(--light);
-  overflow-x:auto;
-  white-space:nowrap;
-  padding:1rem;
-}
-
-.scroll-container img{
-  max-width:90%;
-  margin:.5rem;
-  border-radius:12px;
-}
-
-/* ---------- FOOTER ---------- */
-footer{
-  margin-top:3rem;
-  text-align:center;
-  padding:1rem 0;
-  color:var(--muted);
-}
-
-/* ---------- MOBILE ---------- */
-@media(max-width:768px){
-  header img{max-height:240px}
-  nav a{font-size:.85rem;padding:.45rem .7rem}
-}
-
-    /* ---------- SIDEBAR ---------- */
+/* ---------- SIDEBAR ---------- */
 .sidebar{
   width:260px;
   background:#fff;
@@ -182,7 +145,8 @@ footer{
   color:#fff;
   border-radius:6px;
 }
-    /* ---------- MOBILE ---------- */
+
+/* ---------- MOBILE ---------- */
 @media(max-width:900px){
   .wrapper{
     flex-direction:column;
@@ -205,20 +169,12 @@ footer{
     display:block;
   }
 }
-    <div class="nav-auth avatar-wrap">
-  <button class="avatar-btn">
-    <img src="avatar-default.png" alt="Member Avatar">
-  </button>
-
-  <div class="avatar-menu">
-    <a href="MembersDashboard.html">Dashboard</a>
-    <a href="Profile.html">My Profile</a>
-    <a href="LoggedOut.html">Log Out</a>
-  </div>
-</div>
-
 </style>
 </head>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <body>
 
