@@ -212,6 +212,68 @@ footer{
   </div>
 </div>
 
+    /* ---------- AVATAR LOGIN ---------- */
+.avatar-wrap{
+  position:relative;
+  margin-left:auto;
+}
+
+.avatar-btn{
+  border:none;
+  background:none;
+  cursor:pointer;
+  padding:0;
+}
+
+.avatar-btn img{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #F68686;
+}
+
+/* Dropdown */
+.avatar-menu{
+  display:none;
+  position:absolute;
+  right:0;
+  top:120%;
+  background:white;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,.18);
+  overflow:hidden;
+  min-width:180px;
+  z-index:999;
+}
+
+.avatar-menu a{
+  display:block;
+  padding:.75rem 1rem;
+  text-decoration:none;
+  color:#F68686;
+  font-weight:500;
+}
+
+.avatar-menu a:hover{
+  background:#FDD7D7;
+}
+
+/* Show on hover (desktop) */
+.avatar-wrap:hover .avatar-menu{
+  display:block;
+}
+
+/* Mobile-safe */
+@media (max-width:768px){
+  .avatar-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin-top:.5rem;
+  }
+}
+
 </style>
 </head>
 
@@ -334,6 +396,7 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
 
 </body>
 </html>
+
 
 
 
