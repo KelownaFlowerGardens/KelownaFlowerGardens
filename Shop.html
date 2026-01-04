@@ -631,10 +631,7 @@ header {
         alert('Payment could not be completed. See console for details.');
       }
     }).render('#paypal-button-container');
-  </script>
 
-</div>
-<script>
 let cart = [];
 const TAX_RATE = 0.10;
 const SHIPPING = 5.00;
@@ -677,9 +674,6 @@ function renderCart() {
   document.getElementById("tax").textContent = tax.toFixed(2);
   document.getElementById("total").textContent = total.toFixed(2);
 }
-</script>
-
-<script>
 let cart = [];
 const TAX_RATE = 0.10;
 const SHIPPING = 5;
@@ -805,7 +799,7 @@ paypal.Buttons({
     return actions.order.create({
       purchase_units: [{
         amount: {
-          currency_code: "USD",
+          currency_code: "CAD",
           value: total.toFixed(2),
           breakdown: {
             item_total: { value: subtotal.toFixed(2), currency_code: "USD" },
@@ -845,10 +839,8 @@ paypal.Buttons({
 </html>
 
 </html>
-<script src="https://www.paypal.com/sdk/js?client-id=AcRJF55YIk2_hkm2YNZgEsWpOwYE6v5xqGMA4k6f41VPOE3gwTs1317Sv8ESHclOYn0TKfjJGv1_nkTO&currency=USD"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AcRJF55YIk2_hkm2YNZgEsWpOwYE6v5xqGMA4k6f41VPOE3gwTs1317Sv8ESHclOYn0TKfjJGv1_nkTO&currency=CAD"></script>
 <div id="paypal-button-container"></div>
-
-
 
 <script>
 let cart = [];
@@ -930,7 +922,8 @@ paypal.Buttons({
 </section>
 </main>
 
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_REAL_CLIENT_ID&currency=USD"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AcRJF55YIk2_hkm2YNZgEsWpOwYE6v5xqGMA4k6f41VPOE3gwTs1317Sv8ESHclOYn0TKfjJGv1_nkTO
+_ID&currency=CAD"></script>
     
 
 
