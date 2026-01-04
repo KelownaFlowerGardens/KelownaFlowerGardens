@@ -783,6 +783,54 @@ paypal.Buttons({
     });
   }
 }).render('#paypal-button-container');
+
+    <script>
+paypal.Buttons({
+  createOrder: function (data, actions) {
+    const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+    const tax = subtotal * TAX_RATE;
+    const total = subtotal + tax + SHIPPING;
+
+    if (total <= 0) {
+      alert("Your cart is empty");
+      return;
+    }
+
+    return actions.order.create({
+      purchase_units: [{
+        amount: {
+          currency_code: "USD",
+          value: total.toFixed(2),
+          breakdown: {
+            item_total: { value: subtotal.toFixed(2), currency_code: "USD" },
+            tax_total: { value: tax.toFixed(2), currency_code: "USD" },
+            shipping: { value: SHIPPING.toFixed(2), currency_code: "USD" }
+          }
+        },
+        items: cart.map(item => ({
+          name: item.name,
+          unit_amount: { value: item.price.toFixed(2), currency_code: "USD" },
+          quantity: item.qty
+        }))
+      }]
+    });
+  },
+
+  onApprove: function (data, actions) {
+    return actions.order.capture().then(function (details) {
+      alert("Payment completed by " + details.payer.name.given_name);
+      cart = [];
+      renderCart();
+    });
+  },
+
+  onError: function (err) {
+    console.error(err);
+    alert("Payment failed");
+  }
+}).render("#paypal-button-container");
+</script>
+
 </script>
 
 
