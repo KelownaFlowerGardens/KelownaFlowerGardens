@@ -582,26 +582,24 @@ header {
   </div>
 
   <!-- CART -->
-  <div class="cart">
-    <h2>Cart</h2>
-    <div id="cartItems"></div>
+<div class="cart">
+  <h2>Cart</h2>
 
-    <div class="summary">
-      Subtotal: $<span id="subtotal">0.00</span><br>
-      Tax (10%): $<span id="tax">0.00</span><br>
-      Shipping: $<span id="shipping">5.00</span>
-    </div>
+  <div id="cartItems"></div>
 
-    <div class="total">
-      Total: $<span id="total">0.00</span>
-    </div>
-
-    <div id="paypal-button-container"></div>
+  <div class="summary">
+    Subtotal: $<span id="subtotal">0.00</span><br>
+    Tax (10%): $<span id="tax">0.00</span><br>
+    Shipping: $<span id="shipping">5.00</span>
   </div>
 
-    
-  <!-- PayPal Buttons container -->
+  <div class="total">
+    Total: $<span id="total">0.00</span>
+  </div>
+
+  <!-- PAYPAL BUTTON -->
   <div id="paypal-button-container"></div>
+</div>
 
   <!-- PayPal SDK (replace client-id; use 'sandbox' client-id for testing) -->
   <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
