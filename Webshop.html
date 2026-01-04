@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kelowna Flower Gardens | Shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --radius:14px;
+}
+
+body{
+  margin:0;
+  font-family:system-ui,Arial;
+  background:#fafafa;
+}
+
+h1{text-align:center;color:white;margin:0}
+
+header{
+  background:var(--pink);
+  padding:20px;
+}
+
+.container{
+  display:flex;
+  flex-wrap:wrap;
+}
+
+/* SHOP */
+.shop{
+  flex:1;
+  padding:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+}
+
+.product{
+  background:white;
+  padding:15px;
+  border-radius:var(--radius);
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  text-align:center;
+}
+
+.product img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.product button{
+  margin-top:10px;
+  padding:10px 16px;
+  border:none;
+  background:var(--pink);
+  color:white;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+/* CART */
+.cart{
+  width:320px;
+  background:white;
+  border-left:1px solid #ddd;
+  padding:20px;
+  position:sticky;
+  top:0;
+  height:100vh;
+}
+
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.cart-item button{
+  background:none;
+  border:none;
+  color:red;
+  cursor:pointer;
+}
+
+.summary{
+  font-size:14px;
+  margin-top:10px;
+}
+
+.total{
+  font-weight:bold;
+  margin:10px 0;
+}
+
+@media(max-width:900px){
+  .cart{
+    width:100%;
+    height:auto;
+    position:relative;
+    border-left:none;
+    border-top:1px solid #ddd;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Kelowna Flower Gardens Shop</h1>
+</header>
+
+<div class="container">
+
+  <!-- SHOP -->
+  <div class="shop">
+    <div class="product">
+      <img src="https://via.placeholder.com/300">
+      <h3>Apron</h3>
+      <p>$20.00</p>
+      <button onclick="addToCart('Apron',20)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/300">
+      <h3>Garden Gloves</h3>
+      <p>$35.00</p>
+      <button onclick="addToCart('Garden Gloves',35)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/300">
+      <h3>Visor</h3>
+      <p>$15.00</p>
+      <button onclick="addToCart('Visor',15)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- CART -->
+  <div class="cart">
+    <h2>Cart</h2>
+    <div id="cartItems"></div>
+
+    <div class="summary">
+      Subtotal: $<span id="subtotal">0.00</span><br>
+      Tax (10%): $<span id="tax">0.00</span><br>
+      Shipping: $<span id="shipping">5.00</span>
+    </div>
+
+    <div class="total">
+      Total: $<span id="total">0.00</span>
+    </div>
+
+    <div id="paypal-button-container"></div>
+  </div>
+
+</div>
+
+<!-- PAYPAL SDK (LOAD ONCE) -->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+
+<script>
+let cart = [];
+const TAX_RATE = 0.10;
+const SHIPPING = 5.00;
+
+function addToCart(name, price){
+  const item = cart.find(i => i.name === name);
+  if(item){
+    item.qty++;
+  }else{
+    cart.push({name, price, qty:1});
+  }
+  renderCart();
+}
+
+function removeItem(index){
+  cart.splice(index,1);
+  renderCart();
+}
+
+function renderCart(){
+  const cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML = "";
+  let subtotal = 0;
+
+  cart.forEach((item,i)=>{
+    subtotal += item.price * item.qty;
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        ${item.name} × ${item.qty}
+        <button onclick="removeItem(${i})">✕</button>
+      </div>`;
+  });
+
+  const tax = subtotal * TAX_RATE;
+  const total = subtotal + tax + SHIPPING;
+
+  document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+  document.getElementById("tax").textContent = tax.toFixed(2);
+  document.getElementById("total").textContent = total.toFixed(2);
+}
+
+/* PAYPAL BUTTON */
+paypal.Buttons({
+  createOrder:(data,actions)=>{
+    if(cart.length === 0){
+      alert("Your cart is empty");
+      return;
+    }
+
+    const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    const tax = subtotal * TAX_RATE;
+    const total = subtotal + tax + SHIPPING;
+
+    return actions.order.create({
+      purchase_units:[{
+        amount:{
+          currency_code:"USD",
+          value:total.toFixed(2),
+          breakdown:{
+            item_total:{value:subtotal.toFixed(2),currency_code:"USD"},
+            tax_total:{value:tax.toFixed(2),currency_code:"USD"},
+            shipping:{value:SHIPPING.toFixed(2),currency_code:"USD"}
+          }
+        },
+        items:cart.map(i=>({
+          name:i.name,
+          unit_amount:{value:i.price.toFixed(2),currency_code:"USD"},
+          quantity:i.qty
+        }))
+      }]
+    });
+  },
+
+  onApprove:(data,actions)=>{
+    return actions.order.capture().then(details=>{
+      alert("Payment completed by " + details.payer.name.given_name);
+      cart=[];
+      renderCart();
+    });
+  },
+
+  onError:(err)=>{
+    console.error(err);
+    alert("Payment failed");
+  }
+}).render("#paypal-button-container");
+</script>
+
+</body>
+</html>
