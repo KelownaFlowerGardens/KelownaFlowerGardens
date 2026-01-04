@@ -628,6 +628,50 @@ header {
   </script>
 
 </div>
+<script>
+let cart = [];
+const TAX_RATE = 0.10;
+const SHIPPING = 5.00;
+
+function addToCart(name, price) {
+  const item = cart.find(p => p.name === name);
+  if (item) {
+    item.qty++;
+  } else {
+    cart.push({ name, price, qty: 1 });
+  }
+  renderCart();
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  renderCart();
+}
+
+function renderCart() {
+  const cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML = "";
+
+  let subtotal = 0;
+
+  cart.forEach((item, i) => {
+    subtotal += item.price * item.qty;
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        ${item.name} × ${item.qty}
+        <button onclick="removeItem(${i})">✕</button>
+      </div>
+    `;
+  });
+
+  const tax = subtotal * TAX_RATE;
+  const total = subtotal + tax + SHIPPING;
+
+  document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+  document.getElementById("tax").textContent = tax.toFixed(2);
+  document.getElementById("total").textContent = total.toFixed(2);
+}
+</script>
 
 <script>
 let cart = [];
