@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logged Out | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:16px;
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card{
+  background:white;
+  padding:2.5rem 2rem;
+  border-radius:var(--radius);
+  box-shadow:0 12px 30px rgba(0,0,0,.15);
+  text-align:center;
+  max-width:420px;
+  width:90%;
+}
+
+.card h1{
+  color:var(--pink);
+  margin-bottom:.75rem;
+}
+
+.card p{
+  color:var(--muted);
+  margin-bottom:1.5rem;
+}
+
+.actions{
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+}
+
+.actions a{
+  text-decoration:none;
+  padding:.65rem 1rem;
+  border-radius:999px;
+  font-weight:600;
+}
+
+.login{
+  background:var(--pink);
+  color:white;
+}
+
+.login:hover{
+  background:#e36f6f;
+}
+
+.home{
+  border:2px solid var(--pink);
+  color:var(--pink);
+}
+
+.home:hover{
+  background:var(--light);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>You’re Logged Out</h1>
+  <p>Your session has ended. Thanks for visiting Kelowna Flower Gardens.</p>
+
+  <div class="actions">
+    <a class="login" href="MembersLogin.html">Log In Again</a>
+    <a class="home" href="Home.html">Return to Home</a>
+  </div>
+</div>
+
+</body>
+</html>
