@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+</style>
+</head>
+  
+<script>
+if(sessionStorage.getItem("loggedIn") !== "true"){
+  window.location.href = "login.html";
+}
+</script>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="MemberHome.html">Main</a>
+    <a href="MemberGardenDesign.html">Garden Design</a>
+      <a href="MemberAbout.html">About</a>
+    <a href="MemberRegional Species.html">Regional Species</a>
+      <a href="MemberAwards.html">Awards</a>
+    <a href="MemberRoses.html">Roses</a>
+      <a href="MemberValley Art.html">Valley Art</a>
+    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+    <a href="MemberResources.html">Resources</a>
+      <a href="MemberCalendar.html">Calendar</a>
+    <a href="MembersDashboard.html">Members</a>
+    <a href="MemberContact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <main class="content">
+        <div class="centered">
+    <h2>Regional Species</h2></div>
+
+    <p>
+      For those interested in sustainable gardening, planting species native
+      to the Okanagan Valley helps preserve biodiversity and prevents invasive
+      species.
+      Learn more on
+      <a href="https://inaturalist.ca/places/okanagan-valley-3f9403d8-d20d-4ff4-8b56-6f82a3953c05#taxon=47126"
+         target="_blank">iNaturalist</a>.
+    </p>
+  </section>
+
+  <!-- RESPONSIVE TABLE -->
+  <section class="content-section">
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Flower Description</th>
+            <th>Foliage & Growth</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td>Chicory (Cichorium intybus)</td>
+            <td>Light blue, lavender</td>
+            <td>3–5 cm, double petals, slight fragrance</td>
+            <td>Tall, lanceolate leaves</td>
+            <td><img src="chicory.jpg" alt="Chicory"></td>
+          </tr>
+
+          <tr>
+            <td>Sulphur Cinquefoil</td>
+            <td>Pale yellow</td>
+            <td>Five petals</td>
+            <td>Blooms June–August, up to 80 cm</td>
+            <td><img src="Cinquefoil.jpg" alt="Cinquefoil"></td>
+          </tr>
+
+          <tr>
+            <td>Sagebrush Mariposa Lily</td>
+            <td>Pink–Purple</td>
+            <td>Three petals, tapering bulbs</td>
+            <td>Perennial, blooms June–July</td>
+            <td><img src="sagebrushmariposalily.jpg" alt="Mariposa Lily"></td>
+          </tr>
+
+          <tr>
+            <td>Bearded Iris</td>
+            <td>Purple</td>
+            <td>Double petals, yellow center</td>
+            <td>Up to 1 m tall</td>
+            <td><img src="iris.jpg" alt="Bearded Iris"></td>
+          </tr>
+
+          <tr>
+            <td>White Sweet Clover</td>
+            <td>White</td>
+            <td>Small clustered blooms</td>
+            <td>Annual, up to 2.5 m</td>
+            <td><img src="whitesweetclover.jpg" alt="Sweet Clover"></td>
+          </tr>
+
+          <tr>
+            <td>Roughfruit Fairybells</td>
+            <td>White</td>
+            <td>Delicate hanging flowers</td>
+            <td>30–75 cm perennial</td>
+            <td><img src="Fairybells.jpg" alt="Fairybells"></td>
+          </tr>
+
+          <tr>
+            <td>Carpet Vervain</td>
+            <td>Pale purple</td>
+            <td>Small spike flowers</td>
+            <td>Blooms May–October</td>
+            <td><img src="Vervain.jpg" alt="Vervain"></td>
+          </tr>
+
+          <tr>
+            <td>Queen’s Cup</td>
+            <td>White</td>
+            <td>Six petals</td>
+            <td>15–25 cm tall</td>
+            <td><img src="Queenscup.jpg" alt="Queen’s Cup"></td>
+          </tr>
+
+          <tr>
+            <td>Water Smartweed</td>
+            <td>Pink</td>
+            <td>Five-lobed petals</td>
+            <td>Aquatic perennial</td>
+            <td><img src="Smartweed.jpg" alt="Smartweed"></td>
+          </tr>
+
+          <tr>
+            <td>Pale Evening Primrose</td>
+            <td>Yellow to white</td>
+            <td>Four petals</td>
+            <td>BC to Mexico</td>
+            <td><img src="primrose.jpg" alt="Primrose"></td>
+          </tr>
+
+          <tr>
+            <td>Canada Violet</td>
+            <td>White–purple</td>
+            <td>Five petals</td>
+            <td>Widespread perennial</td>
+            <td><img src="viola.jpg" alt="Violet"></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+
+</main>
+
+      <aside class="sidebar" id="sidebar">
+
+     <a href="Gardens of Kelowna.html">Gardens of Kelowna</a>
+     <a href="Climate.html">Climate</a>
+     <a href="Roots.html">Roots</a>
+            <a href="History.html">History</a>
+        
+</aside>
+</div>
+    
+
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
