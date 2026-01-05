@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+  }
+}
+</style>
+</head>
+<script>
+if(sessionStorage.getItem("loggedIn") !== "true"){
+  window.location.href = "login.html";
+}
+</script>
+
+<body>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="MemberHome.html">Main</a>
+    <a href="MemberGardenDesign.html">Garden Design</a>
+      <a href="MemberAbout.html">About</a>
+    <a href="MemberRegional Species.html">Regional Species</a>
+      <a href="MemberAwards.html">Awards</a>
+    <a href="MemberRoses.html">Roses</a>
+      <a href="MemberValley Art.html">Valley Art</a>
+    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+    <a href="MemberResources.html">Resources</a>
+      <a href="MemberCalendar.html">Calendar</a>
+    <a href="MembersDashboard.html">Members</a>
+    <a href="MemberContact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <main class="content">
+<main class="page-content">
+
+  <!-- INTRO -->
+  <section class="content-section centered">
+    <h1>Bridal Bouquets</h1>
+    <p>The history, beauty, and symbolism of wedding florals.</p>
+  </section>
+
+  <!-- ROYAL BOUQUETS -->
+  <section class="art-grid">
+
+    <article class="art-card">
+      <h3>Caroline, Princess of Monaco</h3>
+      <p>Married June 1978, carried tiny white orchids.</p>
+      <img src="Caroline.jpg" alt="Princess Caroline bouquet">
+    </article>
+
+    <article class="art-card">
+      <h3>Grace Kelly, Princess of Monaco</h3>
+      <p>In 1956, Grace Kelly married Prince Ranier Grimaldi of Monaco, carrying Lilies-of-the-Valley. Her matrons carried Tea Roses, and the flower girls White Daisies.</p>
+      <img src="gracekelly.jpg" alt="Grace Kelly wedding bouquet">
+    </article>
+
+    <article class="art-card">
+      <h3>Victoria, Queen of the United Kingdom</h3>
+      <p>Married Prince Albert in 1840 in the Royal Chapel at St. James Palace. She carried a tiny bouquet of Snowdrops, and wore a wreath crown, of white porcelain Orange Blossoms designed specifically for this event.</p>
+      <img src="queen-victoria.jpg" alt="Queen Victoria bouquet">
+    </article>
+
+    <article class="art-card">
+      <h3>Silvia Renate Sommerlath, Queen of Sweden</h3>
+<p>Married to King Carl XVI Gustaf of Sweden, Silvia chose Orchids and Jasmine, with medium-sized cascading Posy, arranged among Stephanotis, Lily of the Valley and Sprigs of Myrtle.</p>
+      <img src="QueenSilvia.jpg" alt="Queen Silvia bouquet">
+    </article>
+
+    <article class="art-card">
+      <h3>Victoria,  Princess of Sweden</h3>
+      <p>Victoria's bouquet consisted of the traditional flowers seen in Royal Weddings with more flowers adding to the cascading effect. Azaleas, Bleeding Heart, Clematis, Cosmos, Dicentra Formosa, Gardenias, Lilies, Lily of the Valley, Marbacka Pelargonium, Orchids, Peonies, Roses, Sweet Peas, Waxflower and Myrtle of the same garden as her mothers bouquet.</p>
+      <img src="VictoriaofSweden.jpg" alt="Princess Victoria bouquet">
+    </article>
+
+    <article class="art-card">
+      <h3>Muriel Vanderbilt</h3>
+      <p>The American Society wedding at Newport, to Frederick Cameron Church Jr. had the veil of Marie Antoinette purchased for the event. She carried a bouquet of Orchids and Gardenias.</p>
+      <img src="muriel-vanderbilt.jpg" alt="Muriel Vanderbilt bouquet">
+    </article>
+
+  </section>
+
+  <!-- LOCAL FLORISTS -->
+  <section class="content-section centered">
+    <h2>Okanagan Wedding Florists</h2>
+    <p>The Okanagan is bursting with blooms and brides! Here are some reputable florists that will bring life to your your wedding venue: .</p>
+  </section>
+
+  <section class="vendor-grid">
+
+    <a class="vendor-card" href="https://www.enterpriseflowerstudio.com/wedding-gallery" target="_blank">
+      <img src="BLUEORCHIDCORS.jpg" alt="Enterprise Flower Studio">
+      <span>Enterprise Flower Studio</span>
+    </a>
+
+    <a class="vendor-card" href="https://www.sweetelegance.ca/okanagan-weddings-and-events-181008-688083-498691-571595-581102-750967-278730.html" target="_blank">
+      <img src="SweetEleganceFlowerStudio.jpg" alt="Sweet Elegance">
+      <span>Sweet Elegance</span>
+    </a>
+
+    <a class="vendor-card" href="https://www.missionparkflowersbc.com/wedding-bouquets" target="_blank">
+      <img src="OkanaganFloral.jpg" alt="Okanagan Floral">
+      <span>Okanagan Floral</span>
+    </a>
+
+    <a class="vendor-card" href="https://www.valleybloomco.ca/weddingfloralservices" target="_blank">
+      <img src="kelownaflorist.jpg" alt="Valley Bloom">
+      <span>Valley Bloom</span>
+    </a>
+
+    <a class="vendor-card" href="https://www.lavenderandlace.ca/our-gallery" target="_blank">
+      <img src="LavendarandLace.jpg" alt="Lavender and Lace">
+      <span>Lavender & Lace</span>
+    </a>
+
+    <a class="vendor-card" href="https://www.missionparkflowersbc.com/wedding-bouquets" target="_blank">
+      <img src="MissionPark.jpg" alt="Mission Park Flowers">
+      <span>Mission Park Flowers</span>
+    </a>
+
+  </section>
+
+  <!-- INSTAGRAM -->
+  <section class="content-section centered">
+  </section>
+    <a href="https://www.instagram.com/KelownaFlowerGardens"
+   class="instagram-btn"
+   target="_blank">
+  <span>📸</span> #KelownaBridalBouquets
+</a>
+
+<style>
+.instagram-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+}
+</style>
+
+
+</main>
+
+    
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
