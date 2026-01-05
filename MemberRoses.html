@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+</style>
+</head>
+<script>
+if(sessionStorage.getItem("loggedIn") !== "true"){
+  window.location.href = "Login.html";
+}
+</script>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="MemberHome.html">Main</a>
+    <a href="MemberGardenDesign.html">Garden Design</a>
+      <a href="MemberAbout.html">About</a>
+    <a href="MemberRegional Species.html">Regional Species</a>
+      <a href="MemberAwards.html">Awards</a>
+    <a href="MemberRoses.html">Roses</a>
+      <a href="MemberValley Art.html">Valley Art</a>
+    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+    <a href="MemberResources.html">Resources</a>
+      <a href="MemberCalendar.html">Calendar</a>
+    <a href="MembersDashboard.html">Members</a>
+    <a href="MemberContact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <main class="content">
+<main class="page-content">
+
+  <!-- INTRO -->
+  <section class="content-section centered">
+    <h2>The Story of Roses</h2>
+    <p>
+      Original cultivation of European roses predates Christ, beginning with
+      <em>Rosa gallica</em>, the “apothecary’s rose”. Over centuries, roses evolved
+      through Damasks, Albas, Centifolias, China roses, Hybrid Teas, Floribundas,
+      Grandifloras, Shrubs, and Miniatures.
+      <br><br>
+      References:
+      <a href="https://harknessroses1879.com/" target="_blank">Harkness Roses</a>,
+      <a href="https://rose.org/" target="_blank">American Rose Society</a>,
+      <a href="https://canadianrosesociety.org/" target="_blank">Canadian Rose Society</a>
+    </p>
+  </section>
+
+  <aside class="sidebar" id="sidebar">
+    
+    <div class="button-group">
+      <a href="#hybrid-teas">Hybrid Teas</a>
+      <a href="#floribundas">Floribundas</a>
+      <a href="#grandifloras">Grandifloras</a>
+      <a href="#climbers">Climbers</a>
+      <a href="#miniatures">Miniatures</a>
+    </div>
+  </section>
+  </aside>
+  
+  <!-- HYBRID TEAS -->
+  <section id="hybrid-teas" class="content-section">
+    <h3>Hybrid Teas</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th><th>Color</th><th>Flower</th><th>Growth</th><th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>First Love (1951)</td>
+            <td>Rose–Pink</td>
+            <td>6–9 cm, double, light fragrance</td>
+            <td>Vigorous, disease resistant</td>
+            <td><img src="firstlove.jpg" alt="First Love rose"></td>
+          </tr>
+          <tr>
+            <td>Confidence (1951)</td>
+            <td>Light Yellow</td>
+            <td>Large double, moderate fragrance</td>
+            <td>Dark foliage, bushy</td>
+            <td><img src="confidence.jpg" alt="Confidence rose"></td>
+          </tr>
+          <tr>
+            <td>Red Masterpiece (1974)</td>
+            <td>Dark Red</td>
+            <td>15 cm, heavy fragrance</td>
+            <td>Profuse blooming</td>
+            <td><img src="redmasterpeice.jpg" alt="Red Masterpiece rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FLORIBUNDAS -->
+  <section id="floribundas" class="content-section">
+    <h3>Floribundas</h3>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <td>Bon Bon (1974)</td>
+            <td>Rose–White</td>
+            <td>8.9 cm, moderate fragrance</td>
+            <td>Very prolific</td>
+            <td><img src="bonbon.jpg" alt="Bon Bon rose"></td>
+          </tr>
+          <tr>
+            <td>Garnet (1951)</td>
+            <td>Garnet Red</td>
+            <td>Small, long lasting</td>
+            <td>Susceptible to mildew</td>
+            <td><img src="garnet.jpg" alt="Garnet rose"></td>
+          </tr>
+          <tr>
+            <td>Vogue (1951)</td>
+            <td>Cherry Coral</td>
+            <td>Large, moderate fragrance</td>
+            <td>Vigorous, bushy</td>
+            <td><img src="vogue.jpg" alt="Vogue rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- GRANDIFLORAS -->
+  <section id="grandifloras" class="content-section">
+    <h3>Grandifloras</h3>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <td>Arizona (1975)</td>
+            <td>Golden Copper</td>
+            <td>Large double</td>
+            <td>Tall growth</td>
+            <td><img src="arizona.jpg" alt="Arizona rose"></td>
+          </tr>
+          <tr>
+            <td>Mount Shasta (1963)</td>
+            <td>White</td>
+            <td>Large, moderate fragrance</td>
+            <td>Cold hardy</td>
+            <td><img src="mountshasta.jpg" alt="Mount Shasta rose"></td>
+          </tr>
+          <tr>
+            <td>Queen Elizabeth (1954)</td>
+            <td>Rose Pink</td>
+            <td>Large clusters</td>
+            <td>Very vigorous</td>
+            <td><img src="queenelizabeth.jpg" alt="Queen Elizabeth rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CLIMBERS -->
+  <section id="climbers" class="content-section">
+    <h3>Climbers</h3>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <td>Blossomtime (1951)</td>
+            <td>Pink</td>
+            <td>Large, fragrant</td>
+            <td>Low-growing climber</td>
+            <td><img src="blossomtime.jpg" alt="Blossomtime rose"></td>
+          </tr>
+              <tr>
+        <td>Coral Satin (1960)</td>
+        <td>Coral</td>
+         <td>8.89 - 10.25 cm Double (25 petals), moderate fragrence</td>
+        <td> Glossy, leathery, Large-flowered climber, profuse bloom</td>
+        <td> <img src="coralsatin.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
+      </tr>
+          <tr>
+            <td>Golden Showers (1956)</td>
+            <td>Yellow</td>
+            <td>Large blooms</td>
+            <td>Almost thornless</td>
+            <td><img src="goldenshowers.jpg" alt="Golden Showers rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MINIATURES -->
+  <section id="miniatures" class="content-section">
+    <h3>Miniatures</h3>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr>
+            <td>Beauty Secret (1965)</td>
+            <td>Cardinal Red</td>
+            <td>Very fragrant</td>
+            <td>Abundant bloom</td>
+            <td><img src="beautysecret.jpg" alt="Beauty Secret rose"></td>
+          </tr>
+             <tr>
+        <td>Fire Princess (1969)</td>
+        <td>Orange-red</td>
+         <td>4.5 cm Double, no fragrence</td>
+        <td> Glossy, leathery, vigorous, bushy</td>
+        <td> <img src="Fireprincess.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
+      </tr>
+      <tr>
+        <td>Judy Fisher (1968)</td>
+        <td>Rose-pink</td>
+         <td>3.9 cm Double, no fragrence</td>
+        <td> Glossy, leathery, Large-flowered climber, profuse bloom</td>
+        <td> <img src="judyfisher.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
+      </tr>
+      <tr>
+        <td>Lavendar Lace (1968)</td>
+        <td>Lavendar</td>
+         <td>3.9 cm Double, moderate fragrence</td>
+        <td> Glossy, vigorous and bushy</td>
+        <td> <img src="lavendarlace.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
+      </tr>
+      <tr>
+        <td>Over the Rainbow (1974)</td>
+        <td>Red and yellow</td>
+         <td>4.5 cm Double, no fragrence</td>
+        <td> Leathery, medium green; abundant, continuous bloom</td>
+        <td> <img src="overtherainbow.jpg" alt="Centered Image" style="display: block; margin: auto;" width="100" height="100"> </img></td>
+      </tr>
+          <tr>
+            <td>Windy City (1974)</td>
+            <td>Pink</td>
+            <td>Small, long lasting</td>
+            <td>Disease resistant</td>
+            <td><img src="windycity.jpg" alt="Windy City rose"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+<style> /* ===== ROSES TABLE MOBILE FIX ===== */
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 12px;
+}
+
+/* Force table to exceed viewport width */
+.table-wrap table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+/* Prevent image column from collapsing */
+.table-wrap td:last-child,
+.table-wrap th:last-child {
+  min-width: 180px;
+  text-align: center;
+}
+
+/* Force images to stay visible */
+.table-wrap img {
+  width: 160px;
+  max-width: none;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Improve scroll bar visibility (optional) */
+.table-wrap::-webkit-scrollbar {
+  height: 8px;
+}
+.table-wrap::-webkit-scrollbar-thumb {
+  background: #F68686;
+  border-radius: 8px;
+}
+
+/* Mobile swipe hint */
+@media (max-width: 768px) {
+  .table-wrap::after {
+    content: "← swipe to see more roses →";
+    display: block;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 6px;
+  }
+}
+</style>
+</main>
+
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
