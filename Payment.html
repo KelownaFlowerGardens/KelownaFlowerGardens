@@ -181,24 +181,63 @@ nav a:hover{
     </p>
   </section>
 
-  <!-- MEMBER INFO -->
-  <section class="content-section form-section">
-    <h2>Member Information</h2>
+ 
+<div class="form-card">
+  <h2>Join Kelowna Flower Gardens</h2>
 
-    <form action="mailto:kelownaflowergardens@gmail.com" method="POST" enctype="text/plain">
-      <label>
-        Name
-        <input type="text" name="Name" required>
-      </label>
+  <!-- ACCOUNT CREATION -->
+  <label>Username</label>
+  <input id="username" type="text" required>
 
-      <label>
-        Email
-        <input type="email" name="Email" required>
-      </label>
+  <label>Password</label>
+  <input id="password" type="password" required>
 
-      <button type="submit" class="btn-outline">Submit</button>
-    </form>
-  </section>
+  <label>Confirm Password</label>
+  <input id="confirm" type="password" required>
+
+  <!-- PROFILE -->
+  <label>Email</label>
+  <input id="email" type="email" required>
+
+  <!-- MEMBERSHIP -->
+  <label>Membership Type</label>
+  <select id="plan">
+    <option value="annual">Annual — $45</option>
+    <option value="student">Student — $25</option>
+  </select>
+
+  <!-- PAYMENT (NO SHIPPING) -->
+  <label>Payment Method</label>
+  <select id="payment">
+    <option>Credit Card</option>
+    <option>PayPal</option>
+  </select>
+
+  <button onclick="submitSignup()">Continue to Payment</button>
+
+  <p id="error" style="color:red;text-align:center"></p>
+</div>
+
+<script>
+function submitSignup(){
+  const pass = password.value;
+  const confirm = document.getElementById("confirm").value;
+
+  if(pass !== confirm){
+    document.getElementById("error").textContent =
+      "Passwords do not match";
+    return;
+  }
+
+  /* TEMP STORAGE (replace with backend later) */
+  sessionStorage.setItem("pendingUser", JSON.stringify({
+    username: username.value,
+    email: email.value,
+    plan: plan.value
+  }));
+
+</script>
+
 
   <!-- PRICING -->
   <section class="content-section centered">
