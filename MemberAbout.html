@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+</style>
+</head>
+<script>
+if(sessionStorage.getItem("loggedIn") !== "true"){
+  window.location.href = "Login.html";
+}
+</script>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="MemberHome.html">Main</a>
+    <a href="MemberGardenDesign.html">Garden Design</a>
+      <a href="MemberAbout.html">About</a>
+    <a href="MemberRegional Species.html">Regional Species</a>
+      <a href="MemberAwards.html">Awards</a>
+    <a href="MemberRoses.html">Roses</a>
+      <a href="MemberValley Art.html">Valley Art</a>
+    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+    <a href="MemberResources.html">Resources</a>
+      <a href="MemberCalendar.html">Calendar</a>
+    <a href="MembersDashboard.html">Members</a>
+    <a href="MemberContact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <main class="content">
+        <div class="centered">
+    <h2>About</h2>
+        </div>
+    <p>
+      The Kelowna Flower Garden Club is being introduced May 1st, 2026.
+      The founder, Silken Rauhala, has been involved in environmental
+      organizations since completing a Bachelor of Science in Victoria,
+      British Columbia.
+    </p>
+
+    <p>
+      Her experience includes the University of Victoria Parks Club,
+      Trial Islands Restoration, Todd Inlet Remediation, and extensive
+      visits to the Horticulture Centre of the Pacific and Butchart Gardens.
+    </p>
+
+    <p>
+      She has documented flora across South America, remote regions of
+      Northern British Columbia, the Great Lakes of Ontario, and Southern
+      California. Her goal is to bring this passion to the Okanagan and
+      grow a community-centered garden society.
+    </p>
+
+
+</main>
+
+</body>
+</html>
+
+      
+<aside class="sidebar" id="sidebar">
+            <a href="Index.html">Index</a>
+            <a href="Architects of Garden Design.html">Architects of Garden Design</a>
+</aside>
+</div>
+    
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
+      
+
+
+
+
+
+
+
+
+
