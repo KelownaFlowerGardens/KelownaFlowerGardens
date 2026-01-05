@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css" />
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+  .card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.25rem;
+}
+
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:1rem;
+  text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,.1);
+}
+
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+</style>
+<script>
+if(sessionStorage.getItem("loggedIn") !== "true"){
+  window.location.href = "Login.html";
+}
+</script>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+  <nav>
+    <a href="MemberHome.html">Main</a>
+    <a href="MemberGardenDesign.html">Garden Design</a>
+      <a href="MemberAbout.html">About</a>
+    <a href="MemberRegional Species.html">Regional Species</a>
+      <a href="MemberAwards.html">Awards</a>
+    <a href="MemberRoses.html">Roses</a>
+      <a href="MemberValley Art.html">Valley Art</a>
+    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+    <a href="MemberResources.html">Resources</a>
+      <a href="MemberCalendar.html">Calendar</a>
+    <a href="MembersDashboard.html">Members</a>
+    <a href="MemberContact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+ <main class="content page-content">
+
+
+  <section class="content-section centered">
+    <h2>Flower Garden Award</h2>
+    <p>
+      Each year, one member will be awarded <strong>“Flower Garden of the Valley”</strong>.
+      The presentation takes place at the final garden party of the
+      <em>Six Weeks of Summer</em> rotation.
+      <br><strong>*Members only</strong>
+    </p>
+  </section>
+
+  <section class="content-section">
+    <h3 class="centered">Highest Rated Roses</h3>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h4>Climbers</h4>
+        <img src="HoosierBeauty.jpg" alt="Hoosier Beauty Rose">
+        <p>Hoosier Beauty — <strong>9.0</strong></p>
+      </div>
+
+      <div class="card">
+        <h4>Floribunda</h4>
+        <img src="Floribunda CoralGlo.jpg" alt="Coral Glo Rose">
+        <p>Coral Glo — <strong>9.0</strong><br><em>Rose of the Year 2026</em></p>
+      </div>
+
+      <div class="card">
+        <h4>Grandiflora</h4>
+        <img src="ROSE_QUEENELIZ.jpg" alt="Queen Elizabeth Rose">
+        <p>Queen Elizabeth — <strong>9.0</strong></p>
+      </div>
+
+      <div class="card">
+        <h4>Hybrid Tea</h4>
+        <img src="PeaceRose.jpg" alt="Peace Rose">
+        <p>Peace — <strong>9.0</strong></p>
+      </div>
+
+      <div class="card">
+        <h4>Miniatures</h4>
+        <img src="beautysecretMini.jpg" alt="Beauty Secret Miniature Rose">
+        <p>Beauty Secret — <strong>9.0</strong></p>
+      </div>
+
+      <div class="card">
+        <h4>Old Garden Roses</h4>
+        <img src="duchesse-de-montebello.jpg" alt="Duchesse de Montebello">
+        <p>Duchesse de Montebello — <strong>9.0</strong></p>
+      </div>
+
+      <div class="card">
+        <h4>Polyanthas</h4>
+        <img src="Rose-The-Fairy.jpg" alt="The Fairy Rose">
+        <p>The Fairy — <strong>8.4</strong></p>
+      </div>
+
+      <div class="card">
+        <h4>Shrub Roses</h4>
+        <img src="Country-Dancer.jpg" alt="Country Dancer Rose">
+        <p>Country Dancer — <strong>9.3</strong></p>
+      </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>
+
+</div>
+    
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  © Kelowna Flower Gardens
+</footer>
+
+
+</body>
+</html>
+
+      
