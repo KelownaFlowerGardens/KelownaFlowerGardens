@@ -153,31 +153,52 @@ nav a:hover{
 
   <main class="content">
 <main class="page-content">
-<div class="card">
-  <h2>Complete Payment</h2>
 
-  <p id="summary"></p>
+  <section class="content-section centered">
+    <h1>Become a Member</h1>
 
-  <!-- PAYMENT PLACEHOLDER -->
-  <button onclick="completePayment()">Pay Now</button>
-</div>
+    <p>
+      Membership includes participation in the <strong>Six Weeks of Summer</strong> —
+      a rotating series of garden parties hosted by members.
+      The annual <em>Flower Garden of the Valley</em> award is presented at the final event.
+    </p>
 
-<script>
-const user = JSON.parse(sessionStorage.getItem("pendingUser"));
+  <div class="card">
+    <h3>Member Benefits</h3>
+    <ul>
+      <li>Garden Party Event Access</li>
+      <li>Flower Garden Awards Voting</li>
+      <li>Member-Only Resources - Newsletters</li>
+      <li>Garden Party Hosting</li>
+      <li>Discounts at Affiliated Businesses</li>
+      <li>Online Retail</li>
+    </ul>
+  </div>
 
-document.getElementById("summary").textContent =
-  `Membership: ${user.plan.toUpperCase()}`;
+    <p class="muted">
+      Membership availability is limited. Prices may increase annually for new members.
+      Returning members retain their original rate.
+    </p>
+  </section>
 
-function completePayment(){
-  /* Simulate success */
-  sessionStorage.setItem("loggedIn","true");
-  sessionStorage.setItem("memberName", user.username);
-  sessionStorage.removeItem("pendingUser");
+  <!-- MEMBER INFO -->
+  <section class="content-section form-section">
+    <h2>Member Information</h2>
 
-  window.location.href = "signup-success.html";
-}
-</script>
+    <form action="mailto:kelownaflowergardens@gmail.com" method="POST" enctype="text/plain">
+      <label>
+        Name
+        <input type="text" name="Name" required>
+      </label>
 
+      <label>
+        Email
+        <input type="email" name="Email" required>
+      </label>
+
+      <button type="submit" class="btn-outline">Submit</button>
+    </form>
+  </section>
 
   <!-- PRICING -->
   <section class="content-section centered">
@@ -226,6 +247,7 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
 
 </body>
 </html>
+
 
 
 
