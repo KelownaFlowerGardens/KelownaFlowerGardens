@@ -1,1 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
 
+<title>Member Dashboard</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+    <!-- LOGGED IN AVATAR -->
+<div class="member-avatar">
+  <button class="avatar-btn" onclick="toggleMemberMenu()">
+    <img src="KFGL.jpg" alt="Member Avatar">
+  </button>
+
+  <div class="member-dropdown" id="memberMenu">
+    <div class="member-name">Welcome, Member</div>
+
+    <a href="MembersDashboard.html">🌸 Dashboard</a>
+    <a href="Profile.html">👤 Profile</a>
+    <a href="Calendar.html">📅 Calendar</a>
+    <a href="Logout.html" class="logout">🚪 Log Out</a>
+  </div>
+</div>
+/* ---------- MEMBER AVATAR ---------- */
+.member-avatar{
+  position:relative;
+  margin-left:auto;
+}
+
+.avatar-btn{
+  border:none;
+  background:none;
+  cursor:pointer;
+  padding:0;
+}
+
+.avatar-btn img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #F68686;
+}
+
+/* Dropdown Menu */
+.member-dropdown{
+  display:none;
+  position:absolute;
+  right:0;
+  top:120%;
+  background:#fff;
+  width:220px;
+  border-radius:14px;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+  overflow:hidden;
+  z-index:2000;
+}
+
+.member-name{
+  padding:.75rem 1rem;
+  font-weight:600;
+  color:#F68686;
+  border-bottom:1px solid #eee;
+  text-align:center;
+}
+
+.member-dropdown a{
+  display:block;
+  padding:.7rem 1rem;
+  text-decoration:none;
+  color:#444;
+  font-size:.9rem;
+}
+
+.member-dropdown a:hover{
+  background:#F68686;
+  color:white;
+}
+
+.member-dropdown .logout{
+  color:#c0392b;
+}
+
+.member-dropdown .logout:hover{
+  background:#c0392b;
+  color:white;
+}
+
+/* Mobile Friendly */
+@media (max-width:768px){
+  .member-avatar{
+    margin:0 auto;
+  }
+}
+
+</style>
+</head>
+
+    <script>
+function toggleMemberMenu(){
+  const menu = document.getElementById("memberMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+/* Close menu when clicking elsewhere */
+document.addEventListener("click", function(e){
+  const avatar = document.querySelector(".member-avatar");
+  if (avatar && !avatar.contains(e.target)) {
+    document.getElementById("memberMenu").style.display = "none";
+  }
+});
+</script>
+<script>
+if(sessionStorage.getItem("loggedIn") !== "true"){
+  window.location.href = "Login.html";
+}
+</script>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+<nav>
+  <a href="MemberHome.html">Main</a>
+    <a href="MemberGardenDesign.html">Garden Design</a>
+      <a href="MemberAbout.html">About</a>
+    <a href="MemberRegional Species.html">Regional Species</a>
+      <a href="MemberAwards.html">Awards</a>
+    <a href="MemberRoses.html">Roses</a>
+      <a href="MemberValley Art.html">Valley Art</a>
+    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+    <a href="MemberResources.html">Resources</a>
+      <a href="MemberCalendar.html">Calendar</a>
+    <a href="MembersDashboard.html">Members</a>
+    <a href="MemberContact.html">Contact</a>
+</nav>
+</header>
+    <div class="login-avatar">...</div>  <!-- logged out -->
+<div class="member-avatar">...</div> <!-- logged in -->
+
+
+<div class="wrapper">
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#FDD7D7;
+}
+.dashboard{
+  max-width:900px;
+  margin:auto;
+  padding:2rem;
+}
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:1.5rem;
+  margin-bottom:1rem;
+}
+h1{color:#F68686}
+a.button{
+  display:inline-block;
+  padding:.6rem 1.2rem;
+  border-radius:25px;
+  background:#F68686;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+<div class="dashboard">
+
+<title>Admin Dashboard | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --radius:14px;
+}
+
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#fafafa;
+}
+
+header{
+  padding:1rem;
+  background:var(--pink);
+  color:white;
+  text-align:center;
+}
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:1rem;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+
+th, td{
+  padding:.7rem;
+  text-align:left;
+  border-bottom:1px solid #eee;
+}
+
+th{
+  background:#f5f5f5;
+}
+
+button{
+  border:none;
+  padding:.4rem .6rem;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.btn-danger{background:#e74c3c;color:white}
+.btn-ok{background:#2ecc71;color:white}
+
+@media(max-width:700px){
+  table, thead, tbody, th, td, tr{
+    display:block;
+  }
+  tr{
+    margin-bottom:1rem;
+    border:1px solid #eee;
+    border-radius:12px;
+    padding:.6rem;
+  }
+  th{display:none}
+  td::before{
+    font-weight:700;
+    display:block;
+    margin-bottom:.2rem;
+    color:#666;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Admin Dashboard</h1>
+  <p>Kelowna Flower Gardens</p>
+</header>
+
+<main>
+  <h2>Members</h2>
+
+  <table id="membersTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Status</th>
+        <th>Paid</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</main>
+
+<script>
+async function loadMembers(){
+  const res = await fetch("http://localhost:3000/api/admin/members", {
+    credentials:"include"
+  });
+
+  if(res.status === 401){
+    location.href = "LoggedOut.html";
+    return;
+  }
+
+  const members = await res.json();
+  const tbody = document.querySelector("#membersTable tbody");
+  tbody.innerHTML = "";
+
+  members.forEach(m => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${m.name}</td>
+      <td>${m.email}</td>
+      <td>${m.username}</td>
+      <td>${m.active ? "Active" : "Inactive"}</td>
+      <td>${m.paid ? "Yes" : "No"}</td>
+      <td>
+        <button class="btn-ok" onclick="toggle(${m.id})">
+          ${m.active ? "Disable" : "Enable"}
+        </button>
+        <button class="btn-danger" onclick="remove(${m.id})">
+          Delete
+        </button>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+async function toggle(id){
+  await fetch(`http://localhost:3000/api/admin/toggle/${id}`, {
+    method:"POST",
+    credentials:"include"
+  });
+  loadMembers();
+}
+
+async function remove(id){
+  if(confirm("Delete this member?")){
+    await fetch(`http://localhost:3000/api/admin/delete/${id}`, {
+      method:"DELETE",
+      credentials:"include"
+    });
+    loadMembers();
+  }
+}
+
+loadMembers();
+</script>
+
+</div>
+</body>
+</html>
