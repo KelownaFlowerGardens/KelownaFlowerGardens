@@ -231,6 +231,8 @@ function submitSignup(){
     return;
   }
 
+  localStorage.setItem("pendingMember", JSON.stringify(member));
+
   /* TEMP STORAGE (replace with backend later) */
   sessionStorage.setItem("pendingUser", JSON.stringify({
     username: username.value,
