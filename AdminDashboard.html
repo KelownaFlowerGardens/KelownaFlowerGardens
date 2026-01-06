@@ -438,6 +438,43 @@ button{
     </thead>
     <tbody></tbody>
   </table>
+
+    <h1>Member Payments</h1>
+
+<a href="/api/admin/members.csv" class="btn">
+  ⬇ Download CSV
+</a>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Paid</th>
+      <th>Active</th>
+      <th>Transaction</th>
+    </tr>
+  </thead>
+  <tbody id="memberRows"></tbody>
+</table>
+
+<script>
+fetch("/api/admin/members")
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById("memberRows").innerHTML =
+      data.map(m => `
+        <tr>
+          <td>${m.name}</td>
+          <td>${m.email}</td>
+          <td>${m.paid ? "✅" : "❌"}</td>
+          <td>${m.active ? "✅" : "❌"}</td>
+          <td>${m.paypal_txn_id || "-"}</td>
+        </tr>
+      `).join("");
+  });
+</script>
+
 </main>
 
 <script>
