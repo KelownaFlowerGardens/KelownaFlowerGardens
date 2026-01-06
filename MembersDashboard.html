@@ -370,6 +370,21 @@ a.button{
   <div class="card">
     <a class="button" href="https://kelownaflowergardens.github.io/KelownaFlowerGardens/LoggedOut.html">Log Out</a>
   </div>
+    <script>
+fetch("http://localhost:3000/api/session", {
+  credentials: "include"
+})
+.then(res => res.json())
+.then(data => {
+  if (!data.loggedIn) {
+    window.location.href = "Login.html";
+  }
+  if (!data.user.paid) {
+    window.location.href = "Members.html";
+  }
+});
+</script>
+
 </div>
 </body>
 </html>
