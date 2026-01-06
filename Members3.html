@@ -119,6 +119,34 @@ nav a:hover{
     <a href="Profile.html">My Profile</a>
     <a href="LoggedOut.html">Log Out</a>
   </div>
+  
+/* FORM */
+label{
+  display:block;
+  margin-top:1rem;
+  font-weight:600;
+}
+
+input{
+  width:100%;
+  padding:.6rem;
+  margin-top:.4rem;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  margin-top:1.5rem;
+  width:100%;
+  padding:.8rem;
+  background:var(--pink);
+  border:none;
+  color:#fff;
+  border-radius:25px;
+  font-size:1rem;
+  cursor:pointer;
+}
+
 </div>
 
 </style>
@@ -176,8 +204,8 @@ nav a:hover{
   <!-- MEMBERSHIP -->
   <label>Membership Type</label>
   <select id="plan">
-    <option value="annual">Annual — $45</option>
-    <option value="student">Student — $25</option>
+    <option value="annual">Annual — $56</option>
+    <option value="student">Silken — $1</option>
   </select>
 
   <!-- PAYMENT (NO SHIPPING) -->
@@ -211,7 +239,7 @@ function submitSignup(){
   }));
 
   /* Redirect to payment */
-  window.location.href = "payment.html";
+  window.location.href = "Payment.html";
 }
 </script>
 
