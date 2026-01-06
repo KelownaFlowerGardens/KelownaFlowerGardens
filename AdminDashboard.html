@@ -474,6 +474,57 @@ fetch("/api/admin/members")
       `).join("");
   });
 </script>
+<h1>Admin Dashboard</h1>
+<table id="members">
+  <thead>
+    <tr>
+      <th>Name</th><th>Email</th><th>Status</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function loadMembers(){
+  const res = await fetch("/api/admin/members");
+  const data = await res.json();
+
+  document.querySelector("#members tbody").innerHTML =
+    data.map(m => `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.email}</td>
+        <td>${m.active ? "Active" : "Suspended"}</td>
+        <td>
+          <button onclick="toggle(${m.id})">Toggle</button>
+          <button onclick="del(${m.id})">Delete</button>
+        </td>
+      </tr>
+    `).join("");
+}
+
+async function toggle(id){
+  await fetch("/api/admin/toggle-member", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ id })
+  });
+  loadMembers();
+}
+
+async function del(id){
+  if(confirm("Delete member?")){
+    await fetch("/api/admin/delete-member", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ id })
+    });
+    loadMembers();
+  }
+}
+
+loadMembers();
+</script>
 
 </main>
 
