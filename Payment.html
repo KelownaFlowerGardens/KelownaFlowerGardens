@@ -204,6 +204,49 @@ function submitSignup(){
 
   <!-- PRICING -->
   <section class="content-section centered">
+<section class="content-section centered">
+  <h2>Membership Payment</h2>
+
+  <script 
+    src="https://www.paypal.com/sdk/js?client-id=SZFUHL3JY6LUJ&currency=CAD&disable-funding=card">
+  </script>
+
+  <div id="paypal-button-container"></div>
+
+  <script>
+    paypal.Buttons({
+      createOrder: (data, actions) => {
+        return actions.order.create({
+          purchase_units: [{
+            description: "Kelowna Flower Gardens Membership",
+            amount: {
+              value: "56.00"
+            }
+          }],
+          application_context: {
+            shipping_preference: "NO_SHIPPING"
+          }
+        });
+      },
+
+      onApprove: (data, actions) => {
+        return actions.order.capture().then(async () => {
+
+          // Notify backend that user paid
+          await fetch("http://localhost:3000/api/mark-paid", {
+            method: "POST",
+            credentials: "include"
+          });
+
+          window.location.href = "MembersDashboard.html";
+        });
+      }
+    }).render("#paypal-button-container");
+  </script>
+</section>
+
+
+    
     <h2>Membership </h2>
     <p>Annual Membership: <strong>$50.00 CAD</strong></p>
     <p>PST (12%): $6.00</p>
