@@ -384,6 +384,17 @@ fetch("http://localhost:3000/api/session", {
   }
 });
 </script>
+    <p id="status"></p>
+
+<script>
+fetch("http://localhost:3000/api/session", { credentials: "include" })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("status").textContent =
+      data.user.paid ? "Active Member" : "Payment Required";
+  });
+</script>
+
 
 </div>
 </body>
