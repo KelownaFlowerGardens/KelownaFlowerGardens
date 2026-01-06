@@ -285,6 +285,52 @@ fetch("http://localhost:3000/api/session", {
 });
 </script>
 
+    <script>
+fetch("http://localhost:3000/api/session", {
+  credentials: "include"
+})
+.then(res => res.json())
+.then(data => {
+  const navAuth = document.getElementById("nav-auth");
+
+  if (!data.loggedIn) {
+    // Logged OUT
+    navAuth.innerHTML = `
+      <a href="Login.html" class="btn-outline">Login</a>
+      <a href="Members.html" class="btn-primary">Become a Member</a>
+    `;
+    return;
+  }
+
+  // Logged IN
+  navAuth.innerHTML = `
+    <button class="avatar-btn" id="avatarBtn">
+      <img src="avatar-default.png" alt="Member Avatar">
+    </button>
+
+    <div class="avatar-menu" id="avatarMenu">
+      <a href="MembersDashboard.html">Dashboard</a>
+      <a href="Profile.html">My Profile</a>
+      <a href="#" id="logoutBtn">Log Out</a>
+    </div>
+  `;
+
+  // Toggle menu
+  document.getElementById("avatarBtn").onclick = () => {
+    document.getElementById("avatarMenu").classList.toggle("show");
+  };
+
+  // Logout
+  document.getElementById("logoutBtn").onclick = async () => {
+    await fetch("http://localhost:3000/api/logout", {
+      method: "POST",
+      credentials: "include"
+    });
+    window.location.href = "LoggedOut.html";
+  };
+});
+</script>
+
 
 <body>
 
