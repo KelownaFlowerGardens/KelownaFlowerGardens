@@ -261,6 +261,35 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
   });
 });
 </script>
+<script>
+document.getElementById("signupForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const msg = document.getElementById("signupMsg");
+
+  const data = {
+    name: name.value,
+    email: email.value,
+    username: username.value,
+    password: password.value
+  };
+
+  const res = await fetch("http://localhost:3000/api/register", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  if (res.ok) {
+    msg.textContent = "Account created — proceed to payment below.";
+    msg.style.color = "green";
+  } else {
+    msg.textContent = "Username or email already exists.";
+    msg.style.color = "red";
+  }
+});
+</script>
 
 </body>
 </html>
