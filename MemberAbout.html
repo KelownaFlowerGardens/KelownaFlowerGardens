@@ -201,6 +201,17 @@ if(sessionStorage.getItem("loggedIn") !== "true"){
     <a href="MemberContact.html">Contact</a>
   </nav>
 </header>
+<script>
+fetch("http://localhost:3000/api/session", {
+  credentials: "include"
+})
+.then(res => res.json())
+.then(data => {
+  if (!data.loggedIn) {
+    window.location.href = "Login.html";
+  }
+});
+</script>
 
 <div class="wrapper">
 
