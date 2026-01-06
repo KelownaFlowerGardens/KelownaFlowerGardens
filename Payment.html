@@ -163,7 +163,7 @@ nav a:hover{
 
   <!-- PAYMENT PLACEHOLDER -->
   <button onclick="completePayment()">Pay Now</button>
-</div>
+
 
 <script>
 const user = JSON.parse(sessionStorage.getItem("pendingUser"));
@@ -200,13 +200,13 @@ function completePayment(){
     </script>
 
     <div id="paypal-container-SZFUHL3JY6LUJ"></div>
-
+      
     <script>
       paypal.HostedButtons({
         hostedButtonId: "SZFUHL3JY6LUJ"
       }).render("#paypal-container-SZFUHL3JY6LUJ");
     </script>
- </div></div>
+ </div></div></div>
   </section>
 
 </main>
