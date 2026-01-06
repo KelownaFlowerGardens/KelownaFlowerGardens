@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Become a Member | Kelowna Flower Gardens</title>
+  <link rel="stylesheet" href="style.css" />
+<title>Garden Design | Kelowna Flower Gardens</title>
 
 <style>
 :root{
@@ -12,7 +12,7 @@
   --light:#FDD7D7;
   --muted:#666;
   --radius:14px;
-  --max:900px;
+  --max:1200px;
 }
 
 *{box-sizing:border-box}
@@ -24,7 +24,7 @@ body{
   color:#333;
 }
 
-/* HEADER */
+/* ---------- HEADER ---------- */
 header{
   text-align:center;
   padding:1rem;
@@ -32,87 +32,118 @@ header{
 
 header img{
   width:100%;
-  max-height:300px;
+  max-height:360px;
   object-fit:cover;
   border-radius:var(--radius);
 }
 
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
 nav{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
   gap:.5rem;
-  margin-top:1rem;
+  margin:1rem 0;
 }
 
 nav a{
   text-decoration:none;
-  padding:.45rem .9rem;
+  padding:.5rem .9rem;
   background:#fff;
   color:var(--pink);
   border-radius:20px;
   font-weight:600;
-  font-size:.9rem;
+  font-size:.95rem;
 }
 
-/* CONTENT */
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
 .wrapper{
+  display:flex;
   max-width:var(--max);
   margin:auto;
-  padding:1.5rem;
+  padding:1rem;
+  gap:1.5rem;
 }
 
-.card{
-  background:#fff;
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
   border-radius:var(--radius);
-  padding:1.5rem;
-  margin:1.5rem 0;
+  margin:1rem 0;
 }
 
-/* FORM */
-label{
-  display:block;
-  margin-top:1rem;
-  font-weight:600;
-}
 
-input{
-  width:100%;
-  padding:.6rem;
-  margin-top:.4rem;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-
-button{
-  margin-top:1.5rem;
-  width:100%;
-  padding:.8rem;
-  background:var(--pink);
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
   border:none;
+  background:var(--pink);
   color:#fff;
-  border-radius:25px;
-  font-size:1rem;
-  cursor:pointer;
+  border-radius:6px;
 }
 
-button.secondary{
-  background:#fff;
-  color:var(--pink);
-  border:2px solid var(--pink);
 }
+  <div class="nav-auth avatar-wrap">
+  <button class="avatar-btn">
+    <img src="avatar-default.png" alt="Member Avatar">
+  </button>
+
+  <div class="avatar-menu">
+    <a href="MembersDashboard.html">Dashboard</a>
+    <a href="Profile.html">My Profile</a>
+    <a href="LoggedOut.html">Log Out</a>
+  </div>
+</div>
+
 </style>
 </head>
 
 <body>
 
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
 <header>
-  <img src="01126.jpg" alt="Kelowna Flower Gardens">
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
   <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
 
   <nav>
-    <a href="Home.html">Home</a>
+    <a href="Home.html">Main</a>
+    <a href="GardenDesign.html">Garden Design</a>
+      <a href="About.html">About</a>
+    <a href="Regional Species.html">Regional Species</a>
+      <a href="Awards.html">Awards</a>
     <a href="Roses.html">Roses</a>
+      <a href="Valley Art.html">Valley Art</a>
+    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
+    <a href="Resources.html">Resources</a>
+      <a href="Calendar.html">Calendar</a>
     <a href="Members.html">Members</a>
     <a href="Contact.html">Contact</a>
   </nav>
@@ -120,88 +151,98 @@ button.secondary{
 
 <div class="wrapper">
 
-  <div class="card">
-    <h2>Become a Member</h2>
+  <main class="content">
+<main class="page-content">
+
+  <section class="content-section centered">
+    <h1>Become a Member</h1>
+
     <p>
-      Membership includes participation in <strong>Six Weeks of Summer</strong>,
-      member-only resources, and voting for the annual
-      <em>Flower Garden of the Valley</em>.
+      Membership includes participation in the <strong>Six Weeks of Summer</strong> —
+      a rotating series of garden parties hosted by members.
+      The annual <em>Flower Garden of the Valley</em> award is presented at the final event.
     </p>
+
+  <div class="card">
+    <h3>Member Benefits</h3>
+    <ul>
+      <li>Garden Party Event Access</li>
+      <li>Flower Garden Awards Voting</li>
+      <li>Member-Only Resources - Newsletters</li>
+      <li>Garden Party Hosting</li>
+      <li>Discounts at Affiliated Businesses</li>
+      <li>Online Retail</li>
+    </ul>
   </div>
 
-  <!-- MEMBER ACCOUNT -->
-  <div class="card">
-    <h3>Create Your Account</h3>
+    <p class="muted">
+      Membership availability is limited. Prices may increase annually for new members.
+      Returning members retain their original rate.
+    </p>
+  </section>
 
-    <label>Name
-      <input id="name" required>
-    </label>
+  <!-- MEMBER INFO -->
+  <section class="content-section form-section">
+    <h2>Member Information</h2>
 
-    <label>Email
-      <input id="email" type="email" required>
-    </label>
+    <form action="mailto:kelownaflowergardens@gmail.com" method="POST" enctype="text/plain">
+      <label>
+        Name
+        <input type="text" name="Name" required>
+      </label>
 
-    <label>Username
-      <input id="username" required>
-    </label>
+      <label>
+        Email
+        <input type="email" name="Email" required>
+      </label>
 
-    <label>Password
-      <input id="password" type="password" required>
-    </label>
+      <button type="submit" class="btn-outline">Submit</button>
+    </form>
+  </section>
 
-    <button onclick="saveMember()">Continue to Payment</button>
-  </div>
-
-  <!-- PAYMENT -->
-  <div class="card">
-    <h3>Membership Fee</h3>
+  <!-- PRICING -->
+  <section class="content-section centered">
+    <h2>Membership </h2>
     <p>Annual Membership: <strong>$50.00 CAD</strong></p>
     <p>PST (12%): $6.00</p>
     <p><strong>Total: $56.00 CAD</strong></p>
+  </section>
 
-    <div id="paypal-button-container"></div>
-  </div>
+  <!-- PAYPAL -->
+  <section class="content-section centered">
+    <h2>Payment</h2>
 
-</div>
+    <!-- PayPal Hosted Button -->
+    <script 
+      src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&currency=CAD">
+    </script>
+
+    <div id="paypal-container-SZFUHL3JY6LUJ"></div>
+
+    <script>
+      paypal.HostedButtons({
+        hostedButtonId: "SZFUHL3JY6LUJ"
+      }).render("#paypal-container-SZFUHL3JY6LUJ");
+    </script>
+  </section>
+
+</main>
 
 <footer style="text-align:center;padding:2rem;color:var(--muted)">
   © Kelowna Flower Gardens
 </footer>
 
-<!-- PAYPAL -->
-<script src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&currency=CAD&intent=capture"></script>
-
 <script>
-function saveMember(){
-  const member = {
-    name: name.value,
-    email: email.value,
-    username: username.value,
-    password: password.value
-  };
-
-  localStorage.setItem("pendingMember", JSON.stringify(member));
-  alert("Account saved. Please complete payment.");
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
 }
 
-paypal.Buttons({
-  createOrder: (data, actions) => {
-    return actions.order.create({
-      purchase_units: [{
-        amount: { value: "56.00" },
-        description: "Kelowna Flower Gardens Membership"
-      }]
-    });
-  },
-  onApprove: (data, actions) => {
-    return actions.order.capture().then(() => {
-      const member = JSON.parse(localStorage.getItem("pendingMember"));
-      localStorage.setItem("memberSession", JSON.stringify(member));
-      localStorage.removeItem("pendingMember");
-      window.location.href = "MembersDashboard.html";
-    });
-  }
-}).render('#paypal-button-container');
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
 </script>
 
 </body>
