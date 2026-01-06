@@ -149,6 +149,49 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
   }
 });
 </script>
+  <script>
+const modal = document.getElementById("loginModal");
+const loginBtn = document.getElementById("loginBtn");
+const avatar = document.querySelector(".avatar-wrap");
+
+loginBtn.onclick = () => modal.style.display = "grid";
+
+document.getElementById("loginForm").onsubmit = async e => {
+  e.preventDefault();
+
+  const res = await fetch("http://localhost:3000/api/login", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: loginUser.value,
+      password: loginPass.value
+    })
+  });
+
+  if (res.ok) location.reload();
+  else loginMsg.textContent = "Invalid login";
+};
+
+/* CHECK SESSION */
+fetch("http://localhost:3000/api/me", { credentials: "include" })
+  .then(r => r.json())
+  .then(user => {
+    if (user) {
+      loginBtn.style.display = "none";
+      avatar.style.display = "block";
+    }
+  });
+
+document.getElementById("logoutBtn").onclick = async () => {
+  await fetch("http://localhost:3000/api/logout", {
+    method: "POST",
+    credentials: "include"
+  });
+  location.reload();
+};
+</script>
+
 
 </body>
 </html>
