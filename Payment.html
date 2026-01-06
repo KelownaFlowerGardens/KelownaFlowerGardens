@@ -178,64 +178,37 @@ button{
 </header>
 
 <div class="wrapper">
+<section class="content-section form-section">
+  <h2>Create Member Account</h2>
 
-  <main class="content">
-<main class="page-content">
+  <form id="signupForm">
+    <label>
+      Full Name
+      <input type="text" name="name" required>
+    </label>
 
-  <section class="content-section centered">
-  
-<div class="card">
-  <h2>Complete Payment</h2>
+    <label>
+      Email
+      <input type="email" name="email" required>
+    </label>
 
-  <p id="summary"></p>
+    <label>
+      Username
+      <input type="text" name="username" required>
+    </label>
 
-  <!-- PAYMENT PLACEHOLDER -->
-  <button onclick="completePayment()">Pay Now</button>
+    <label>
+      Password
+      <input type="password" name="password" required>
+    </label>
 
+    <button type="submit" class="btn-outline">
+      Create Account
+    </button>
 
-<script>
-const user = JSON.parse(sessionStorage.getItem("pendingUser"));
-
-document.getElementById("summary").textContent =
-  `Membership: ${user.plan.toUpperCase()}`;
-
-function completePayment(){
-  /* Simulate success */
-  sessionStorage.setItem("loggedIn","true");
-  sessionStorage.setItem("memberName", user.username);
-  sessionStorage.removeItem("pendingUser");
-
-  window.location.href = "Success.html";
-}
-</script>
-
-  <!-- PRICING -->
-  <section class="content-section centered">
-    <h2>Membership </h2>
-    <p>Annual Membership: <strong>$50.00 CAD</strong></p>
-    <p>PST (12%): $6.00</p>
-    <p><strong>Total: $56.00 CAD</strong></p>
-  </section>
-
-  <!-- PAYPAL -->
-  <section class="content-section centered">
-      <div class="centered">
-    <h2>Payment</h2>
-
-    <!-- PayPal Hosted Button -->
-    <script 
-      src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&currency=CAD">
-    </script>
-
-    <div id="paypal-container-SZFUHL3JY6LUJ"></div>
-      
-    <script>
-      paypal.HostedButtons({
-        hostedButtonId: "SZFUHL3JY6LUJ"
-      }).render("#paypal-container-SZFUHL3JY6LUJ");
-    </script>
- </div></div></div>
-  </section>
+    <p id="signupMessage" class="muted"></p>
+  </form>
+</section>
 
 </main>
 
