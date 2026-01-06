@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Member Login | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --radius:14px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+}
+
+.login-card{
+  background:#fff;
+  width:100%;
+  max-width:420px;
+  padding:2rem;
+  border-radius:var(--radius);
+  box-shadow:0 12px 30px rgba(0,0,0,.15);
+  text-align:center;
+}
+
+.login-card img{
+  width:90px;
+  margin-bottom:1rem;
+}
+
+.login-card h1{
+  color:var(--pink);
+  margin-bottom:.25rem;
+}
+
+.login-card p{
+  color:#666;
+  margin-bottom:1.5rem;
+}
+
+label{
+  display:block;
+  text-align:left;
+  font-weight:600;
+  margin-bottom:.25rem;
+}
+
+input{
+  width:100%;
+  padding:.65rem;
+  margin-bottom:1rem;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:1rem;
+}
+
+button{
+  width:100%;
+  padding:.75rem;
+  border:none;
+  border-radius:25px;
+  background:var(--pink);
+  color:white;
+  font-size:1rem;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+.links{
+  margin-top:1rem;
+  font-size:.9rem;
+}
+
+.links a{
+  color:var(--pink);
+  text-decoration:none;
+  font-weight:600;
+}
+
+.links a:hover{
+  text-decoration:underline;
+}
+
+.error{
+  color:#b00020;
+  font-size:.9rem;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-card">
+  <!-- Optional logo -->
+  <img src="KFGLogo.jpg" alt="Kelowna Flower Gardens">
+
+  <h1>Member Login</h1>
+  <p>Kelowna Flower Gardens</p>
+<div id="loginModal" class="modal">
+  <form id="loginForm" class="modal-box">
+    <h3>Member Login</h3>
+
+    <input id="loginUser" placeholder="Username" required>
+    <input id="loginPass" type="password" placeholder="Password" required>
+
+    <button type="submit">Login</button>
+    <p id="loginMsg"></p>
+  </form>
+</div>
+
+</form>
+    
+
+  <div class="links">
+    <p><a href="Members.html">Become a Member</a></p>
+    <p><a href="Home.html">← Back to Home</a></p>
+   <p><a href="AdminDashboard.html">Admin Dashboard</a></p>
+  </div>
+</div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  /* TEMP DEMO LOGIN (replace later) */
+  if(email === "member@kelownaflowergardens.com" && password === "garden123"){
+    window.location.href = "MembersDashboard.html";
+  } else {
+    document.getElementById("errorMsg").style.display = "block";
+  }
+});
+</script>
+  <script>
+const modal = document.getElementById("loginModal");
+const loginBtn = document.getElementById("loginBtn");
+const avatar = document.querySelector(".avatar-wrap");
+
+loginBtn.onclick = () => modal.style.display = "grid";
+
+document.getElementById("loginForm").onsubmit = async e => {
+  e.preventDefault();
+
+  const res = await fetch("http://localhost:3000/api/login", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: loginUser.value,
+      password: loginPass.value
+    })
+  });
+
+  if (res.ok) location.reload();
+  else loginMsg.textContent = "Invalid login";
+};
+
+/* CHECK SESSION */
+fetch("http://localhost:3000/api/me", { credentials: "include" })
+  .then(r => r.json())
+  .then(user => {
+    if (user) {
+      loginBtn.style.display = "none";
+      avatar.style.display = "block";
+    }
+  });
+
+document.getElementById("logoutBtn").onclick = async () => {
+  await fetch("http://localhost:3000/api/logout", {
+    method: "POST",
+    credentials: "include"
+  });
+  location.reload();
+};
+</script>
+
+
+</body>
+</html>
