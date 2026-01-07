@@ -281,7 +281,21 @@ nav a:hover{
     border-radius:20px;
   }
 }
-
+{
+  "name": "KFG Members Chat",
+  "short_name": "KFG Chat",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F68686",
+  "theme_color": "#F68686",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
+#messengerModal {
+  touch-action: pan-y;
+}
 
 </style>
 </head>
@@ -760,6 +774,7 @@ a.button{
   toggleBtn.onclick = () => messengerModal.style.display = "flex";
   closeBtn.onclick = () => messengerModal.style.display = "none";
 })();
+
 </script>
 <button id="chatToggle">
   💬
@@ -768,6 +783,7 @@ a.button{
 <button id="emojiBtn">😊</button>
 
 </button>
+
     
 <div id="messengerModal">
   <div class="messengerHeader">Members Chat</div>
