@@ -739,6 +739,72 @@ a.button{
 }
         
 </style>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+(async ()=>{
+  const res = await fetch("/api/session",{credentials:"include"});
+  if(!res.ok) return;
+
+  const user = await res.json();
+  const username = user.username;
+  const avatar = user.avatar || "/default-avatar.png";
+
+  const socket = io({auth:{username,avatar}});
+  let currentRoom = "general";
+  let unread = 0;
+
+  const modal = document.getElementById("messengerModal");
+  const toggle = document.getElementById("messengerToggle");
+  const close = document.getElementById("closeMessenger");
+  const messages = document.getElementById("chatMessages");
+  const members = document.getElementById("membersList");
+  const input = document.getElementById("chatInput");
+  const send = document.getElementById("sendBtn");
+  const badge = document.getElementById("chatBadge");
+
+  toggle.onclick = ()=>{ modal.style.display="flex"; unread=0; badge.textContent=0; }
+  close.onclick = ()=> modal.style.display="none";
+
+  send.onclick = ()=>{
+    if(!input.value.trim()) return;
+    socket.emit("chatMessage",{text:input.value,room:currentRoom});
+    input.value="";
+  };
+
+  socket.on("message",msg=>{
+    const div=document.createElement("div");
+    div.className="message "+(msg.username===username?"self":"other");
+    div.innerHTML=`<strong>${msg.username}</strong>: ${msg.text}`;
+    messages.appendChild(div);
+    messages.scrollTop=messages.scrollHeight;
+
+    if(modal.style.display==="none"){
+      unread++;
+      badge.textContent=unread;
+    }
+  });
+
+  socket.on("updateMembers",list=>{
+    members.innerHTML="";
+    list.forEach(m=>{
+      if(m.username===username) return;
+      const div=document.createElement("div");
+      div.className="memberItem";
+      div.innerHTML=`
+        <span class="statusDot ${m.online?'online':'offline'}"></span>
+        <img src="${m.avatar}" width="26">
+        ${m.username}
+      `;
+      div.onclick=()=>{
+        currentRoom=[username,m.username].sort().join("#");
+        socket.emit("startPrivateChat",m.username);
+        messages.innerHTML="";
+      };
+      members.appendChild(div);
+    });
+  });
+})();
+</script>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
