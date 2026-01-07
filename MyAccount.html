@@ -273,17 +273,7 @@ document.addEventListener("click", function(e){
   }
 });
 </script>
-<script>
-fetch("http://localhost:3000/api/session", {
-  credentials: "include"
-})
-.then(res => res.json())
-.then(data => {
-  if (!data.loggedIn) {
-    window.location.href = "Login.html";
-  }
-});
-</script>
+
 
     <script>
 fetch("http://localhost:3000/api/session", {
@@ -532,10 +522,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 <script>
 (async () => {
-  const res = await fetch("/api/session", { credentials:"include" });
-  if(!res.ok) return window.location.href="/Login.html";
-  const user = await res.json();
-
+  
   document.getElementById("username").value = user.username;
   document.getElementById("email").value = user.email;
   document.getElementById("plan").value = user.plan;
@@ -599,9 +586,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
-  const res = await fetch("/api/session");
-  if (!res.ok) return window.location.href = "/Login.html";
-  const user = await res.json();
+  
 
   const username = user.username;
   const avatar = user.avatar;
@@ -666,20 +651,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   <div class="card">
     <a class="button" href="https://kelownaflowergardens.github.io/KelownaFlowerGardens/LoggedOut.html">Log Out</a>
   </div>
-    <script>
-fetch("http://localhost:3000/api/session", {
-  credentials: "include"
-})
-.then(res => res.json())
-.then(data => {
-  if (!data.loggedIn) {
-    window.location.href = "Login.html";
-  }
-  if (!data.user.paid) {
-    window.location.href = "Members.html";
-  }
-});
-</script>
+
     <p id="status"></p>
 
 <script>
