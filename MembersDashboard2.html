@@ -492,3 +492,260 @@ document.addEventListener("click", function(e){
 
 </body>
 </html>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* Header/Nav styles omitted for brevity, same as before */
+
+/* Messenger Modal */
+#messengerModal{
+  position:fixed;
+  bottom:70px;
+  right:20px;
+  width:320px;
+  max-height:450px;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:10000;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn{
+  from{transform: translateY(100%);}
+  to{transform: translateY(0);}
+}
+
+#messengerHeader{
+  background:#F68686;
+  color:#fff;
+  padding:0.6rem 1rem;
+  font-weight:bold;
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
+}
+
+#membersListPopup{
+  padding:0.5rem;
+  border-bottom:1px solid #eee;
+  max-height:80px;
+  overflow-y:auto;
+}
+
+.memberItem{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  padding:0.2rem 0;
+  cursor:pointer;
+}
+
+.memberItem:hover{
+  background:#FDD7D7;
+  border-radius:6px;
+}
+
+.status{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  display:inline-block;
+}
+
+.online{background:#2ecc71;}
+.offline{background:#aaa;}
+
+#chatWindowPopup{
+  flex:1;
+  padding:0.5rem;
+  overflow-y:auto;
+}
+
+.message.self{text-align:right;}
+.message.other{text-align:left;}
+.message img.msgAvatar{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  vertical-align:middle;
+  margin-right:4px;
+}
+
+#chatInputPopup{
+  border:1px solid #ccc;
+  padding:0.5rem;
+  width:calc(100% - 120px);
+  margin:0.3rem 0.5rem;
+  border-radius:12px;
+}
+
+#sendBtnPopup, #emojiBtn, #imageBtn{
+  background:#F68686;
+  color:#fff;
+  border:none;
+  padding:0.5rem 0.8rem;
+  border-radius:12px;
+  cursor:pointer;
+  margin-right:0.3rem;
+}
+
+#messengerToggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:9999;
+  background:#F68686;
+  color:#fff;
+  border:none;
+  padding:0.7rem 1rem;
+  border-radius:50px;
+  font-size:1.2rem;
+  cursor:pointer;
+}
+
+#typingIndicator{
+  font-size:12px;
+  color:#999;
+  padding-left:4px;
+}
+.badge{
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  background:red;
+  color:white;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:50%;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Kelowna Flower Gardens</h1>
+</header>
+
+<div class="dashboard">
+  <h1>Welcome, <span id="username">TestUser</span></h1>
+  <!-- ... other cards ... -->
+</div>
+
+<!-- Messenger Toggle -->
+<button id="messengerToggle">💬<span id="chatBadge" class="badge">0</span></button>
+
+<!-- Messenger Modal -->
+<div id="messengerModal">
+  <div id="messengerHeader">
+    💬 Members Chat
+    <span id="closeMessenger">×</span>
+  </div>
+  <div id="membersListPopup"></div>
+  <div id="chatWindowPopup"></div>
+  <div style="display:flex; align-items:center; padding:0.5rem;">
+    <input type="text" id="chatInputPopup" placeholder="Type a message...">
+    <button id="sendBtnPopup">Send</button>
+    <button id="emojiBtn">😊</button>
+    <button id="imageBtn">📸</button>
+  </div>
+  <div id="typingIndicator"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+// Editable Messenger JS
+(async () => {
+  const username = "TestUser"; // placeholder
+  const avatar = "/default-avatar.png";
+  const socket = io({ auth:{username, avatar} });
+  let currentRoom = "general";
+  let typingTimeout;
+
+  const modal = document.getElementById("messengerModal");
+  const toggleBtn = document.getElementById("messengerToggle");
+  const closeBtn = document.getElementById("closeMessenger");
+  const messagesDiv = document.getElementById("chatWindowPopup");
+  const chatInput = document.getElementById("chatInputPopup");
+  const sendBtn = document.getElementById("sendBtnPopup");
+  const membersContainer = document.getElementById("membersListPopup");
+  const badge = document.getElementById("chatBadge");
+  const typingIndicator = document.getElementById("typingIndicator");
+
+  function renderMessage(msg){
+    const div = document.createElement("div");
+    div.className = "message "+(msg.username===username?"self":"other");
+    div.innerHTML = `${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:""}<span><strong>${msg.username}</strong>: ${msg.text}</span>`;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    if(msg.username!==username) badge.textContent = parseInt(badge.textContent)+1;
+  }
+
+  sendBtn.onclick = () => {
+    const text = chatInput.value.trim();
+    if(!text) return;
+    socket.emit("chatMessage",{text, room:currentRoom});
+    chatInput.value = "";
+  };
+
+  chatInput.addEventListener("keypress", e=>{
+    if(e.key==="Enter") sendBtn.click();
+    socket.emit("typing",{room:currentRoom, username});
+  });
+
+  socket.on("message", msg=>renderMessage(msg));
+
+  socket.on("updateMembers", members=>{
+    membersContainer.innerHTML="";
+    members.forEach(member=>{
+      const div = document.createElement("div");
+      div.className="memberItem";
+      div.innerHTML=`<span class="status ${member.online?"online":"offline"}"></span><img src="${member.avatar||'/default-avatar.png'}" class="msgAvatar">${member.username}`;
+      div.onclick=()=>{
+        currentRoom=[username, member.username].sort().join("#");
+        messagesDiv.innerHTML="";
+        socket.emit("startPrivateChat",member.username);
+      };
+      membersContainer.appendChild(div);
+    });
+  });
+
+  socket.on("typing", data=>{
+    if(data.username!==username && data.room===currentRoom){
+      typingIndicator.textContent=`${data.username} is typing...`;
+      clearTimeout(typingTimeout);
+      typingTimeout=setTimeout(()=>typingIndicator.textContent="",2000);
+    }
+  });
+
+  toggleBtn.onclick = ()=>modal.style.display="flex";
+  closeBtn.onclick = ()=>modal.style.display="none";
+
+  // Emoji & Image placeholders
+  document.getElementById("emojiBtn").onclick=()=>chatInput.value+="😊";
+  document.getElementById("imageBtn").onclick=()=>alert("Image upload not yet connected to backend");
+})();
+</script>
+
+</body>
+</html>
