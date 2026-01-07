@@ -240,28 +240,36 @@ button{
   <p id="error" style="color:red;text-align:center"></p>
    </form>
 </div>
-
 <script>
-function submitSignup(){
-  const pass = password.value;
-  const confirm = document.getElementById("confirm").value;
+document.getElementById("signupForm").addEventListener("submit", async e => {
+  e.preventDefault();
 
-  if(pass !== confirm){
-    document.getElementById("error").textContent =
-      "Passwords do not match";
+  const error = document.getElementById("error");
+  error.textContent = "";
+
+  if (password.value !== confirm.value) {
+    error.textContent = "Passwords do not match";
     return;
   }
 
-  /* TEMP STORAGE (replace with backend later) */
-  sessionStorage.setItem("pendingUser", JSON.stringify({
-    username: username.value,
-    email: email.value,
-    plan: plan.value
-  }));
+  const res = await fetch("http://localhost:3000/api/register", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      email: email.value,
+      password: password.value,
+      plan: plan.value
+    })
+  });
 
-  /* Redirect to payment */
-  window.location.href = "Payment.html";
-}
+  if (res.ok) {
+    window.location.href = "Payment.html";
+  } else {
+    error.textContent = "Username or email already exists";
+  }
+});
 </script>
 
   <!-- PRICING -->
