@@ -101,19 +101,6 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
   display: none; flex-direction: column; overflow: hidden; z-index: 10000;
   <div id="messengerModal">
   <div id="messengerHeader">
-    Members Chat
-    <span id="closeMessenger">×</span>
-  </div>
-  <div id="membersListPopup"></div>
-  <div id="chatWindowPopup"></div>
-  
-  <div style="display:flex; align-items:center; padding:0.3rem;">
-    <input type="text" id="chatInputPopup" placeholder="Type a message..." style="flex:1;"/>
-    <button id="emojiBtn">😊</button>
-    <input type="file" id="imageInput" accept="image/*" style="display:none;"/>
-    <button id="sendBtnPopup">Send</button>
-  </div>
-</div>
 
 }
 
@@ -195,27 +182,10 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
   <!-- Messenger Toggle Button -->
 <button id="messengerToggle">💬<span id="chatBadge" class="badge">0</span></button>
 
+
 <!-- Messenger Modal -->
 <div id="messengerModal">
   <div id="messengerHeader">
-    💬 Members Chat
-    <span id="closeMessenger">×</span>
-  </div>
-  <div id="membersListPopup">
-    <h4>Online Members</h4>
-    <div id="membersContainerPopup"></div>
-  </div>
-  <div id="chatWindowPopup">
-    <div id="messagesPopup"></div>
-    <div id="typingIndicator" style="font-size:0.8rem; color:#666; padding:0.3rem 0;"></div>
-  </div>
-  <div style="display:flex; gap:4px; padding:0.3rem;">
-    <input type="text" id="chatInputPopup" placeholder="Type a message..." style="flex:1; border-radius:12px; padding:0.5rem; border:1px solid #ccc;">
-    <button id="sendBtnPopup" style="border:none; background:#F68686; color:#fff; border-radius:12px; padding:0.5rem 0.8rem;">Send</button>
-    <input type="file" id="imageInput" accept="image/*" style="display:none;">
-    <button id="emojiBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">😊</button>
-  </div>
-</div>
 
 <style>
 /* Toggle Button */
@@ -318,8 +288,8 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
-  // --- Session check ---
-  
+
+
   const socket = io({ auth: { username, avatar } });
   let currentRoom = "general";
   let unreadCount = 0;
@@ -412,30 +382,30 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 })();
 </script>
 
-
-
-
-  
-<!-- Messenger Toggle & Modal -->
-<button id="messengerToggle">
-  💬 <span id="chatBadge" class="badge">0</span>
-</button>
-
-<div id="messengerModal">
+<div id="messengerModal" ondragover="event.preventDefault();" ondrop="handleDrop(event)">
   <div id="messengerHeader">
-    Members Chat
+    💬 Members Chat
     <span id="closeMessenger">×</span>
   </div>
-  <div id="membersListPopup"></div>
-  <div id="chatWindowPopup"></div>
-  <input type="text" id="chatInputPopup" placeholder="Type a message...">
-  <button id="sendBtnPopup">Send</button>
-</div>
+  <div id="membersListPopup">
+    <h4>Online Members</h4>
+    <div id="membersContainerPopup"></div>
+  </div>
+  <div id="chatWindowPopup">
+    <div id="messagesPopup"></div>
+    <div id="typingIndicator" style="font-size:0.8rem; color:#666; padding:0.3rem 0;"></div>
+  </div>
+  <div style="display:flex; gap:4px; padding:0.3rem;">
+    <input type="text" id="chatInputPopup" placeholder="Type a message..." style="flex:1; border-radius:12px; padding:0.5rem; border:1px solid #ccc;">
+    <button id="sendBtnPopup" style="border:none; background:#F68686; color:#fff; border-radius:12px; padding:0.5rem 0.8rem;">Send</button>
+    <input type="file" id="imageInput" accept="image/*" style="display:none;">
+    <button id="imageBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">📷</button>
+    <button id="emojiBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">😊</button>
+  </div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
-  // Check session
  
   const socket = io({ auth:{username, avatar} });
   let currentRoom = "general";
@@ -538,7 +508,8 @@ toggleBtn.onclick = () => {
 };
 
   (async () => {
-  
+ 
+
   const socket = io({ auth:{username, avatar} });
   let currentRoom = "general";
   let unreadCount = 0;
@@ -644,30 +615,9 @@ toggleBtn.onclick = () => {
 })();
 
 <!-- Emoji + Image Input added -->
-<!-- Messenger Toggle Button -->
-<button id="messengerToggle">💬<span id="chatBadge" class="badge">0</span></button>
 
-<!-- Messenger Modal -->
-<div id="messengerModal">
-  <div id="messengerHeader">
-    💬 Members Chat
-    <span id="closeMessenger">×</span>
-  </div>
-  <div id="membersListPopup">
-    <h4>Online Members</h4>
-    <div id="membersContainerPopup"></div>
-  </div>
-  <div id="chatWindowPopup">
-    <div id="messagesPopup"></div>
-    <div id="typingIndicator" style="font-size:0.8rem; color:#666; padding:0.3rem 0;"></div>
-  </div>
-  <div style="display:flex; gap:4px; padding:0.3rem;">
-    <input type="text" id="chatInputPopup" placeholder="Type a message..." style="flex:1; border-radius:12px; padding:0.5rem; border:1px solid #ccc;">
-    <button id="sendBtnPopup" style="border:none; background:#F68686; color:#fff; border-radius:12px; padding:0.5rem 0.8rem;">Send</button>
-    <input type="file" id="imageInput" accept="image/*" style="display:none;">
-    <button id="imageBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">📷</button>
-    <button id="emojiBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">😊</button>
-  </div>
+
+
   <!-- Emoji picker container -->
   <div id="emojiPicker" style="display:none; border-top:1px solid #eee; padding:0.5rem; max-height:150px; overflow-y:auto;"></div>
 </div>
@@ -697,7 +647,7 @@ toggleBtn.onclick = () => {
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async()=>{
-
+ 
 
   const messengerModal = document.getElementById("messengerModal");
   const toggleBtn = document.getElementById("messengerToggle");
@@ -803,30 +753,6 @@ toggleBtn.onclick = () => {
 <!-- Scroll to bottom button -->
 <button id="scrollBottomBtn" style="position:absolute; bottom:80px; right:10px; display:none; background:#F68686; color:#fff; border:none; padding:0.5rem; border-radius:50px; cursor:pointer; z-index:10001;">⬇️</button>
 
-<!-- Messenger Modal (drag & drop enabled) -->
-<div id="messengerModal" ondragover="event.preventDefault();" ondrop="handleDrop(event)">
-  <div id="messengerHeader">
-    💬 Members Chat
-    <span id="closeMessenger">×</span>
-  </div>
-  <div id="membersListPopup">
-    <h4>Online Members</h4>
-    <div id="membersContainerPopup"></div>
-  </div>
-  <div id="chatWindowPopup">
-    <div id="messagesPopup"></div>
-    <div id="typingIndicator" style="font-size:0.8rem; color:#666; padding:0.3rem 0;"></div>
-  </div>
-  <div style="display:flex; gap:4px; padding:0.3rem;">
-    <input type="text" id="chatInputPopup" placeholder="Type a message..." style="flex:1; border-radius:12px; padding:0.5rem; border:1px solid #ccc;">
-    <button id="sendBtnPopup" style="border:none; background:#F68686; color:#fff; border-radius:12px; padding:0.5rem 0.8rem;">Send</button>
-    <input type="file" id="imageInput" accept="image/*" style="display:none;">
-    <button id="imageBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">📷</button>
-    <button id="emojiBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">😊</button>
-  </div>
-  <div id="emojiPicker" style="display:none; border-top:1px solid #eee; padding:0.5rem; max-height:150px; overflow-y:auto;"></div>
-</div>
-
 <script>
 function handleDrop(event){
   event.preventDefault();
@@ -843,7 +769,7 @@ function handleDrop(event){
 
 <script>
 (async()=>{
-  
+ 
 
   const messengerModal = document.getElementById("messengerModal");
   const toggleBtn = document.getElementById("messengerToggle");
@@ -983,6 +909,5 @@ function handleDrop(event){
   if("Notification" in window) Notification.requestPermission();
 })();
 </script>
-    
 </body>
 </html>
