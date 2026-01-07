@@ -121,7 +121,7 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 </style>
 </head>
 <body>
-
+  <button id="messengerToggle">💬</button>
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <header>
@@ -595,8 +595,6 @@ function renderMessage(msg) {
   // --- Typing events ---
   socket.on("userTyping",user=>{typingDiv.textContent=`${user} is typing...`;});
   socket.on("userStopTyping",user=>{typingDiv.textContent="";});
-
-  
 
   // --- Emoji toggle ---
   emojiBtn.onclick=()=>{ emojiPicker.style.display = emojiPicker.style.display==="flex"?"none":"flex"; };
