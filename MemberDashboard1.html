@@ -259,6 +259,64 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
       }
     }
   });
+
+  let typingTimeout;
+
+// Detect typing
+chatInput.addEventListener("input", () => {
+  socket.emit("typing", currentRoom);
+  clearTimeout(typingTimeout);
+  typingTimeout = setTimeout(() => {
+    socket.emit("stopTyping", currentRoom);
+  }, 1000);
+});
+
+// Render messages with read receipt
+function renderMessage(msg) {
+  const div = document.createElement("div");
+  div.className = "message " + (msg.username === username ? "self" : "other");
+
+  let receiptHTML = "";
+  if(msg.username === username && msg.readBy && msg.readBy.includes(msg.roomMember)){
+    receiptHTML = `<span class="receipt">✔✔</span>`;
+  }
+
+  if(msg.type === "image"){
+    div.innerHTML = `${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ''}
+      <strong>${msg.username}</strong>: <br/>
+      <img src="${msg.text}" style="max-width:200px; border-radius:10px;"> ${receiptHTML}`;
+  } else {
+    div.innerHTML = `${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ''}
+      <span><strong>${msg.username}</strong>: ${msg.text}</span> ${receiptHTML}`;
+  }
+
+  messagesDiv.appendChild(div);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+// Show typing indicator
+const typingDiv = document.createElement("div");
+typingDiv.id = "typingIndicator";
+typingDiv.style.fontSize = "0.8rem";
+typingDiv.style.color = "#666";
+messagesDiv.appendChild(typingDiv);
+
+socket.on("userTyping", (user) => {
+  typingDiv.textContent = `${user} is typing...`;
+});
+
+socket.on("userStopTyping", (user) => {
+  typingDiv.textContent = "";
+});
+
+// Mark messages as read when modal opens
+toggleBtn.onclick = () => {
+  messengerModal.style.display = "flex";
+  unreadCount = 0;
+  badge.style.display = "none";
+  socket.emit("markRoomRead", currentRoom);
+};
+
   (async () => {
   const res = await fetch("/api/session", { credentials:"include" });
   if(!res.ok) return window.location.href="/Login.html";
