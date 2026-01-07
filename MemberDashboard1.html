@@ -99,6 +99,22 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
   position: fixed; bottom: 70px; right: 20px; width: 300px; max-height: 400px;
   background: #fff; border-radius: 14px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);
   display: none; flex-direction: column; overflow: hidden; z-index: 10000;
+  <div id="messengerModal">
+  <div id="messengerHeader">
+    Members Chat
+    <span id="closeMessenger">×</span>
+  </div>
+  <div id="membersListPopup"></div>
+  <div id="chatWindowPopup"></div>
+  
+  <div style="display:flex; align-items:center; padding:0.3rem;">
+    <input type="text" id="chatInputPopup" placeholder="Type a message..." style="flex:1;"/>
+    <button id="emojiBtn">😊</button>
+    <input type="file" id="imageInput" accept="image/*" style="display:none;"/>
+    <button id="sendBtnPopup">Send</button>
+  </div>
+</div>
+
 }
 
 #messengerHeader {
