@@ -331,6 +331,19 @@ fetch("http://localhost:3000/api/session", {
 });
 </script>
 
+<script>
+fetch("http://localhost:3000/api/session", {
+  credentials: "include"
+})
+.then(res => res.json())
+.then(data => {
+  if (data.loggedIn && data.status === "active") {
+    document.querySelector(".avatar-wrap").style.display = "block";
+  } else {
+    document.querySelector(".avatar-wrap").style.display = "none";
+  }
+});
+</script>
 
 <body>
 
