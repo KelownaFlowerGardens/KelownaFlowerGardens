@@ -417,12 +417,12 @@ a.button{
        
 <div class="dashboard">
   <h1>Welcome, <span id="username"></span></h1>
-
+ <div class="card">
   <p><strong>Email:</strong> <span id="email"></span></p>
   <p><strong>Membership:</strong> <span id="plan"></span></p>
   <p><strong>Status:</strong> <span id="status"></span></p>
   <p><strong>Member Since:</strong> <span id="since"></span></p>
-
+ </div>
 <script>
 fetch("http://localhost:3000/api/dashboard", {
   credentials: "include"
