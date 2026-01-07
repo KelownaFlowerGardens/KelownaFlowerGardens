@@ -458,6 +458,10 @@ button{
   <tbody id="memberRows"></tbody>
 </table>
 
+    <button onclick="deleteMsg(id)">🗑</button>
+<button onclick="muteUser(userId)">🔇</button>
+
+    
 <script>
 fetch("/api/admin/members")
   .then(r => r.json())
