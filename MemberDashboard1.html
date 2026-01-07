@@ -823,6 +823,165 @@ toggleBtn.onclick = () => {
 
 })();
 </script>
+<!-- Scroll to bottom button -->
+<button id="scrollBottomBtn" style="position:absolute; bottom:80px; right:10px; display:none; background:#F68686; color:#fff; border:none; padding:0.5rem; border-radius:50px; cursor:pointer; z-index:10001;">⬇️</button>
+
+<!-- Messenger Modal (drag & drop enabled) -->
+<div id="messengerModal" ondragover="event.preventDefault();" ondrop="handleDrop(event)">
+  <div id="messengerHeader">
+    💬 Members Chat
+    <span id="closeMessenger">×</span>
+  </div>
+  <div id="membersListPopup">
+    <h4>Online Members</h4>
+    <div id="membersContainerPopup"></div>
+  </div>
+  <div id="chatWindowPopup">
+    <div id="messagesPopup"></div>
+    <div id="typingIndicator" style="font-size:0.8rem; color:#666; padding:0.3rem 0;"></div>
+  </div>
+  <div style="display:flex; gap:4px; padding:0.3rem;">
+    <input type="text" id="chatInputPopup" placeholder="Type a message..." style="flex:1; border-radius:12px; padding:0.5rem; border:1px solid #ccc;">
+    <button id="sendBtnPopup" style="border:none; background:#F68686; color:#fff; border-radius:12px; padding:0.5rem 0.8rem;">Send</button>
+    <input type="file" id="imageInput" accept="image/*" style="display:none;">
+    <button id="imageBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">📷</button>
+    <button id="emojiBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">😊</button>
+  </div>
+  <div id="emojiPicker" style="display:none; border-top:1px solid #eee; padding:0.5rem; max-height:150px; overflow-y:auto;"></div>
+</div>
+
+<script>
+function handleDrop(event){
+  event.preventDefault();
+  const file = event.dataTransfer.files[0];
+  if(!file) return;
+  if(!file.type.startsWith("image/")) return alert("Only images allowed!");
+  const reader = new FileReader();
+  reader.onload = e => {
+    socket.emit("chatMessage",{text:e.target.result, room:currentRoom, type:"image"});
+  };
+  reader.readAsDataURL(file);
+}
+</script>
+
+<script>
+(async()=>{
+  const res = await fetch("/api/session",{credentials:"include"});
+  if(!res.ok) return window.location.href="/Login.html";
+  const user = await res.json();
+  const username = user.username;
+  const avatar = user.avatar || "/default-avatar.png";
+  const socket = io({auth:{username,avatar}});
+  let currentRoom = "general";
+  let unreadCount=0;
+
+  const messengerModal = document.getElementById("messengerModal");
+  const toggleBtn = document.getElementById("messengerToggle");
+  const closeBtn = document.getElementById("closeMessenger");
+  const messagesDiv = document.getElementById("messagesPopup");
+  const chatInput = document.getElementById("chatInputPopup");
+  const sendBtn = document.getElementById("sendBtnPopup");
+  const membersContainer = document.getElementById("membersContainerPopup");
+  const typingDiv = document.getElementById("typingIndicator");
+  const badge = document.getElementById("chatBadge");
+  const emojiPicker = document.getElementById("emojiPicker");
+  const emojiBtn = document.getElementById("emojiBtn");
+  const imageBtn = document.getElementById("imageBtn");
+  const imageInput = document.getElementById("imageInput");
+  const scrollBtn = document.getElementById("scrollBottomBtn");
+
+  // --- Emoji list ---
+  const emojis = ["😀","😂","😍","🥰","😎","😢","👍","🙏","🎉","💐","🌹","🍀"];
+  emojis.forEach(e=>{
+    const span=document.createElement("span");
+    span.textContent=e;
+    span.onclick=()=>{ chatInput.value+=e; chatInput.focus(); };
+    emojiPicker.appendChild(span);
+  });
+
+  // --- Render message ---
+  function renderMessage(msg){
+    const div=document.createElement("div");
+    div.className="message "+(msg.username===username?"self":"other");
+    if(msg.type==="image"){
+      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<strong>${msg.username}</strong>:<br/><img src="${msg.text}" style="max-width:200px; border-radius:10px;">`;
+    } else {
+      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<span><strong>${msg.username}</strong>: ${msg.text}</span>`;
+    }
+    messagesDiv.appendChild(div);
+    scrollBtn.style.display = (messagesDiv.scrollTop + messagesDiv.clientHeight < messagesDiv.scrollHeight-50) ? "block" : "none";
+    if(messengerModal.style.display==="flex") messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  // --- Send text message ---
+  sendBtn.onclick=()=>{
+    const text=chatInput.value.trim();
+    if(!text) return;
+    socket.emit("chatMessage",{text,room:currentRoom,type:"text"});
+    chatInput.value="";
+  };
+  chatInput.addEventListener("keypress",e=>{if(e.key==="Enter") sendBtn.click();});
+
+  // --- Typing indicator ---
+  let typingTimeout;
+  chatInput.addEventListener("input",()=>{
+    socket.emit("typing",currentRoom);
+    clearTimeout(typingTimeout);
+    typingTimeout=setTimeout(()=>socket.emit("stopTyping",currentRoom),1000);
+  });
+
+  // --- Receive messages ---
+  socket.on("message",msg=>{
+    renderMessage(msg);
+    if(messengerModal.style.display!=="flex" && msg.username!==username){
+      unreadCount++; badge.style.display="inline"; badge.textContent=unreadCount;
+    }
+  });
+
+  // --- Online members ---
+  socket.on("updateMembers",members=>{
+    membersContainer.innerHTML="";
+    members.forEach(member=>{
+      if(member.username===username) return;
+      const div=document.createElement("div");
+      div.className="memberItem";
+      div.innerHTML=`<span class="status ${member.online?"online":"offline"}"></span><img src="${member.avatar||'/default-avatar.png'}" class="msgAvatar"> ${member.username}`;
+      div.onclick=()=>{
+        currentRoom=[username,member.username].sort().join("#");
+        socket.emit("startPrivateChat",member.username);
+        messagesDiv.innerHTML="";
+      };
+      membersContainer.appendChild(div);
+    });
+  });
+
+  // --- Typing events ---
+  socket.on("userTyping",user=>{typingDiv.textContent=`${user} is typing...`;});
+  socket.on("userStopTyping",user=>{typingDiv.textContent="";});
+
+  // --- Toggle modal ---
+  toggleBtn.onclick=()=>{ messengerModal.style.display="flex"; unreadCount=0; badge.style.display="none"; socket.emit("markRoomRead",currentRoom); };
+  closeBtn.onclick=()=>{ messengerModal.style.display="none"; };
+
+  // --- Emoji toggle ---
+  emojiBtn.onclick=()=>{ emojiPicker.style.display = emojiPicker.style.display==="flex"?"none":"flex"; };
+
+  // --- Image upload ---
+  imageBtn.onclick=()=>{ imageInput.click(); };
+  imageInput.onchange=()=>{
+    const file=imageInput.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=e=>{ socket.emit("chatMessage",{text:e.target.result, room:currentRoom, type:"image"}); };
+    reader.readAsDataURL(file);
+  };
+
+  // --- Scroll to bottom ---
+  scrollBtn.onclick=()=>{ messagesDiv.scrollTop = messagesDiv.scrollHeight; scrollBtn.style.display="none"; };
+  messagesDiv.onscroll=()=>{ scrollBtn.style.display = (messagesDiv.scrollTop + messagesDiv.clientHeight < messagesDiv.scrollHeight-50) ? "block" : "none"; };
+
+})();
+</script>
 
   // Online members
   socket.on("updateMembers", members=>{
