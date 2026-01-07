@@ -638,6 +638,75 @@ a.button{
   });
 })();
 </script>
+    <script src="/socket.io/socket.io.js"></script>
+<script>
+(async () => {
+  const res = await fetch("/api/session", { credentials: "include" });
+  if (!res.ok) return window.location.href = "/Login.html";
+  const user = await res.json();
+  const username = user.username;
+  const avatar = user.avatar || "/default-avatar.png";
+  const socket = io({ auth: { username, avatar } });
+
+  let currentRoom = "general";
+
+  const messengerModal = document.getElementById("messengerModal");
+  const toggleBtn = document.getElementById("messengerToggle");
+  const closeBtn = document.getElementById("closeMessenger");
+  const messagesDiv = document.getElementById("messagesPopup");
+  const chatInput = document.getElementById("chatInputPopup");
+  const sendBtn = document.getElementById("sendBtnPopup");
+  const membersContainer = document.getElementById("membersContainerPopup");
+
+  function renderMessage(msg) {
+    const div = document.createElement("div");
+    div.className = "message " + (msg.username === username ? "self" : "other");
+    div.innerHTML = `
+      ${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ""}
+      <span><strong>${msg.username}</strong>: ${msg.text}</span>
+    `;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  // Chat send
+  sendBtn.onclick = () => {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    socket.emit("chatMessage", { text, room: currentRoom });
+    chatInput.value = "";
+  };
+
+  chatInput.addEventListener("keypress", e => {
+    if (e.key === "Enter") sendBtn.click();
+  });
+
+  // Receive messages
+  socket.on("message", msg => renderMessage(msg));
+
+  // Online members
+  socket.on("updateMembers", members => {
+    membersContainer.innerHTML = "";
+    members.forEach(member => {
+      if (member.username === username) return;
+      const div = document.createElement("div");
+      div.className = "memberItem";
+      div.innerHTML = `<img src="${member.avatar || '/default-avatar.png'}" class="msgAvatar"> ${member.username}`;
+      div.onclick = () => {
+        currentRoom = [username, member.username].sort().join("#");
+        socket.emit("startPrivateChat", member.username);
+        messagesDiv.innerHTML = "";
+      };
+      membersContainer.appendChild(div);
+    });
+  });
+
+  // Toggle chat modal
+  toggleBtn.onclick = () => messengerModal.style.display = "flex";
+  closeBtn.onclick = () => messengerModal.style.display = "none";
+})();
+</script>
+
 
 </script>
 
