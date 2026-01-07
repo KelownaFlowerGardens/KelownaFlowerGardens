@@ -273,26 +273,6 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 .offline { background:#aaa; }
 </style>
 
-<script src="/socket.io/socket.io.js"></script>
-<script>
-(async () => {
-
-
-  const socket = io({ auth: { username, avatar } });
-  let currentRoom = "general";
-  let unreadCount = 0;
-
-  // --- DOM ---
-  const messengerModal = document.getElementById("messengerModal");
-  const toggleBtn = document.getElementById("messengerToggle");
-  const closeBtn = document.getElementById("closeMessenger");
-  const messagesDiv = document.getElementById("messagesPopup");
-  const chatInput = document.getElementById("chatInputPopup");
-  const sendBtn = document.getElementById("sendBtnPopup");
-  const membersContainer = document.getElementById("membersContainerPopup");
-  const typingDiv = document.getElementById("typingIndicator");
-  const badge = document.getElementById("chatBadge");
-
   // --- Functions ---
   function renderMessage(msg) {
     const div = document.createElement("div");
@@ -390,31 +370,6 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
     <button id="imageBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">📷</button>
     <button id="emojiBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">😊</button>
   </div>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-(async () => {
- 
-  const socket = io({ auth:{username, avatar} });
-  let currentRoom = "general";
-  let unreadCount = 0;
-
-  const messengerModal = document.getElementById("messengerModal");
-  const toggleBtn = document.getElementById("messengerToggle");
-  const closeBtn = document.getElementById("closeMessenger");
-  const messagesDiv = document.getElementById("chatWindowPopup");
-  const chatInput = document.getElementById("chatInputPopup");
-  const sendBtn = document.getElementById("sendBtnPopup");
-  const membersContainer = document.getElementById("membersListPopup");
-  const badge = document.getElementById("chatBadge");
-
-  function renderMessage(msg){
-    const div = document.createElement("div");
-    div.className = "message " + (msg.username===username?"self":"other");
-    div.innerHTML = `${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<span><strong>${msg.username}</strong>: ${msg.text}</span>`;
-    messagesDiv.appendChild(div);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
 
   // Send message
   sendBtn.onclick = () => {
