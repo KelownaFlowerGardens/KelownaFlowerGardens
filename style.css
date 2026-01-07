@@ -1166,6 +1166,30 @@ input{
 }
 
 }
+.membersList {
+  background:#fff0f5;
+  border:1px solid #F68686;
+  padding:10px;
+  border-radius:12px;
+  margin-bottom:10px;
+}
+.memberItem {
+  display:flex;
+  align-items:center;
+  padding:4px;
+  cursor:pointer;
+  margin-bottom:4px;
+}
+.memberItem:hover {
+  background:#F68686;
+  color:white;
+}
+.memberItem img {
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  margin-right:6px;
+}
 
 
 
