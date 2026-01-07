@@ -351,14 +351,6 @@ socket.on("userStopTyping", (user) => {
   typingDiv.textContent = "";
 });
 
-// Mark messages as read when modal opens
-toggleBtn.onclick = () => {
-  messengerModal.style.display = "flex";
-  unreadCount = 0;
-  badge.style.display = "none";
-  socket.emit("markRoomRead", currentRoom);
-};
-
   (async () => {
  
 
@@ -429,13 +421,7 @@ toggleBtn.onclick = () => {
     });
   });
 
-  // Toggle messenger modal
-  toggleBtn.onclick = ()=>{
-    messengerModal.style.display="flex";
-    unreadCount=0;
-    badge.style.display="none";
-    socket.emit("markRoomRead",currentRoom);
-  };
+
   closeBtn.onclick = ()=>messengerModal.style.display="none";
 
   if("Notification" in window) Notification.requestPermission();
@@ -559,10 +545,6 @@ function renderMessage(msg) {
   socket.on("userTyping", user => { typingDiv.textContent=`${user} is typing...`; });
   socket.on("userStopTyping", user => { typingDiv.textContent=""; });
 
-  // --- Toggle modal ---
-  toggleBtn.onclick = () => { messengerModal.style.display="flex"; unreadCount=0; badge.style.display="none"; socket.emit("markRoomRead", currentRoom); };
-  closeBtn.onclick = () => { messengerModal.style.display="none"; };
-})();
 </script>
 
   
