@@ -425,9 +425,6 @@ a.button{
  </div>
 </script>
 
-</body>
-</html>
-
 
   <div class="card">
     <h3>Member Benefits</h3>
@@ -458,7 +455,28 @@ a.button{
   <input type="text" id="chatInput" placeholder="Type a message...">
   <button id="sendBtn">Send</button>
 </div>
+<!-- Messenger Popup -->
+<div id="messengerModal">
+  <div id="messengerHeader">
+    💬 Members Chat
+    <span id="closeMessenger">×</span>
+  </div>
+  <div id="membersListPopup">
+    <h4>Online Members</h4>
+    <div id="membersContainerPopup"></div>
+  </div>
+  <div id="chatWindowPopup">
+    <div id="messagesPopup"></div>
+  </div>
+  <input type="text" id="chatInputPopup" placeholder="Type a message...">
+  <button id="sendBtnPopup">Send</button>
+</div>
 
+<!-- Messenger Toggle Button -->
+<button id="messengerToggle">💬</button>
+
+
+</body>
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
