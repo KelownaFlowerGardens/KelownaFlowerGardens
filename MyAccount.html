@@ -481,6 +481,54 @@ a.button{
   margin: 0.5rem 0;
 }
 </style>
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const res = await fetch("/api/session", { credentials: "include" });
+  if (!res.ok) return window.location.href = "/Login.html";
+  const user = await res.json();
+
+  const avatarPreview = document.getElementById("avatarPreview");
+  if (user.avatar) avatarPreview.src = user.avatar;
+
+  const avatarForm = document.getElementById("avatarForm");
+  const avatarInput = document.getElementById("avatarInput");
+
+  // Preview selected image
+  avatarInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => avatarPreview.src = reader.result;
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Upload to server
+  avatarForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const file = avatarInput.files[0];
+    if (!file) return alert("Please select an image!");
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    const uploadRes = await fetch("/api/upload-avatar", {
+      method: "POST",
+      credentials: "include",
+      body: formData
+    });
+
+    const data = await uploadRes.json();
+    if (uploadRes.ok) {
+      avatarPreview.src = data.avatarUrl;
+      alert("Profile picture updated!");
+    } else {
+      alert(data.error || "Upload failed.");
+    }
+  });
+});
+</script>
+
 
 <script>
 (async () => {
