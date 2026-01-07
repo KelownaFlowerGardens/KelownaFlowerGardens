@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" />
+
+<title>Member Dashboard</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:260px;
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1rem;
+}
+
+.sidebar h5{
+  margin:.75rem 0;
+  color:var(--pink);
+}
+
+.sidebar a,
+.dropdown-btn{
+  display:block;
+  width:100%;
+  padding:.6rem;
+  margin:.2rem 0;
+  background:#fff;
+  color:var(--pink);
+  border:none;
+  text-align:left;
+  font-size:.95rem;
+  cursor:pointer;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+.dropdown-container{
+  display:none;
+  padding-left:1rem;
+}
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+    <!-- LOGGED IN AVATAR -->
+<div class="member-avatar">
+  <button class="avatar-btn" onclick="toggleMemberMenu()">
+    <img src="KFGL.jpg" alt="Member Avatar">
+  </button>
+
+  <div class="member-dropdown" id="memberMenu">
+    <div class="member-name">Welcome, Member</div>
+
+    <a href="MembersDashboard.html">🌸 Dashboard</a>
+    <a href="Profile.html">👤 Profile</a>
+    <a href="Calendar.html">📅 Calendar</a>
+    <a href="Logout.html" class="logout">🚪 Log Out</a>
+  </div>
+</div>
+/* ---------- MEMBER AVATAR ---------- */
+.member-avatar{
+  position:relative;
+  margin-left:auto;
+}
+
+.avatar-btn{
+  border:none;
+  background:none;
+  cursor:pointer;
+  padding:0;
+}
+
+.avatar-btn img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #F68686;
+}
+
+/* Dropdown Menu */
+.member-dropdown{
+  display:none;
+  position:absolute;
+  right:0;
+  top:120%;
+  background:#fff;
+  width:220px;
+  border-radius:14px;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+  overflow:hidden;
+  z-index:2000;
+}
+
+.member-name{
+  padding:.75rem 1rem;
+  font-weight:600;
+  color:#F68686;
+  border-bottom:1px solid #eee;
+  text-align:center;
+}
+
+.member-dropdown a{
+  display:block;
+  padding:.7rem 1rem;
+  text-decoration:none;
+  color:#444;
+  font-size:.9rem;
+}
+
+.member-dropdown a:hover{
+  background:#F68686;
+  color:white;
+}
+
+.member-dropdown .logout{
+  color:#c0392b;
+}
+
+.member-dropdown .logout:hover{
+  background:#c0392b;
+  color:white;
+}
+
+/* Mobile Friendly */
+@media (max-width:768px){
+  .member-avatar{
+    margin:0 auto;
+  }
+}
+
+</style>
+</head>
+
+    <script>
+function toggleMemberMenu(){
+  const menu = document.getElementById("memberMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+/* Close menu when clicking elsewhere */
+document.addEventListener("click", function(e){
+  const avatar = document.querySelector(".member-avatar");
+  if (avatar && !avatar.contains(e.target)) {
+    document.getElementById("memberMenu").style.display = "none";
+  }
+});
+</script>
+<script>
+fetch("http://localhost:3000/api/session", {
+  credentials: "include"
+})
+.then(res => res.json())
+.then(data => {
+  if (!data.loggedIn) {
+    window.location.href = "Login.html";
+  }
+});
+</script>
+
+    <script>
+fetch("http://localhost:3000/api/session", {
+  credentials: "include"
+})
+.then(res => res.json())
+.then(data => {
+  const navAuth = document.getElementById("nav-auth");
+
+  if (!data.loggedIn) {
+    // Logged OUT
+    navAuth.innerHTML = `
+      <a href="Login.html" class="btn-outline">Login</a>
+      <a href="Members.html" class="btn-primary">Become a Member</a>
+    `;
+    return;
+  }
+
+  // Logged IN
+  navAuth.innerHTML = `
+    <button class="avatar-btn" id="avatarBtn">
+      <img src="avatar-default.png" alt="Member Avatar">
+    </button>
+
+    <div class="avatar-menu" id="avatarMenu">
+      <a href="MembersDashboard.html">Dashboard</a>
+      <a href="Profile.html">My Profile</a>
+      <a href="#" id="logoutBtn">Log Out</a>
+    </div>
+  `;
+
+  // Toggle menu
+  document.getElementById("avatarBtn").onclick = () => {
+    document.getElementById("avatarMenu").classList.toggle("show");
+  };
+
+  // Logout
+  document.getElementById("logoutBtn").onclick = async () => {
+    await fetch("http://localhost:3000/api/logout", {
+      method: "POST",
+      credentials: "include"
+    });
+    window.location.href = "LoggedOut.html";
+  };
+});
+</script>
+
+<script>
+fetch("http://localhost:3000/api/session", {
+  credentials: "include"
+})
+.then(res => res.json())
+.then(data => {
+  if (data.loggedIn && data.status === "active") {
+    document.querySelector(".avatar-wrap").style.display = "block";
+  } else {
+    document.querySelector(".avatar-wrap").style.display = "none";
+  }
+});
+</script>
+
+<body>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+<nav>
+  <a href="MemberHome.html">Main</a>
+    <a href="MemberGardenDesign.html">Garden Design</a>
+      <a href="MemberAbout.html">About</a>
+    <a href="MemberRegional Species.html">Regional Species</a>
+      <a href="MemberAwards.html">Awards</a>
+    <a href="MemberRoses.html">Roses</a>
+      <a href="MemberValley Art.html">Valley Art</a>
+    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+    <a href="MemberResources.html">Resources</a>
+      <a href="MemberCalendar.html">Calendar</a>
+    <a href="MembersDashboard.html">Members</a>
+    <a href="MemberContact.html">Contact</a>
+</nav>
+    <div class="nav-auth" id="nav-auth"></div>
+
+</header>
+    <div class="login-avatar">...</div>  <!-- logged out -->
+<div class="member-avatar">...</div> <!-- logged in -->
+
+
+<div class="wrapper">
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#FDD7D7;
+}
+.dashboard{
+  max-width:900px;
+  margin:auto;
+  padding:2rem;
+}
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:1.5rem;
+  margin-bottom:1rem;
+}
+h1{color:#F68686}
+a.button{
+  display:inline-block;
+  padding:.6rem 1.2rem;
+  border-radius:25px;
+  background:#F68686;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<head>
+  <title>Member Dashboard</title>
+</head>
+<div class="card">
+  <h2>My Account</h2>
+  <form id="accountForm">
+    <label>Username</label>
+    <input type="text" id="username" disabled>
+    <label>Email</label>
+    <input type="email" id="email" required>
+    <label>Membership Plan</label>
+    <select id="plan">
+      <option value="basic">Basic</option>
+      <option value="premium">Premium</option>
+    </select>
+    <label>Status</label>
+    <input type="text" id="status" disabled>
+    <label>Member Since</label>
+    <input type="text" id="since" disabled>
+    <button type="submit">Update Account</button>
+    <p id="updateMsg" style="color:green;"></p>
+  </form>
+</div>
+
+  <div class="card">
+    <h3>Member Benefits</h3>
+    <ul>
+      <li>Garden Party Event Access</li>
+      <li>Flower Garden Awards Voting</li>
+      <li>Member-Only Resources - Newsletters</li>
+      <li>Garden Party Hosting</li>
+      <li>Discounts at Affiliated Businesses</li>
+      <li>Online Retail</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <a class="button" href="/Roses.html">View Rose Database</a>
+    <a class="button" href="/Calendar.html">Events Calendar</a>
+  </div>
+    
+<div class="card" id="messengerCard">
+  <h3>Members Chat</h3>
+
+  <div class="membersList" id="membersList">
+    <h4>Online Members</h4>
+    <div id="membersContainer"></div>
+  </div>
+
+  <div id="chatWindow"><div id="messages"></div></div>
+  <input type="text" id="chatInput" placeholder="Type a message...">
+  <button id="sendBtn">Send</button>
+</div>
+<script>
+(async () => {
+  const res = await fetch("/api/session", { credentials:"include" });
+  if(!res.ok) return window.location.href="/Login.html";
+  const user = await res.json();
+
+  document.getElementById("username").value = user.username;
+  document.getElementById("email").value = user.email;
+  document.getElementById("plan").value = user.plan;
+  document.getElementById("status").value = user.paid ? "Active" : "Payment Required";
+  document.getElementById("since").value = new Date(user.created_at).toLocaleDateString();
+})();
+
+document.getElementById("accountForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const plan = document.getElementById("plan").value;
+
+  const res = await fetch("/api/update-account", {
+    method:"POST",
+    credentials:"include",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ email, plan })
+  });
+
+  const msgEl = document.getElementById("updateMsg");
+  if(res.ok) msgEl.textContent = "Account updated successfully!";
+  else { msgEl.textContent = "Error updating account"; msgEl.style.color="red"; }
+});
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+(async () => {
+  const res = await fetch("/api/session");
+  if (!res.ok) return window.location.href = "/Login.html";
+  const user = await res.json();
+
+  const username = user.username;
+  const avatar = user.avatar;
+
+  const socket = io({ auth: { username, avatar, room: "general" } });
+
+  const messagesDiv = document.getElementById("messages");
+  const chatInput = document.getElementById("chatInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const membersContainer = document.getElementById("membersContainer");
+
+  let currentRoom = "general";
+
+  function renderMessage(msg) {
+    const div = document.createElement("div");
+    div.className = "message " + (msg.username === username ? "self" : "other");
+    div.innerHTML = `
+      ${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ""}
+      <span class="msgText"><strong>${msg.username}</strong> [${msg.timestamp}]: ${msg.text}</span>
+    `;
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  socket.on("message", msg => renderMessage(msg));
+
+  sendBtn.addEventListener("click", () => {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    socket.emit("chatMessage", { text, room: currentRoom });
+    chatInput.value = "";
+  });
+
+  chatInput.addEventListener("keypress", e => {
+    if (e.key === "Enter") sendBtn.click();
+  });
+
+  // Render online members
+  socket.on("updateMembers", members => {
+    membersContainer.innerHTML = "";
+    members.forEach(member => {
+      if (member.username === username) return; // skip self
+      const div = document.createElement("div");
+      div.className = "memberItem";
+      div.innerHTML = `<img src="${member.avatar}" class="msgAvatar"> ${member.username}`;
+      div.onclick = () => {
+        currentRoom = [username, member.username].sort().join("#"); // private room
+        socket.emit("startPrivateChat", member.username);
+        messagesDiv.innerHTML = ""; // clear chat window for private
+      };
+      membersContainer.appendChild(div);
+    });
+  });
+})();
+</script>
+
+</script>
+
+</div>
+
+
+  <div class="card">
+    <a class="button" href="https://kelownaflowergardens.github.io/KelownaFlowerGardens/LoggedOut.html">Log Out</a>
+  </div>
+    <script>
+fetch("http://localhost:3000/api/session", {
+  credentials: "include"
+})
+.then(res => res.json())
+.then(data => {
+  if (!data.loggedIn) {
+    window.location.href = "Login.html";
+  }
+  if (!data.user.paid) {
+    window.location.href = "Members.html";
+  }
+});
+</script>
+    <p id="status"></p>
+
+<script>
+fetch("http://localhost:3000/api/session", { credentials: "include" })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("status").textContent =
+      data.user.paid ? "Active Member" : "Payment Required";
+  });
+</script>
+
+
+</div>
+</body>
+</html>
