@@ -477,6 +477,106 @@ a.button{
 
 
 </body>
+    <style>
+#messengerToggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background: #F68686;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+#messengerModal {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10000;
+}
+
+#messengerHeader {
+  background: #F68686;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+#messengerHeader span {
+  cursor: pointer;
+}
+
+#membersListPopup {
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+#membersListPopup .memberItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0;
+  cursor: pointer;
+}
+
+#membersListPopup .memberItem:hover {
+  background: #FDD7D7;
+  border-radius: 6px;
+}
+
+#chatWindowPopup {
+  flex: 1;
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+
+.message.self { text-align: right; }
+.message.other { text-align: left; }
+
+.message img.msgAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+#chatInputPopup {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  width: calc(100% - 60px);
+  margin: 0.3rem;
+  border-radius: 12px;
+}
+
+#sendBtnPopup {
+  background: #F68686;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-right: 0.3rem;
+}
+</style>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
