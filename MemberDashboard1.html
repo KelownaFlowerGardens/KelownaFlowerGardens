@@ -659,6 +659,170 @@ toggleBtn.onclick = () => {
   if("Notification" in window) Notification.requestPermission();
 })();
 
+<!-- Emoji + Image Input added -->
+<!-- Messenger Toggle Button -->
+<button id="messengerToggle">💬<span id="chatBadge" class="badge">0</span></button>
+
+<!-- Messenger Modal -->
+<div id="messengerModal">
+  <div id="messengerHeader">
+    💬 Members Chat
+    <span id="closeMessenger">×</span>
+  </div>
+  <div id="membersListPopup">
+    <h4>Online Members</h4>
+    <div id="membersContainerPopup"></div>
+  </div>
+  <div id="chatWindowPopup">
+    <div id="messagesPopup"></div>
+    <div id="typingIndicator" style="font-size:0.8rem; color:#666; padding:0.3rem 0;"></div>
+  </div>
+  <div style="display:flex; gap:4px; padding:0.3rem;">
+    <input type="text" id="chatInputPopup" placeholder="Type a message..." style="flex:1; border-radius:12px; padding:0.5rem; border:1px solid #ccc;">
+    <button id="sendBtnPopup" style="border:none; background:#F68686; color:#fff; border-radius:12px; padding:0.5rem 0.8rem;">Send</button>
+    <input type="file" id="imageInput" accept="image/*" style="display:none;">
+    <button id="imageBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">📷</button>
+    <button id="emojiBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">😊</button>
+  </div>
+  <!-- Emoji picker container -->
+  <div id="emojiPicker" style="display:none; border-top:1px solid #eee; padding:0.5rem; max-height:150px; overflow-y:auto;"></div>
+</div>
+
+<style>
+/* Toggle Button & Modal same as before */
+#messengerToggle { position: fixed; bottom: 20px; right: 20px; z-index: 9999; background:#F68686; color:#fff; border:none; padding:0.7rem 1rem; border-radius:50px; font-size:1.2rem; cursor:pointer; }
+.badge { position:absolute; top:-5px; right:-5px; background:red; color:white; font-size:12px; padding:2px 6px; border-radius:50%; display:none; }
+#messengerModal { position: fixed; bottom: 70px; right: 20px; width: 320px; max-height: 500px; background: #fff; border-radius: 14px; box-shadow:0 8px 20px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow:hidden; z-index:10000; font-family: system-ui; }
+#messengerHeader { background: #F68686; color:#fff; padding:0.6rem 1rem; font-weight:bold; display:flex; justify-content:space-between; cursor:pointer; }
+#messengerHeader span{cursor:pointer;}
+#membersListPopup { padding:0.5rem; border-bottom:1px solid #eee; max-height:80px; overflow-y:auto;}
+#membersListPopup .memberItem { display:flex; align-items:center; gap:0.5rem; padding:0.2rem 0; cursor:pointer; }
+#membersListPopup .memberItem:hover { background:#FDD7D7; border-radius:6px; }
+#chatWindowPopup { flex:1; padding:0.5rem; overflow-y:auto; display:flex; flex-direction:column; }
+.message.self { text-align:right; }
+.message.other { text-align:left; }
+.message img.msgAvatar { width:30px; height:30px; border-radius:50%; vertical-align:middle; margin-right:4px; }
+.receipt { font-size:12px; color:#999; margin-left:6px; }
+.status { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:6px; }
+.online { background:#2ecc71; }
+.offline { background:#aaa; }
+#emojiPicker { display:flex; flex-wrap:wrap; gap:4px; }
+#emojiPicker span { cursor:pointer; font-size:1.2rem; padding:4px; }
+</style>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+(async()=>{
+  const res = await fetch("/api/session",{credentials:"include"});
+  if(!res.ok) return window.location.href="/Login.html";
+  const user = await res.json();
+  const username = user.username;
+  const avatar = user.avatar || "/default-avatar.png";
+  const socket = io({auth:{username,avatar}});
+  let currentRoom = "general";
+  let unreadCount=0;
+
+  const messengerModal = document.getElementById("messengerModal");
+  const toggleBtn = document.getElementById("messengerToggle");
+  const closeBtn = document.getElementById("closeMessenger");
+  const messagesDiv = document.getElementById("messagesPopup");
+  const chatInput = document.getElementById("chatInputPopup");
+  const sendBtn = document.getElementById("sendBtnPopup");
+  const membersContainer = document.getElementById("membersContainerPopup");
+  const typingDiv = document.getElementById("typingIndicator");
+  const badge = document.getElementById("chatBadge");
+  const emojiPicker = document.getElementById("emojiPicker");
+  const emojiBtn = document.getElementById("emojiBtn");
+  const imageBtn = document.getElementById("imageBtn");
+  const imageInput = document.getElementById("imageInput");
+
+  // --- Emoji list ---
+  const emojis = ["😀","😂","😍","🥰","😎","😢","👍","🙏","🎉","💐","🌹","🍀"];
+  emojis.forEach(e=>{
+    const span=document.createElement("span");
+    span.textContent=e;
+    span.onclick=()=>{ chatInput.value+=e; chatInput.focus(); };
+    emojiPicker.appendChild(span);
+  });
+
+  // --- Render message ---
+  function renderMessage(msg){
+    const div=document.createElement("div");
+    div.className="message "+(msg.username===username?"self":"other");
+    if(msg.type==="image"){
+      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<strong>${msg.username}</strong>:<br/><img src="${msg.text}" style="max-width:200px; border-radius:10px;">`;
+    } else {
+      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<span><strong>${msg.username}</strong>: ${msg.text}</span>`;
+    }
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop=messagesDiv.scrollHeight;
+  }
+
+  // --- Send text message ---
+  sendBtn.onclick=()=>{
+    const text=chatInput.value.trim();
+    if(!text) return;
+    socket.emit("chatMessage",{text,room:currentRoom,type:"text"});
+    chatInput.value="";
+  };
+  chatInput.addEventListener("keypress",e=>{if(e.key==="Enter") sendBtn.click();});
+
+  // --- Typing indicator ---
+  let typingTimeout;
+  chatInput.addEventListener("input",()=>{
+    socket.emit("typing",currentRoom);
+    clearTimeout(typingTimeout);
+    typingTimeout=setTimeout(()=>socket.emit("stopTyping",currentRoom),1000);
+  });
+
+  // --- Receive messages ---
+  socket.on("message",msg=>{
+    renderMessage(msg);
+    if(messengerModal.style.display!=="flex" && msg.username!==username){
+      unreadCount++; badge.style.display="inline"; badge.textContent=unreadCount;
+    }
+  });
+
+  // --- Online members ---
+  socket.on("updateMembers",members=>{
+    membersContainer.innerHTML="";
+    members.forEach(member=>{
+      if(member.username===username) return;
+      const div=document.createElement("div");
+      div.className="memberItem";
+      div.innerHTML=`<span class="status ${member.online?"online":"offline"}"></span><img src="${member.avatar||'/default-avatar.png'}" class="msgAvatar"> ${member.username}`;
+      div.onclick=()=>{
+        currentRoom=[username,member.username].sort().join("#");
+        socket.emit("startPrivateChat",member.username);
+        messagesDiv.innerHTML="";
+      };
+      membersContainer.appendChild(div);
+    });
+  });
+
+  // --- Typing events ---
+  socket.on("userTyping",user=>{typingDiv.textContent=`${user} is typing...`;});
+  socket.on("userStopTyping",user=>{typingDiv.textContent="";});
+
+  // --- Toggle modal ---
+  toggleBtn.onclick=()=>{ messengerModal.style.display="flex"; unreadCount=0; badge.style.display="none"; socket.emit("markRoomRead",currentRoom); };
+  closeBtn.onclick=()=>{ messengerModal.style.display="none"; };
+
+  // --- Emoji toggle ---
+  emojiBtn.onclick=()=>{ emojiPicker.style.display = emojiPicker.style.display==="flex"?"none":"flex"; };
+
+  // --- Image upload ---
+  imageBtn.onclick=()=>{ imageInput.click(); };
+  imageInput.onchange=()=>{
+    const file=imageInput.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=(e)=>{ socket.emit("chatMessage",{text:e.target.result, room:currentRoom, type:"image"}); };
+    reader.readAsDataURL(file);
+  };
+
+})();
+</script>
 
   // Online members
   socket.on("updateMembers", members=>{
