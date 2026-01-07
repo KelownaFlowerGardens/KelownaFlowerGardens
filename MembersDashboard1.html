@@ -351,25 +351,6 @@ socket.on("userStopTyping", (user) => {
   typingDiv.textContent = "";
 });
 
-  (async () => {
- 
-
-  const socket = io({ auth:{username, avatar} });
-  let currentRoom = "general";
-  let unreadCount = 0;
-
-  const messengerModal = document.getElementById("messengerModal");
-  const toggleBtn = document.getElementById("messengerToggle");
-  const closeBtn = document.getElementById("closeMessenger");
-  const messagesDiv = document.getElementById("chatWindowPopup");
-  const chatInput = document.getElementById("chatInputPopup");
-  const sendBtn = document.getElementById("sendBtnPopup");
-  const membersContainer = document.getElementById("membersListPopup");
-  const badge = document.getElementById("chatBadge");
-  const emojiBtn = document.getElementById("emojiBtn");
-  const imageInput = document.getElementById("imageInput");
-
-
   // Send text
   sendBtn.onclick = () => {
     const text = chatInput.value.trim();
