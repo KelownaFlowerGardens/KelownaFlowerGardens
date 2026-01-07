@@ -461,6 +461,27 @@ a.button{
   <input type="text" id="chatInput" placeholder="Type a message...">
   <button id="sendBtn">Send</button>
 </div>
+    <style>
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #F68686;
+  display: block;
+  margin: 1rem auto;
+}
+
+#avatarForm {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+#avatarInput {
+  margin: 0.5rem 0;
+}
+</style>
+
 <script>
 (async () => {
   const res = await fetch("/api/session", { credentials:"include" });
