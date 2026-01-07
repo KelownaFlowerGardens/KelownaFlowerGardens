@@ -273,6 +273,109 @@ closeBtn.onclick = () => modal.style.display = "none";
 
   <div id="emojiPicker"></div>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const socket = io();
+
+const modal = document.getElementById("messengerModal");
+const toggleBtn = document.getElementById("messengerToggle");
+const closeBtn = document.getElementById("closeMessenger");
+const messagesDiv = document.getElementById("messages");
+const membersList = document.getElementById("membersList");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const emojiBtn = document.getElementById("emojiBtn");
+const imageBtn = document.getElementById("imageBtn");
+const imageInput = document.getElementById("imageInput");
+const typingDiv = document.getElementById("typingIndicator");
+const badge = document.getElementById("chatBadge");
+const emojiPicker = document.getElementById("emojiPicker");
+
+let currentRoom = "general";
+let unread = 0;
+
+// Toggle modal
+toggleBtn.onclick = () => {
+  modal.style.display = "flex";
+  unread = 0;
+  badge.style.display = "none";
+};
+closeBtn.onclick = () => modal.style.display = "none";
+
+// Send message
+sendBtn.onclick = sendMessage;
+chatInput.onkeypress = e => e.key==="Enter" && sendMessage();
+
+function sendMessage(){
+  const text = chatInput.value.trim();
+  if(!text) return;
+  socket.emit("chatMessage",{room:currentRoom,text,type:"text"});
+  chatInput.value="";
+}
+
+// Typing indicator
+let typingTimer;
+chatInput.oninput = () => {
+  socket.emit("typing", currentRoom);
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(()=>socket.emit("stopTyping",currentRoom),800);
+};
+
+// Emoji picker
+["😀","😂","😍","🥰","😎","👍","🎉","🌹"].forEach(e=>{
+  const s=document.createElement("span");
+  s.textContent=e;
+  s.onclick=()=>chatInput.value+=e;
+  emojiPicker.appendChild(s);
+});
+emojiBtn.onclick = ()=>emojiPicker.style.display =
+  emojiPicker.style.display==="flex"?"none":"flex";
+
+// Image send
+imageBtn.onclick=()=>imageInput.click();
+imageInput.onchange=()=>{
+  const file=imageInput.files[0];
+  const r=new FileReader();
+  r.onload=e=>socket.emit("chatMessage",{room:currentRoom,text:e.target.result,type:"image"});
+  r.readAsDataURL(file);
+};
+
+// Receive messages
+socket.on("chatMessage",msg=>{
+  const div=document.createElement("div");
+  div.className="message "+(msg.self?"self":"other");
+  div.innerHTML = msg.type==="image"
+    ? `<img src="${msg.text}"> ✔✔`
+    : `${msg.text} ✔✔`;
+  messagesDiv.appendChild(div);
+  messagesDiv.scrollTop=messagesDiv.scrollHeight;
+
+  if(modal.style.display!=="flex"){
+    unread++;
+    badge.textContent=unread;
+    badge.style.display="inline-block";
+  }
+});
+
+// Typing events
+socket.on("typing",u=>typingDiv.textContent=u+" is typing…");
+socket.on("stopTyping",()=>typingDiv.textContent="");
+
+// Online members
+socket.on("members",members=>{
+  membersList.innerHTML="";
+  members.forEach(m=>{
+    const d=document.createElement("div");
+    d.className="member";
+    d.innerHTML=`<span class="status ${m.online?'online':'offline'}"></span>${m.username}`;
+    d.onclick=()=>{
+      currentRoom=[m.username,"YOU"].sort().join("#");
+      messagesDiv.innerHTML="";
+    };
+    membersList.appendChild(d);
+  });
+});
+</script>
 
 </script>
   <button id="messengerToggle">💬</button>
