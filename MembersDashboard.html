@@ -486,6 +486,17 @@ fetch("http://localhost:3000/api/session", {
   color:#999;
   margin-left:6px;
 }
+#typingIndicator::after{
+  content:'';
+  animation:dots 1.4s infinite;
+}
+
+@keyframes dots{
+  0%{content:''}
+  33%{content:'.'}
+  66%{content:'..'}
+  100%{content:'...'}
+}
 
 
 </script>
@@ -629,6 +640,7 @@ a.button{
   <div class="messengerHeader">
     Members Chat
     <span id="closeMessenger">×</span>
+      <div id="typingIndicator" style="font-size:13px;color:#999;padding:0 8px;"></div>
   </div>
 
   <div id="membersList"></div>
