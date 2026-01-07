@@ -305,18 +305,6 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
   };
   chatInput.addEventListener("keypress", e=>{if(e.key==="Enter") sendBtn.click();});
 
-  // Receive messages
-  socket.on("message", msg=>{
-    renderMessage(msg);
-    if(messengerModal.style.display!=="flex" && msg.username!==username){
-      unreadCount++;
-      badge.textContent = unreadCount;
-      badge.style.display="inline-block";
-      if(Notification.permission==="granted"){
-        new Notification(`New message from ${msg.username}`,{body:msg.text, icon:msg.avatar});
-      }
-    }
-  });
 
   let typingTimeout;
 
@@ -329,10 +317,6 @@ chatInput.addEventListener("input", () => {
   }, 1000);
 });
 
-// Render messages with read receipt
-function renderMessage(msg) {
-  const div = document.createElement("div");
-  div.className = "message " + (msg.username === username ? "self" : "other");
 
   let receiptHTML = "";
   if(msg.username === username && msg.readBy && msg.readBy.includes(msg.roomMember)){
@@ -426,20 +410,7 @@ toggleBtn.onclick = () => {
   // Click emoji button to trigger file input
   // (you can also add a dedicated image button if needed)
   // document.getElementById("imageBtn").onclick = ()=> imageInput.click();
- 
 
-  // Receive messages
-  socket.on("message", msg => {
-    renderMessage(msg);
-    if(messengerModal.style.display!=="flex" && msg.username!==username){
-      unreadCount++;
-      badge.textContent = unreadCount;
-      badge.style.display="inline-block";
-      if(Notification.permission==="granted"){
-        new Notification(`New message from ${msg.username}`,{body:msg.type==="text"?msg.text:"📷 Image", icon:msg.avatar});
-      }
-    }
-  });
 
   // Online members
   socket.on("updateMembers", members=>{
@@ -499,9 +470,18 @@ toggleBtn.onclick = () => {
 </style>
   
 <script>
-  // --- Functions ---
-   function renderMessage(msg){
-    const div = document.createElement("div");
+
+    // --- Functions ---
+  // Render messages with read receipt
+function renderMessage(msg) {
+  const div = document.createElement("div");
+  div.className = "message " + (msg.username === username ? "self" : "other");
+    if(messengerModal.style.display!=="flex" && msg.username!==username){
+      unreadCount++;
+      badge.textContent = unreadCount;
+      badge.style.display="inline-block";
+      if(Notification.permission==="granted"){
+        new Notification(`New message from ${msg.username}`,{body:msg.type==="text"?msg.text:"📷 Image", icon:msg.avatar});
     div.className = "message " + (msg.username===username?"self":"other");
     if(msg.type==="image"){
       div.innerHTML = `${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}
@@ -528,6 +508,16 @@ toggleBtn.onclick = () => {
     }
     messagesDiv.appendChild(div);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+   div.className="message "+(msg.username===username?"self":"other");
+    if(msg.type==="image"){
+      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<strong>${msg.username}</strong>:<br/><img src="${msg.text}" style="max-width:200px; border-radius:10px;">`;
+    } else {
+      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<span><strong>${msg.username}</strong>: ${msg.text}</span>`;
+    }
+    messagesDiv.appendChild(div);
+    scrollBtn.style.display = (messagesDiv.scrollTop + messagesDiv.clientHeight < messagesDiv.scrollHeight-50) ? "block" : "none";
+    if(messengerModal.style.display==="flex") messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
 
   // --- Send message ---
@@ -603,20 +593,7 @@ toggleBtn.onclick = () => {
     emojiPicker.appendChild(span);
   });
 
-  // --- Render message ---
-  function renderMessage(msg){
-    const div=document.createElement("div");
-    div.className="message "+(msg.username===username?"self":"other");
-    if(msg.type==="image"){
-      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<strong>${msg.username}</strong>:<br/><img src="${msg.text}" style="max-width:200px; border-radius:10px;">`;
-    } else {
-      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<span><strong>${msg.username}</strong>: ${msg.text}</span>`;
-    }
-    messagesDiv.appendChild(div);
-    scrollBtn.style.display = (messagesDiv.scrollTop + messagesDiv.clientHeight < messagesDiv.scrollHeight-50) ? "block" : "none";
-    if(messengerModal.style.display==="flex") messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-
+  
   // --- Send text message ---
   sendBtn.onclick=()=>{
     const text=chatInput.value.trim();
@@ -633,14 +610,7 @@ toggleBtn.onclick = () => {
     clearTimeout(typingTimeout);
     typingTimeout=setTimeout(()=>socket.emit("stopTyping",currentRoom),1000);
   });
-
-  // --- Receive messages ---
-  socket.on("message",msg=>{
-    renderMessage(msg);
-    if(messengerModal.style.display!=="flex" && msg.username!==username){
-      unreadCount++; badge.style.display="inline"; badge.textContent=unreadCount;
-    }
-  });
+;
 
   // --- Online members ---
   socket.on("updateMembers",members=>{
