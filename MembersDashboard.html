@@ -376,8 +376,84 @@ socket.on("members",members=>{
   });
 });
 </script>
+  <script>
+const MessageSchema = new mongoose.Schema({
+  room: String,
+  senderId: String,
+  senderName: String,
+  avatar: String,
+  type: { type:String, enum:["text","image"], default:"text" },
+  content: String,
+  readBy: [String],
+  createdAt: { type: Date, default: Date.now }
+});
+
+module.exports = mongoose.model("Message", MessageSchema);
+  io.use((socket,next)=>{
+  if(!socket.request.session.user) return next(new Error("unauthorized"));
+  socket.user = socket.request.session.user;
+  next();
+});
+
+io.on("connection", socket => {
+  socket.join("global");
+
+  socket.on("joinRoom", room => socket.join(room));
+
+  socket.on("chatMessage", async msg => {
+    const message = await Message.create({
+      room: msg.room,
+      senderId: socket.user.id,
+      senderName: socket.user.username,
+      avatar: socket.user.avatar,
+      content: msg.text,
+      type: msg.type,
+      readBy: [socket.user.id]
+    });
+    io.to(msg.room).emit("chatMessage", message);
+  });
+
+  socket.on("markRead", async ({room,userId})=>{
+    await Message.updateMany(
+      { room, readBy:{ $ne:userId }},
+      { $push:{ readBy:userId }}
+    );
+  });
+
+  socket.on("typing", room => {
+    socket.to(room).emit("typing", socket.user.username);
+  });
+
+  socket.on("stopTyping", room => {
+    socket.to(room).emit("stopTyping");
+  });
+
+  socket.on("disconnect", ()=>{/* update online status */});
+});
+socket.on("adminDeleteMessage", async id=>{
+  if(!socket.user.isAdmin) return;
+  await Message.findByIdAndDelete(id);
+  io.emit("deleteMessage", id);
+});
+if(msg.senderId === currentUserId){
+  const allRead = msg.readBy.length > 1;
+  receipt.textContent = allRead ? "✔✔" : "✔";
+}
+self.addEventListener("push", e=>{
+  const data = e.data.json();
+  self.registration.showNotification(data.title,{
+    body:data.body,
+    icon:"/icon.png"
+  });
+});
+webpush.sendNotification(user.subscription,{
+  title:"New Message",
+  body:`${sender}: ${text}`
+});
+if(navigator.vibrate) navigator.vibrate(10);
 
 </script>
+  
   <button id="messengerToggle">💬</button>
 </body>
 </html>
