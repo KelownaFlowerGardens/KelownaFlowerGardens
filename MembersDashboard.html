@@ -423,79 +423,6 @@ a.button{
   <p><strong>Status:</strong> <span id="status"></span></p>
   <p><strong>Member Since:</strong> <span id="since"></span></p>
  </div>
-    <div class="card" id="messengerCard">
-  <h3>Members Chat</h3>
-  <div id="chatWindow"><div id="messages"></div></div>
-  <input type="text" id="chatInput" placeholder="Type a message...">
-  <button id="sendBtn">Send</button>
-</div>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-(async () => {
-  // Fetch logged-in member info from session
-  const res = await fetch("/api/session");
-  if (!res.ok) return window.location.href = "/Login.html";
-  const user = await res.json();
-
-  const username = user.username;
-  const avatar = user.avatar;
-  const room = "general";
-
-  document.getElementById("username").textContent = username;
-
-  const socket = io({ auth: { username, avatar, room } });
-
-  const messagesDiv = document.getElementById("messages");
-  const chatInput = document.getElementById("chatInput");
-  const sendBtn = document.getElementById("sendBtn");
-
-  function renderMessage(msg) {
-    const div = document.createElement("div");
-    div.className = "message " + (msg.username === username ? "self" : "other");
-    div.innerHTML = `
-      ${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ""}
-      <span class="msgText"><strong>${msg.username}</strong> [${msg.timestamp}]: ${msg.text}</span>
-    `;
-    messagesDiv.appendChild(div);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-
-  socket.on("message", msg => renderMessage(msg));
-
-  sendBtn.addEventListener("click", () => {
-    const text = chatInput.value.trim();
-    if (!text) return;
-    socket.emit("chatMessage", text);
-    chatInput.value = "";
-  });
-
-  chatInput.addEventListener("keypress", e => {
-    if (e.key === "Enter") sendBtn.click();
-  });
-})();
-</script>
-
-<script>
-fetch("http://localhost:3000/api/dashboard", {
-  credentials: "include"
-})
-.then(res => {
-  if (!res.ok) {
-    window.location.href = "Login.html";
-    return;
-  }
-  return res.json();
-})
-.then(user => {
-  username.textContent = user.username;
-  email.textContent = user.email;
-  plan.textContent = user.plan;
-  status.textContent = user.status;
-  since.textContent = new Date(user.created_at).toLocaleDateString();
-});
-
-}
 </script>
 
 </body>
@@ -594,50 +521,6 @@ fetch("http://localhost:3000/api/dashboard", {
 })();
 </script>
 
-        <div class="card" id="messengerCard">
-  <h3>Member Chat</h3>
-  <div id="chatWindow">
-    <div id="messages"></div>
-  </div>
-  <input type="text" id="chatInput" placeholder="Type a message..." />
-  <button id="sendBtn">Send</button>
-</div>
-
-  <script src="/socket.io/socket.io.js"></script>
-
-<script>
-const socket = io({
-  auth: {
-    username: document.getElementById("username").textContent || "Guest"
-  }
-});
-
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
-const messagesDiv = document.getElementById("messages");
-
-function renderMessage(msg) {
-  const div = document.createElement("div");
-  div.textContent = msg.text;
-  div.className = "message " + (msg.self === document.getElementById("username").textContent ? "self" : "other");
-  messagesDiv.appendChild(div);
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-
-socket.on("message", (msg) => {
-  renderMessage(msg);
-});
-
-sendBtn.addEventListener("click", () => {
-  const text = chatInput.value.trim();
-  if (!text) return;
-  socket.emit("chatMessage", text);
-  chatInput.value = "";
-});
-
-chatInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendBtn.click();
-});
 </script>
 
 </div>
