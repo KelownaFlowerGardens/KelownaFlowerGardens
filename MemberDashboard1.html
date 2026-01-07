@@ -259,6 +259,117 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
       }
     }
   });
+  (async () => {
+  const res = await fetch("/api/session", { credentials:"include" });
+  if(!res.ok) return window.location.href="/Login.html";
+  const user = await res.json();
+  const username = user.username;
+  const avatar = user.avatar || "/default-avatar.png";
+
+  const socket = io({ auth:{username, avatar} });
+  let currentRoom = "general";
+  let unreadCount = 0;
+
+  const messengerModal = document.getElementById("messengerModal");
+  const toggleBtn = document.getElementById("messengerToggle");
+  const closeBtn = document.getElementById("closeMessenger");
+  const messagesDiv = document.getElementById("chatWindowPopup");
+  const chatInput = document.getElementById("chatInputPopup");
+  const sendBtn = document.getElementById("sendBtnPopup");
+  const membersContainer = document.getElementById("membersListPopup");
+  const badge = document.getElementById("chatBadge");
+  const emojiBtn = document.getElementById("emojiBtn");
+  const imageInput = document.getElementById("imageInput");
+
+  function renderMessage(msg){
+    const div = document.createElement("div");
+    div.className = "message " + (msg.username===username?"self":"other");
+    if(msg.type==="image"){
+      div.innerHTML = `${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}
+      <strong>${msg.username}</strong>: <br/><img src="${msg.text}" style="max-width:200px; border-radius:10px;">`;
+    } else {
+      div.innerHTML = `${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}
+      <span><strong>${msg.username}</strong>: ${msg.text}</span>`;
+    }
+    messagesDiv.appendChild(div);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  // Send text
+  sendBtn.onclick = () => {
+    const text = chatInput.value.trim();
+    if(!text) return;
+    socket.emit("chatMessage",{text, room:currentRoom, type:"text"});
+    chatInput.value="";
+  };
+
+  chatInput.addEventListener("keypress", e => { if(e.key==="Enter") sendBtn.click(); });
+
+  // Send emoji
+  emojiBtn.onclick = () => {
+    const emoji = prompt("Enter emoji or text:");
+    if(!emoji) return;
+    socket.emit("chatMessage",{text:emoji, room:currentRoom, type:"text"});
+  };
+
+  // Send image
+  imageInput.addEventListener("change", e => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      socket.emit("chatMessage",{text:reader.result, room:currentRoom, type:"image"});
+    };
+    reader.readAsDataURL(file);
+    imageInput.value = "";
+  });
+
+  // Click emoji button to trigger file input
+  // (you can also add a dedicated image button if needed)
+  // document.getElementById("imageBtn").onclick = ()=> imageInput.click();
+
+  // Receive messages
+  socket.on("message", msg => {
+    renderMessage(msg);
+    if(messengerModal.style.display!=="flex" && msg.username!==username){
+      unreadCount++;
+      badge.textContent = unreadCount;
+      badge.style.display="inline-block";
+      if(Notification.permission==="granted"){
+        new Notification(`New message from ${msg.username}`,{body:msg.type==="text"?msg.text:"📷 Image", icon:msg.avatar});
+      }
+    }
+  });
+
+  // Online members
+  socket.on("updateMembers", members=>{
+    membersContainer.innerHTML="";
+    members.forEach(member=>{
+      if(member.username===username) return;
+      const div = document.createElement("div");
+      div.className="memberItem";
+      div.innerHTML = `<img src="${member.avatar || '/default-avatar.png'}" class="msgAvatar">${member.username}`;
+      div.onclick=()=>{
+        currentRoom=[username, member.username].sort().join("#");
+        socket.emit("startPrivateChat",member.username);
+        messagesDiv.innerHTML="";
+      };
+      membersContainer.appendChild(div);
+    });
+  });
+
+  // Toggle messenger modal
+  toggleBtn.onclick = ()=>{
+    messengerModal.style.display="flex";
+    unreadCount=0;
+    badge.style.display="none";
+    socket.emit("markRoomRead",currentRoom);
+  };
+  closeBtn.onclick = ()=>messengerModal.style.display="none";
+
+  if("Notification" in window) Notification.requestPermission();
+})();
+
 
   // Online members
   socket.on("updateMembers", members=>{
