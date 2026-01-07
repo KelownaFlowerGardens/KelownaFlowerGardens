@@ -89,11 +89,11 @@ nav a:hover { background:var(--pink); color:#fff; }
 h1{color:#F68686}
 a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; background:#F68686; color:#fff; text-decoration:none; font-weight:600; }
 
-/* Messenger Modal */
-#messengerToggle {
-  position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-  background: #F68686; color: #fff; border: none; padding: 0.7rem 1rem; border-radius: 50px; font-size: 1.2rem; cursor: pointer;
-}
+#messengerModal {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+
 
 #messengerModal {
   <div id="messengerModal">
@@ -682,5 +682,6 @@ function handleDrop(event){
   reader.readAsDataURL(file);
 }
 </script>
+  <button id="messengerToggle">💬</button>
 </body>
 </html>
