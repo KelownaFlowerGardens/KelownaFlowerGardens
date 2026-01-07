@@ -386,17 +386,7 @@ document.addEventListener("click", function(e){
   }
 });
 </script>
-<script>
-fetch("http://localhost:3000/api/session", {
-  credentials: "include"
-})
-.then(res => res.json())
-.then(data => {
-  if (!data.loggedIn) {
-    window.location.href = "";
-  }
-});
-</script>
+
 
     <script>
 fetch("http://localhost:3000/api/session", {
@@ -406,14 +396,9 @@ fetch("http://localhost:3000/api/session", {
 .then(data => {
   const navAuth = document.getElementById("nav-auth");
 
-  if (!data.loggedIn) {
-    // Logged OUT
-    navAuth.innerHTML = `
-      <a href="Login.html" class="btn-outline">Login</a>
-      <a href="Members.html" class="btn-primary">Become a Member</a>
-    `;
-    return;
-  }
+
+
+    
 
   // Logged IN
   navAuth.innerHTML = `
@@ -868,9 +853,7 @@ a.button{
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
-  const res = await fetch("/api/session");
-  if (!res.ok) return window.location.href = "/Login.html";
-  const user = await res.json();
+ 
 
   const username = user.username;
   const avatar = user.avatar;
@@ -929,13 +912,7 @@ a.button{
     <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
-  const res = await fetch("/api/session", { credentials: "include" });
-  if (!res.ok) return window.location.href = "/Login.html";
-  const user = await res.json();
-  const username = user.username;
-  const avatar = user.avatar || "/default-avatar.png";
-  const socket = io({ auth: { username, avatar } });
-
+ 
   let currentRoom = "general";
 
   const messengerModal = document.getElementById("messengerModal");
@@ -1020,32 +997,7 @@ a.button{
   <div class="card">
     <a class="button" href="https://kelownaflowergardens.github.io/KelownaFlowerGardens/LoggedOut.html">Log Out</a>
   </div>
-    <script>
-fetch("http://localhost:3000/api/session", {
-  credentials: "include"
-})
-.then(res => res.json())
-.then(data => {
-  if (!data.loggedIn) {
-    window.location.href = "Login.html";
-  }
-  if (!data.user.paid) {
-    window.location.href = "Members.html";
-  }
-});
-</script>
-    <p id="status"></p>
-
-<script>
-fetch("http://localhost:3000/api/session", { credentials: "include" })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("status").textContent =
-      data.user.paid ? "Active Member" : "Payment Required";
-  });
-</script>
-
-
+  
 </div>
 </body>
 </html>
