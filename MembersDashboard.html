@@ -395,9 +395,56 @@ a.button{
 </head>
 
 <body>
-<div class="dashboard">
-  <h1>Welcome, Member 🌸</h1>
 
+<head>
+  <title>Member Dashboard</title>
+</head>
+
+<body>
+   
+  <h1>Welcome, <span id="username"></span></h1>
+
+  <p><strong>Email:</strong> <span id="email"></span></p>
+  <p><strong>Membership:</strong> <span id="plan"></span></p>
+  <p><strong>Status:</strong> <span id="status"></span></p>
+  <p><strong>Member Since:</strong> <span id="since"></span></p>
+
+  <button onclick="logout()">Log Out</button>
+
+<script>
+fetch("http://localhost:3000/api/dashboard", {
+  credentials: "include"
+})
+.then(res => {
+  if (!res.ok) {
+    window.location.href = "Login.html";
+    return;
+  }
+  return res.json();
+})
+.then(user => {
+  username.textContent = user.username;
+  email.textContent = user.email;
+  plan.textContent = user.plan;
+  status.textContent = user.status;
+  since.textContent = new Date(user.created_at).toLocaleDateString();
+});
+
+function logout(){
+  fetch("http://localhost:3000/api/logout", {
+    method: "POST",
+    credentials: "include"
+  }).then(() => {
+    window.location.href = "LoggedOut.html";
+  });
+}
+</script>
+
+</body>
+</html>
+
+    
+<div class="dashboard">
   <div class="card">
     <h3>Member Benefits</h3>
     <ul>
