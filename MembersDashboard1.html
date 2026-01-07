@@ -318,12 +318,7 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
-  // --- Session check ---
-  const res = await fetch("/api/session", { credentials:"include" });
-  if(!res.ok) return window.location.href="/Login.html";
-  const user = await res.json();
-  const username = user.username;
-  const avatar = user.avatar || "/default-avatar.png";
+
 
   const socket = io({ auth: { username, avatar } });
   let currentRoom = "general";
@@ -440,14 +435,7 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
-  // Check session
-  const res = await fetch("/api/session", { credentials:"include" });
-  if(!res.ok) return window.location.href="/Login.html";
-  const user = await res.json();
-  const username = user.username;
-  const avatar = user.avatar || "/default-avatar.png";
-  document.getElementById("username").textContent = username;
-
+ 
   const socket = io({ auth:{username, avatar} });
   let currentRoom = "general";
   let unreadCount = 0;
@@ -549,11 +537,7 @@ toggleBtn.onclick = () => {
 };
 
   (async () => {
-  const res = await fetch("/api/session", { credentials:"include" });
-  if(!res.ok) return window.location.href="/Login.html";
-  const user = await res.json();
-  const username = user.username;
-  const avatar = user.avatar || "/default-avatar.png";
+ 
 
   const socket = io({ auth:{username, avatar} });
   let currentRoom = "general";
@@ -713,14 +697,7 @@ toggleBtn.onclick = () => {
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async()=>{
-  const res = await fetch("/api/session",{credentials:"include"});
-  if(!res.ok) return window.location.href="/Login.html";
-  const user = await res.json();
-  const username = user.username;
-  const avatar = user.avatar || "/default-avatar.png";
-  const socket = io({auth:{username,avatar}});
-  let currentRoom = "general";
-  let unreadCount=0;
+ 
 
   const messengerModal = document.getElementById("messengerModal");
   const toggleBtn = document.getElementById("messengerToggle");
@@ -866,14 +843,7 @@ function handleDrop(event){
 
 <script>
 (async()=>{
-  const res = await fetch("/api/session",{credentials:"include"});
-  if(!res.ok) return window.location.href="/Login.html";
-  const user = await res.json();
-  const username = user.username;
-  const avatar = user.avatar || "/default-avatar.png";
-  const socket = io({auth:{username,avatar}});
-  let currentRoom = "general";
-  let unreadCount=0;
+ 
 
   const messengerModal = document.getElementById("messengerModal");
   const toggleBtn = document.getElementById("messengerToggle");
