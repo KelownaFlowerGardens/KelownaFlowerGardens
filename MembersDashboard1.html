@@ -615,9 +615,7 @@ function renderMessage(msg) {
   socket.on("userTyping",user=>{typingDiv.textContent=`${user} is typing...`;});
   socket.on("userStopTyping",user=>{typingDiv.textContent="";});
 
-  // --- Toggle modal ---
-  toggleBtn.onclick=()=>{ messengerModal.style.display="flex"; unreadCount=0; badge.style.display="none"; socket.emit("markRoomRead",currentRoom); };
-  closeBtn.onclick=()=>{ messengerModal.style.display="none"; };
+  
 
   // --- Emoji toggle ---
   emojiBtn.onclick=()=>{ emojiPicker.style.display = emojiPicker.style.display==="flex"?"none":"flex"; };
@@ -656,8 +654,8 @@ function renderMessage(msg) {
       membersContainer.appendChild(div);
     });
   });
-
-  // Toggle messenger modal
+  
+// --- Toggle modal ---
   toggleBtn.onclick = ()=>{
     messengerModal.style.display="flex";
     unreadCount=0;
