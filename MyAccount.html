@@ -560,6 +560,42 @@ document.getElementById("accountForm").addEventListener("submit", async e => {
   else { msgEl.textContent = "Error updating account"; msgEl.style.color="red"; }
 });
 </script>
+    <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const socket = io(); // assuming your chat socket is already connected
+
+  const avatarForm = document.getElementById("avatarForm");
+  const avatarInput = document.getElementById("avatarInput");
+  const avatarPreview = document.getElementById("avatarPreview");
+
+  avatarForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const file = avatarInput.files[0];
+    if (!file) return alert("Please select an image!");
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    const uploadRes = await fetch("/api/upload-avatar", {
+      method: "POST",
+      credentials: "include",
+      body: formData
+    });
+
+    const data = await uploadRes.json();
+    if (uploadRes.ok) {
+      avatarPreview.src = data.avatarUrl;
+      alert("Profile picture updated!");
+
+      // Notify the server to update chat avatar
+      socket.emit("updateAvatar", { avatarUrl: data.avatarUrl });
+    } else {
+      alert(data.error || "Upload failed.");
+    }
+  });
+});
+</script>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
 (async () => {
