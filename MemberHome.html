@@ -292,12 +292,7 @@ document.addEventListener("click", function(e){
   }
 });   
 </script>
-  
-<script>
-if(sessionStorage.getItem("loggedIn") !== "true"){
-  window.location.href = "Login.html";
-}
-</script>
+
 <script>
 fetch("http://localhost:3000/api/session", {
   credentials: "include"
