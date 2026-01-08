@@ -172,17 +172,6 @@ nav a:hover{
 </style>
 </head>
 
-<script>
-fetch("http://localhost:3000/api/session", {
-  credentials: "include"
-})
-.then(res => res.json())
-.then(data => {
-  if (!data.loggedIn) {
-    window.location.href = "Login.html";
-  }
-});
-</script>
 
   <script>
 fetch("http://localhost:3000/api/session", {
