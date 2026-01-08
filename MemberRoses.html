@@ -172,17 +172,6 @@ nav a:hover{
 </style>
 </head>
 
-<script>
-fetch("http://localhost:3000/api/session", {
-  credentials: "include"
-})
-.then(res => res.json())
-.then(data => {
-  if (!data.loggedIn) {
-    window.location.href = "Login.html";
-  }
-});
-</script>
 
     <script>
 fetch("http://localhost:3000/api/session", {
@@ -243,11 +232,11 @@ fetch("http://localhost:3000/api/session", {
     <a href="MemberHome.html">Main</a>
     <a href="MemberGardenDesign.html">Garden Design</a>
       <a href="MemberAbout.html">About</a>
-    <a href="MemberRegional Species.html">Regional Species</a>
+    <a href="MemberRegionalSpecies.html">Regional Species</a>
       <a href="MemberAwards.html">Awards</a>
     <a href="MemberRoses.html">Roses</a>
-      <a href="MemberValley Art.html">Valley Art</a>
-    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+      <a href="MemberValleyArt.html">Valley Art</a>
+    <a href="MemberBridalBouquets.html">Bridal Bouquets</a>
     <a href="MemberResources.html">Resources</a>
       <a href="MemberCalendar.html">Calendar</a>
     <a href="MembersDashboard.html">Members</a>
