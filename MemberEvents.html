@@ -247,6 +247,27 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 
     <p id="hostMsg" style="margin-top:1rem;text-align:center;"></p>
   </form>
+       <style>
+         textarea {
+  width: 100%;
+  padding: .6rem;
+  margin-top: .4rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  font-family: inherit;
+}
+       </style>
+       <script>
+document.getElementById("hostSignupForm").addEventListener("submit", e => {
+  e.preventDefault();
+  document.getElementById("hostMsg").textContent =
+    "Thank you! Your host application has been received.";
+  document.getElementById("hostMsg").style.color = "green";
+  e.target.reset();
+});
+</script>
+
 </section>
 
     </div>
