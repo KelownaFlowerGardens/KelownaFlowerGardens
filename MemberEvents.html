@@ -168,6 +168,14 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 
 #chatInputPopup { border:1px solid #ccc; padding:0.5rem; width:calc(100% - 60px); margin:0.3rem; border-radius:12px; }
 #sendBtnPopup { background:#F68686; color:#fff; border:none; padding:0.5rem 0.8rem; border-radius:12px; cursor:pointer; margin-right:0.3rem; }
+ 
+document.getElementById("hostSignupForm").addEventListener("submit", e => {
+  e.preventDefault();
+  document.getElementById("hostMsg").textContent =
+    "Thank you! Your host application has been received.";
+  document.getElementById("hostMsg").style.color = "green";
+  e.target.reset();
+});
 
 </style>
 </head>
@@ -258,15 +266,7 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
   font-family: inherit;
 }
        </style>
-       <script>
-document.getElementById("hostSignupForm").addEventListener("submit", e => {
-  e.preventDefault();
-  document.getElementById("hostMsg").textContent =
-    "Thank you! Your host application has been received.";
-  document.getElementById("hostMsg").style.color = "green";
-  e.target.reset();
-});
-</script>
+      
 <script>
 document.getElementById("hostSignupForm").addEventListener("submit", async e => {
   e.preventDefault();
