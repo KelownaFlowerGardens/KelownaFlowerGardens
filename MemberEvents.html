@@ -267,6 +267,29 @@ document.getElementById("hostSignupForm").addEventListener("submit", e => {
   e.target.reset();
 });
 </script>
+<script>
+document.getElementById("hostSignupForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+
+  const res = await fetch("http://localhost:3000/api/host-signup", {
+    method: "POST",
+    body: formData
+  });
+
+  const msg = document.getElementById("hostMsg");
+
+  if (res.ok) {
+    msg.textContent = "Thank you! Your host application has been sent.";
+    msg.style.color = "green";
+    e.target.reset();
+  } else {
+    msg.textContent = "Submission failed. Please try again.";
+    msg.style.color = "red";
+  }
+});
+</script>
 
 </section>
 
