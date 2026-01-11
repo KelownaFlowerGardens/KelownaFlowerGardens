@@ -208,10 +208,51 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
   <div class="dashboard">
     <h1>Welcome, <span id="username"></span></h1>
     <div class="card">
-      <p><strong>Email:</strong> <span id="email"></span></p>
-      <p><strong>Membership:</strong> <span id="plan"></span></p>
-      <p><strong>Status:</strong> <span id="status"></span></p>
-      <p><strong>Member Since:</strong> <span id="since"></span></p>
+     <section class="content-section form-section centered">
+  <h2>Host Sign Up</h2>
+
+  <form id="hostSignupForm" enctype="multipart/form-data">
+
+    <label>
+      Name
+      <input type="text" name="name" required>
+    </label>
+
+    <label>
+      Location
+      <input type="text" name="location" placeholder="City or Address" required>
+    </label>
+
+    <label>
+      Preferred Date
+      <input type="date" name="preferredDate" required>
+    </label>
+
+    <label>
+      Venue Size
+      <input type="text" name="venueSize" placeholder="Approx. number of guests" required>
+    </label>
+
+    <label>
+      Description
+      <textarea
+        name="description"
+        rows="6"
+        placeholder="Tell us about your garden, accessibility, parking, and anything else we should know"
+        required></textarea>
+    </label>
+
+    <label>
+      Upload Image
+      <input type="file" name="image" accept="image/*">
+    </label>
+
+    <button type="submit">Submit Host Application</button>
+
+    <p id="hostMsg" style="margin-top:1rem;text-align:center;"></p>
+  </form>
+</section>
+
     </div>
 
     <div class="card">
