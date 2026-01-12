@@ -21,6 +21,37 @@ body{
   border-radius:16px;
   text-align:center;
 }
+    .tick-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+.tick-option input {
+  width: 18px;
+  height: 18px;
+}
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.popup-box {
+  background: #fff;
+  padding: 25px;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 16px;
+}
+
 </style>
 </head>
 
@@ -51,4 +82,31 @@ body{
 </div>
 
 </body>
+    <script>
+async function submitSelection() {
+  const checked = [...document.querySelectorAll(
+    '.popup-box input[type="checkbox"]:checked'
+  )].map(cb => cb.value);
+
+  if (checked.length === 0) {
+    alert("Please select at least one option.");
+    return;
+  }
+
+  const res = await fetch("http://localhost:3000/api/member-selection", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ selections: checked })
+  });
+
+  if (res.ok) {
+    closePopup();
+    alert("Selection saved.");
+  } else {
+    alert("Error saving selection.");
+  }
+}
+</script>
+
 </html>
