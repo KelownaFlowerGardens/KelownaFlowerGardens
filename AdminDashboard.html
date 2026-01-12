@@ -255,7 +255,27 @@ nav a:hover{
     margin:0 auto;
   }
 }
-
+body { font-family: system-ui; padding: 30px; background: #f7f7f7; }
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+img {
+  max-width: 300px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+button {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.approve { background: #4CAF50; color: white; }
+.reject { background: #e74c3c; color: white; }
 </style>
 </head>
 
@@ -487,7 +507,7 @@ fetch("/api/admin/members")
   </thead>
   <tbody></tbody>
 </table>
-
+<div id="list"></div>
 <script>
 async function loadMembers(){
   const res = await fetch("/api/admin/members");
@@ -530,6 +550,46 @@ async function del(id){
 loadMembers();
 </script>
 
+<script>
+async function loadHosts() {
+  const res = await fetch("http://localhost:3000/api/admin/hosts", {
+    credentials: "include"
+  });
+  const hosts = await res.json();
+
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  hosts.forEach(h => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `
+      <h3>${h.name} (${h.status})</h3>
+      <p><strong>Location:</strong> ${h.location}</p>
+      <p><strong>Date:</strong> ${h.preferred_date}</p>
+      <p><strong>Venue Size:</strong> ${h.venue_size}</p>
+      <p>${h.description}</p>
+      ${h.image_path ? `<img src="http://localhost:3000/${h.image_path}">` : ""}
+      <br><br>
+      <button class="approve" onclick="setStatus(${h.id}, 'approved')">Approve</button>
+      <button class="reject" onclick="setStatus(${h.id}, 'rejected')">Reject</button>
+    `;
+    list.appendChild(div);
+  });
+}
+
+async function setStatus(id, status) {
+  await fetch(`http://localhost:3000/api/admin/hosts/${id}/status`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ status })
+  });
+  loadHosts();
+}
+
+loadHosts();
+</script>
 </main>
 
 <script>
