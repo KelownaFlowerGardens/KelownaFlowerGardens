@@ -25,6 +25,24 @@ body{
 </head>
 
 <body>
+<!-- POPUP OVERLAY -->
+<div id="popupOverlay" class="popup-overlay">
+
+  <div class="popup-box">
+    <h2>I agree and have read the
+   <a href=".pdf"><p>Terms and Conditions</p></a></h2>
+    <label class="tick-option">
+      <input type="checkbox" value="Check">
+    </label>
+
+
+    <div class="popup-actions">
+      <button class="btn-secondary" onclick="closePopup()">Cancel</button>
+      <button class="btn-primary" onclick="submitSelection()">Confirm</button>
+    </div>
+  </div>
+
+</div>
 
 <div class="card">
   <h2>Welcome to the Garden 🌸</h2>
