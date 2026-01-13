@@ -56,24 +56,20 @@ body{
 </head>
 
 <body>
+
 <!-- POPUP OVERLAY -->
 <div id="popupOverlay" class="popup-overlay">
-
   <div class="popup-box">
+    <h3>Required Before Continuing</h3>
 
     <label class="tick-option">
-      <input type="checkbox" value="Check">
+      <input type="checkbox" id="agreeCheck">
+      I agree and have read the
+      <a href="Waiver.pdf" target="_blank">Terms & Conditions / Liability Waiver</a>
     </label>
-        <button id="continueBtn" disabled>Continue</button>
-  <label>
-    <input type="checkbox" name="selection" value="Terms and Conditions">
-<h2>I agree and have read the
-   <a href="Waiver.pdf"><p>Terms and Conditions, Liability Waiver</p></a></h2>
-  </label>
 
-    </div>
+    <button id="continueBtn" disabled>Continue</button>
   </div>
-
 </div>
 
 <div class="card">
