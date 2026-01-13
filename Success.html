@@ -60,16 +60,17 @@ body{
 <div id="popupOverlay" class="popup-overlay">
 
   <div class="popup-box">
-    <h2>I agree and have read the
-   <a href=".pdf"><p>Terms and Conditions</p></a></h2>
+
     <label class="tick-option">
       <input type="checkbox" value="Check">
     </label>
+        <button id="continueBtn" disabled>Continue</button>
+  <label>
+    <input type="checkbox" name="selection" value="Terms and Conditions">
+<h2>I agree and have read the
+   <a href=".pdf"><p>Terms and Conditions</p></a></h2>
+  </label>
 
-
-    <div class="popup-actions">
-      <button class="btn-secondary" onclick="closePopup()">Cancel</button>
-      <button class="btn-primary" onclick="submitSelection()">Confirm</button>
     </div>
   </div>
 
@@ -82,6 +83,38 @@ body{
 </div>
 
 </body>
+    <script>
+const checkboxes = document.querySelectorAll("input[name='selection']");
+const btn = document.getElementById("continueBtn");
+
+checkboxes.forEach(cb => {
+  cb.addEventListener("change", () => {
+    btn.disabled = ![...checkboxes].some(c => c.checked);
+  });
+});
+</script>
+    <script>
+document.getElementById("selectionForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const selections = [...document.querySelectorAll("input[name='selection']:checked")]
+    .map(cb => cb.value);
+
+  const res = await fetch("http://localhost:3000/api/member-selection", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ selections })
+  });
+
+  if (res.ok) {
+    document.getElementById("msg").textContent =
+      "Selection saved. You may continue.";
+    window.location.href = "NextPage.html";
+  }
+});
+</script>
+
     <script>
 async function submitSelection() {
   const checked = [...document.querySelectorAll(
