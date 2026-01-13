@@ -75,10 +75,50 @@ body{
 <div class="card">
   <h2>Welcome to the Garden 🌸</h2>
   <p>Your membership is active.</p>
-  <a href="MembersDashboard.html">Go to Dashboard</a>
+<button id="dashboardBtn" disabled>Go to Dashboard</button>
 </div>
 
 </body>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("popupOverlay");
+  const agree = document.getElementById("agreeCheck");
+  const continueBtn = document.getElementById("continueBtn");
+  const dashboardBtn = document.getElementById("dashboardBtn");
+
+  // Force popup open
+  overlay.style.display = "flex";
+  document.body.style.overflow = "hidden";
+
+  agree.addEventListener("change", () => {
+    continueBtn.disabled = !agree.checked;
+  });
+
+  continueBtn.addEventListener("click", async () => {
+    // Save selection + notify admin
+    await fetch("http://localhost:3000/api/member-selection", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        accepted: true,
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    // Unlock page
+    overlay.style.display = "none";
+    document.body.style.overflow = "auto";
+
+    dashboardBtn.disabled = false;
+  });
+
+  dashboardBtn.addEventListener("click", () => {
+    window.location.href = "MembersDashboard.html";
+  });
+});
+</script>
+
     <script>
 const checkboxes = document.querySelectorAll("input[name='selection']");
 const btn = document.getElementById("continueBtn");
