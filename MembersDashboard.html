@@ -172,6 +172,14 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 
 </style>
 </head>
+  <script>
+if (
+  !localStorage.getItem("waiverAccepted")
+) {
+  window.location.href = "Success.html";
+}
+</script>
+
 <body>
   <button id="messengerToggle">💬</button>
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
