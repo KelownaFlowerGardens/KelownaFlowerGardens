@@ -101,105 +101,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
     
-    <script>
+<script>
 document.addEventListener("DOMContentLoaded", () => {
+  const checkbox = document.getElementById("waiverCheck");
+  const btn = document.getElementById("continueBtn");
   const overlay = document.getElementById("popupOverlay");
-  const agree = document.getElementById("agreeCheck");
-  const continueBtn = document.getElementById("continueBtn");
-  const dashboardBtn = document.getElementById("dashboardBtn");
 
-  // Force popup open
-  overlay.style.display = "flex";
-  document.body.style.overflow = "hidden";
-
-  agree.addEventListener("change", () => {
-    continueBtn.disabled = !agree.checked;
+  checkbox.addEventListener("change", () => {
+    btn.disabled = !checkbox.checked;
   });
 
-continueBtn.addEventListener("click", async () => {
-  const res = await fetch("/api/accept-waiver", {
-    method: "POST",
-    credentials: "include"
-  });
+  btn.addEventListener("click", async () => {
+    const res = await fetch("/api/accept-waiver", {
+      method: "POST",
+      credentials: "include"
+    });
 
-  if (res.ok) {
-    window.location.href = "MembersDashboard.html";
-  } else {
-    alert("Please accept the waiver to continue.");
-  }
-});
-
-    // Unlock page
-    overlay.style.display = "none";
-    document.body.style.overflow = "auto";
-
-    dashboardBtn.disabled = false;
-  });
-
-  dashboardBtn.addEventListener("click", () => {
-    window.location.href = "MembersDashboard.html";
+    if (res.ok) {
+      overlay.style.display = "none";
+      document.body.style.overflow = "auto";
+      window.location.href = "MembersDashboard.html";
+    } else {
+      alert("Waiver acceptance failed.");
+    }
   });
 });
 </script>
 
-    <script>
-const checkboxes = document.querySelectorAll("input[name='selection']");
-const btn = document.getElementById("continueBtn");
-
-checkboxes.forEach(cb => {
-  cb.addEventListener("change", () => {
-    btn.disabled = ![...checkboxes].some(c => c.checked);
-  });
-});
-</script>
-    <script>
-document.getElementById("selectionForm").addEventListener("submit", async e => {
-  e.preventDefault();
-
-  const selections = [...document.querySelectorAll("input[name='selection']:checked")]
-    .map(cb => cb.value);
-
-  const res = await fetch("http://localhost:3000/api/member-selection", {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ selections })
-  });
-
-  if (res.ok) {
-    document.getElementById("msg").textContent =
-      "Selection saved. You may continue.";
-    window.location.href = "NextPage.html";
-  }
-});
-</script>
-
-    <script>
-async function submitSelection() {
-  const checked = [...document.querySelectorAll(
-    '.popup-box input[type="checkbox"]:checked'
-  )].map(cb => cb.value);
-
-  if (checked.length === 0) {
-    alert("Please select at least one option.");
-    return;
-  }
-
-  const res = await fetch("http://localhost:3000/api/member-selection", {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ selections: checked })
-  });
-
-  if (res.ok) {
-    closePopup();
-    alert("Selection saved.");
-  } else {
-    alert("Error saving selection.");
-  }
-}
-</script>
     
 
 </html>
