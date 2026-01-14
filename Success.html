@@ -84,6 +84,15 @@ body{
   <p>Your membership is active.</p>
 <button id="dashboardBtn" disabled>Go to Dashboard</button>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("popupOverlay");
+  overlay.style.display = "flex";
+
+  // lock background
+  document.body.style.overflow = "hidden";
+});
+</script>
 
 </body>
     
@@ -186,5 +195,6 @@ async function submitSelection() {
   }
 }
 </script>
+    
 
 </html>
