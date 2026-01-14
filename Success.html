@@ -99,6 +99,32 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const checkbox = document.getElementById("waiverCheck");
+  const btn = document.getElementById("continueBtn");
+  const overlay = document.getElementById("popupOverlay");
+
+  checkbox.addEventListener("change", () => {
+    btn.disabled = !checkbox.checked;
+  });
+
+  btn.addEventListener("click", async () => {
+    const res = await fetch("/api/accept-waiver", {
+      method: "POST",
+      credentials: "include"
+    });
+
+    if (res.ok) {
+      overlay.style.display = "none";
+      document.body.style.overflow = "auto";
+      window.location.href = "MembersDashboard.html";
+    } else {
+      alert("Waiver acceptance failed.");
+    }
+  });
+});
+</script>
 
     <script>
 document.getElementById("continueBtn").onclick = async () => {
