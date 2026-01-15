@@ -123,18 +123,18 @@ nav a:hover{
   <p>Kelowna’s Flower Garden Club</p>
 
 <nav>
-  <a href="Home.html">Main</a>
-    <a href="GardenDesign.html">Garden Design</a>
-      <a href="About.html">About</a>
-    <a href="Regional Species.html">Regional Species</a>
-      <a href="Awards.html">Awards</a>
-    <a href="Roses.html">Roses</a>
-      <a href="Valley Art.html">Valley Art</a>
-    <a href="Bridal Bouquets.html">Bridal Bouquets</a>
-    <a href="Resources.html">Resources</a>
-      <a href="Calendar.html">Calendar</a>
-    <a href="Members.html">Members</a>
-    <a href="Contact.html">Contact</a>
+  <a href="Home">Main</a>
+    <a href="GardenDesign">Garden Design</a>
+      <a href="About">About</a>
+    <a href="Regional Species">Regional Species</a>
+      <a href="Awards">Awards</a>
+    <a href="Roses">Roses</a>
+      <a href="Valley Art">Valley Art</a>
+    <a href="Bridal Bouquets">Bridal Bouquets</a>
+    <a href="Resources">Resources</a>
+      <a href="Calendar">Calendar</a>
+    <a href="Members">Members</a>
+    <a href="Contact">Contact</a>
 </nav>
 
 <section>
@@ -246,6 +246,7 @@ nav a:hover{
 
 </body>
 </html>
+
 
 
 
