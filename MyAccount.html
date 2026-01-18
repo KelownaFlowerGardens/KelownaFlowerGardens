@@ -410,6 +410,16 @@ a.button{
     <input type="text" id="username" disabled>
     <label>Email</label>
     <input type="email" id="email" required>
+          <label>
+  Phone Number (optional)
+  <input type="tel" id="phone" placeholder="+1 250 555 1234">
+</label>
+
+<label class="tick-option">
+  <input type="checkbox" id="smsOpt">
+  Receive SMS event reminders
+</label>
+
     <label>Membership Plan</label>
     <select id="plan">
       <option value="basic">Basic</option>
@@ -423,6 +433,9 @@ a.button{
     <p id="updateMsg" style="color:green;"></p>
   </form>
 </div>
+
+<button onclick="saveProfile()">Save</button>
+
     <div class="card">
   <div class="profile-picture">
     <img id="avatarPreview" src="/default-avatar.png" alt="Profile Avatar" class="avatar-img">
