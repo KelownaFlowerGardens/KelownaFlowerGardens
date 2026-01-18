@@ -219,7 +219,7 @@ document.getElementById("hostSignupForm").addEventListener("submit", e => {
           <ul> First Garden Party May 31st 2026 </ul>
   <li </li> 
     <button id="rsvpBtn"
-        data-event="First Garden Party May 30th 2026"
+        data-event="1st Garden Party"
         class="rsvp-btn">
   🌸 RSVP
 </button>
@@ -282,7 +282,29 @@ document.getElementById("hostSignupForm").addEventListener("submit", e => {
   font-family: inherit;
 }
        </style>
-      
+
+         <script>
+const btn = document.getElementById("rsvpBtn");
+const eventId = btn.dataset.event;
+let rsvped = false;
+
+btn.onclick = async () => {
+  const url = rsvped ? "/api/rsvp/cancel" : "/api/rsvp";
+
+  const res = await fetch(url, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ eventId })
+  });
+
+  if (res.ok) {
+    rsvped = !rsvped;
+    btn.textContent = rsvped ? "❌ Cancel RSVP" : "🌸 RSVP";
+  }
+};
+</script>
+
 <script>
 document.getElementById("hostSignupForm").addEventListener("submit", async e => {
   e.preventDefault();
