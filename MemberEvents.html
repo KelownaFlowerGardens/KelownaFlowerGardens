@@ -227,11 +227,51 @@ document.getElementById("hostSignupForm").addEventListener("submit", e => {
   <ul>May 1st Official Launch! </ul>
           <ul> First Garden Party May 31st 2026 </ul>
   <li </li> 
- <ul>   <button id="rsvpBtn"
-        data-event="1st Garden Party"
-        class="rsvp-btn">
-  🌸 RSVP
-</button></ul>
+      
+ <ul>  
+ <button
+  type="button"
+  class="rsvp-btn"
+  onclick="rsvpEvent(1st Garden Party)">🌸 RSVP
+</button>
+
+<p id="rsvpMsg"></p>
+
+<script>
+async function rsvpEvent(eventId){
+  const msg = document.getElementById("rsvpMsg");
+  msg.textContent = "Saving RSVP...";
+
+  try {
+    const res = await fetch("/api/rsvp", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ eventId })
+    });
+
+    if (res.status === 401) {
+      msg.textContent = "Please log in.";
+      return;
+    }
+
+    if (res.status === 403) {
+      msg.textContent = "Please accept the waiver first.";
+      return;
+    }
+
+    if (!res.ok) {
+      msg.textContent = "RSVP failed.";
+      return;
+    }
+
+    msg.textContent = "✅ RSVP confirmed!";
+  } catch (err) {
+    msg.textContent = "Network error.";
+  }
+}
+</script>
+</ul>
 
 <ul>      <a href="/api/events/5/calendar.ics" class="btn">
   📅 Add to Calendar
