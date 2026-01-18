@@ -679,13 +679,12 @@ async function toggle(id){
 }
 
 async function remove(id){
-  if(confirm("Delete this member?")){
-    await fetch(`http://localhost:3000/api/admin/delete/${id}`, {
-      method:"DELETE",
-      credentials:"include"
-    });
-    loadMembers();
-  }
+    fetch("/api/admin/delete-member", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  credentials: "include",
+  body: JSON.stringify({ id })
+});
 }
 
 loadMembers();
