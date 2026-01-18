@@ -591,6 +591,28 @@ async function setStatus(id, status) {
 }
 
 loadHosts();
+    async function toggleMember(id){
+  await fetch("/api/admin/toggle-member", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ id })
+  });
+  loadMembers();
+}
+
+async function deleteMember(id){
+  if(confirm("Delete this member?")){
+    await fetch("/api/admin/delete-member", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ id })
+    });
+    loadMembers();
+  }
+}
+
 </script>
 </main>
 
