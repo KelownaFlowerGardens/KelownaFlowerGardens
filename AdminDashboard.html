@@ -294,9 +294,6 @@ document.addEventListener("click", function(e){
 });
 </script>
 
-
-<body>
-
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <header>
@@ -444,6 +441,25 @@ button{
 </header>
 
 <main>
+
+<h2>Members</h2>
+
+<table id="membersTable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Username</th>
+      <th>Status</th>
+      <th>Paid</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+
+<main>
   <h2>Members</h2>
 
   <table id="membersTable">
@@ -466,18 +482,6 @@ button{
   ⬇ Download CSV
 </a>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Paid</th>
-      <th>Active</th>
-      <th>Transaction</th>
-    </tr>
-  </thead>
-  <tbody id="memberRows"></tbody>
-</table>
 
     <button onclick="deleteMsg(id)">🗑</button>
 <button onclick="muteUser(userId)">🔇</button>
@@ -517,12 +521,10 @@ fetch("/api/admin/members", { credentials: "include" })
   <td>Date</td>
 </tr>
 
-
-
 <script>
-    async function loadMembers(){
+async function loadMembers(){
   const res = await fetch("/api/admin/members", {
-    credentials: "include"
+    credentials:"include"
   });
 
   if(res.status === 401){
@@ -543,16 +545,47 @@ fetch("/api/admin/members", { credentials: "include" })
         <td>${m.active ? "Active" : "Inactive"}</td>
         <td>${m.paid ? "Yes" : "No"}</td>
         <td>
-          <button onclick="toggleMember(${m.id})">
+          <button class="${m.active ? "disable" : "enable"}"
+            onclick="toggleMember(${m.id})">
             ${m.active ? "Disable" : "Enable"}
           </button>
-          <button onclick="deleteMember(${m.id})">Delete</button>
+          <button class="delete"
+            onclick="deleteMember(${m.id})">
+            Delete
+          </button>
         </td>
       </tr>
     `;
   });
 }
 
+async function toggleMember(id){
+  await fetch("/api/admin/toggle-member", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    credentials:"include",
+    body: JSON.stringify({ id })
+  });
+  loadMembers();
+}
+
+async function deleteMember(id){
+  if(confirm("Delete this member?")){
+    await fetch("/api/admin/delete-member", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      credentials:"include",
+      body: JSON.stringify({ id })
+    });
+    loadMembers();
+  }
+}
+
+loadMembers();
+</script>
+
+
+<script>
 async function loadHosts() {
   const res = await     fetch("/api/admin/members", { credentials: "include" }), {
     credentials: "include"
