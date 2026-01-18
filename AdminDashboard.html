@@ -516,10 +516,13 @@ fetch("/api/admin/members", { credentials: "include" })
   <td>Check</td>
   <td>Date</td>
 </tr>
+
+
+
 <script>
     async function loadMembers(){
-  const res = await     fetch("/api/admin/members", { credentials: "include" }), {
-    credentials:"include"
+  const res = await fetch("/api/admin/members", {
+    credentials: "include"
   });
 
   if(res.status === 401){
@@ -536,7 +539,9 @@ fetch("/api/admin/members", { credentials: "include" })
       <tr>
         <td>${m.name}</td>
         <td>${m.email}</td>
+        <td>${m.username}</td>
         <td>${m.active ? "Active" : "Inactive"}</td>
+        <td>${m.paid ? "Yes" : "No"}</td>
         <td>
           <button onclick="toggleMember(${m.id})">
             ${m.active ? "Disable" : "Enable"}
@@ -547,50 +552,7 @@ fetch("/api/admin/members", { credentials: "include" })
     `;
   });
 }
-</script>
-<script>
-async function loadMembers(){
-  const res = await     fetch("/api/admin/members", { credentials: "include" });
-  const data = await res.json();
 
-  document.querySelector("#members tbody").innerHTML =
-    data.map(m => `
-      <tr>
-        <td>${m.name}</td>
-        <td>${m.email}</td>
-        <td>${m.active ? "Active" : "Suspended"}</td>
-        <td>
-          <button onclick="toggle(${m.id})">Toggle</button>
-          <button onclick="del(${m.id})">Delete</button>
-        </td>
-      </tr>
-    `).join("");
-}
-async function toggle(id){  
-fetch("/api/admin/toggle-member", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  credentials: "include",
-  body: JSON.stringify({ id })
-});
-
-}
-
-async function del(id){
-  if(confirm("Delete member?")){
-    await fetch("/api/admin/delete-member", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ id })
-    });
-    loadMembers();
-  }
-}
-
-loadMembers();
-</script>
-
-<script>
 async function loadHosts() {
   const res = await     fetch("/api/admin/members", { credentials: "include" }), {
     credentials: "include"
@@ -632,63 +594,7 @@ loadHosts();
 </script>
 </main>
 
-<script>
-async function loadMembers(){
-  const res = await     fetch("/api/admin/members", { credentials: "include" }), {
-    credentials:"include"
-  });
 
-  if(res.status === 401){
-    location.href = "LoggedOut.html";
-    return;
-  }
-
-  const members = await res.json();
-  const tbody = document.querySelector("#membersTable tbody");
-  tbody.innerHTML = "";
-
-  members.forEach(m => {
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-      <td>${m.name}</td>
-      <td>${m.email}</td>
-      <td>${m.username}</td>
-      <td>${m.active ? "Active" : "Inactive"}</td>
-      <td>${m.paid ? "Yes" : "No"}</td>
-      <td>
-        <button class="btn-ok" onclick="toggle(${m.id})">
-          ${m.active ? "Disable" : "Enable"}
-        </button>
-        <button class="btn-danger" onclick="remove(${m.id})">
-          Delete
-        </button>
-      </td>
-    `;
-
-    tbody.appendChild(tr);
-  });
-}
-
-async function toggle(id){
-  await fetch(`http://localhost:3000/api/admin/toggle/${id}`, {
-    method:"POST",
-    credentials:"include"
-  });
-  loadMembers();
-}
-
-async function remove(id){
-    fetch("/api/admin/delete-member", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  credentials: "include",
-  body: JSON.stringify({ id })
-});
-}
-
-loadMembers();
-</script>
 <script src="AdminControls.js"></script>
 </div>
 </body>
