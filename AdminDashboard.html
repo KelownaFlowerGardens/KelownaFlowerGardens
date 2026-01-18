@@ -435,11 +435,6 @@ button{
 
 <body>
 
-<header>
-  <h1>Admin Dashboard</h1>
-  <p>Kelowna Flower Gardens</p>
-</header>
-
 <main>
 
 <h2>Members</h2>
@@ -458,21 +453,16 @@ button{
   <tbody></tbody>
 </table>
 
-
 <main>
- 
-
     <h1>Member Payments</h1>
 
 <a href="/api/admin/members.csv" class="btn">
   ⬇ Download CSV
 </a>
 
-
     <button onclick="deleteMsg(id)">🗑</button>
 <button onclick="muteUser(userId)">🔇</button>
 
-    
 <script>
 fetch("/api/admin/members", { credentials: "include" })
   .then(r => r.json())
