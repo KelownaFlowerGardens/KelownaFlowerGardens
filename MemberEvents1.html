@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Member Events & Messenger</title>
+<link rel="icon" type="image/x-icon" href="KFGL.jpg">
+<link rel="stylesheet" href="style.css">
+
+<style>
+:root{
+  --pink:#F68686; --light:#FDD7D7; --muted:#666; --radius:14px; --max:1200px;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,var(--pink),#fff);color:#333;}
+header{text-align:center;padding:1rem;}
+header img{width:100%;max-height:360px;object-fit:cover;border-radius:var(--radius);}
+header h1{color:var(--pink);margin:1rem 0 .25rem;}
+header p{color:var(--muted);margin:0;}
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin:1rem 0;}
+nav a{text-decoration:none;padding:.5rem .9rem;background:#fff;color:var(--pink);border-radius:20px;font-weight:600;font-size:.95rem;}
+nav a:hover{background:var(--pink);color:#fff;}
+
+.wrapper{display:flex;flex-direction:column;max-width:var(--max);margin:auto;padding:1rem;gap:1.5rem;}
+.card{background:#fff;border-radius:14px;padding:1.5rem;margin-bottom:1rem;}
+.button{display:inline-block;padding:.6rem 1.2rem;border-radius:25px;background:#F68686;color:#fff;text-decoration:none;font-weight:600;}
+.rsvp-btn{padding:.7rem 1.4rem;border-radius:25px;border:none;background:#F68686;color:white;font-weight:600;cursor:pointer;}
+
+#messengerToggle{position:fixed;bottom:20px;right:20px;background:#F68686;color:#fff;border:none;border-radius:50px;padding:.7rem 1.2rem;font-size:1.2rem;cursor:pointer;z-index:9999;}
+.badge{position:absolute;top:-6px;right:-6px;background:red;color:white;font-size:12px;padding:2px 6px;border-radius:50%;display:none;}
+
+#messengerModal{position:fixed;bottom:80px;right:20px;width:350px;height:500px;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.3);display:none;flex-direction:column;z-index:10000;}
+#messengerHeader{background:#F68686;color:#fff;padding:.7rem;font-weight:600;display:flex;justify-content:space-between;align-items:center;}
+#memberSearch{padding:.5rem;margin:.5rem;border-radius:8px;border:1px solid #ccc;width:100%;}
+#membersList{max-height:100px;overflow-y:auto;border-bottom:1px solid #eee;padding:.5rem;}
+.member{display:flex;align-items:center;gap:.4rem;cursor:pointer;padding:.3rem;border-radius:6px;}
+.member:hover{background:#FDD7D7;}
+.status{width:8px;height:8px;border-radius:50%;}
+.online{background:#2ecc71;}
+.offline{background:#aaa;}
+
+#messages{flex:1;padding:.5rem;overflow-y:auto;font-size:.9rem;}
+.message.self{text-align:right;}
+.message.other{text-align:left;}
+.message img{max-width:180px;border-radius:8px;}
+#typingIndicator{font-size:.8rem;color:#999;margin:2px;}
+.chat-input{display:flex;gap:4px;padding:.4rem;}
+#chatInput{flex:1;padding:.4rem;border-radius:8px;border:1px solid #ccc;}
+#emojiPicker{display:none;padding:.4rem;flex-wrap:wrap;gap:4px;}
+#emojiPicker span{cursor:pointer;}
+textarea{width:100%;padding:.6rem;margin-top:.4rem;border-radius:8px;border:1px solid #ccc;resize:vertical;font-family:inherit;}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Member Events & Chat</p>
+  <nav>
+    <a href="MembersDashboard.html">Dashboard</a>
+    <a href="MemberEvents.html">Events</a>
+    <a href="MemberCalendar.html">Calendar</a>
+    <a href="MemberContact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <!-- Upcoming Events Section -->
+  <div class="card">
+    <h3>Upcoming Events</h3>
+
+    <div>
+      <p>May 1st Official Launch!</p>
+      <button class="rsvp-btn" onclick="rsvpEvent('official-launch')">🌸 RSVP</button>
+      <a href="https://calendar.google.com/calendar/r/eventedit?text=Official+Launch&dates=20260501T170000Z/20260501T200000Z" target="_blank" class="button">📅 Add to Google Calendar</a>
+      <p id="rsvpMsgOfficial" style="margin-top:.5rem;"></p>
+    </div>
+
+    <div style="margin-top:1rem;">
+      <p>First Garden Party - May 31st 2026</p>
+      <button class="rsvp-btn" onclick="rsvpEvent('first-garden-party')">🌸 RSVP</button>
+      <a href="https://calendar.google.com/calendar/r/eventedit?text=Garden+Party&dates=20260531T170000Z/20260531T200000Z" target="_blank" class="button">📅 Add to Google Calendar</a>
+      <p id="rsvpMsgGarden" style="margin-top:.5rem;"></p>
+    </div>
+  </div>
+
+  <!-- Host Signup Form -->
+  <div class="card">
+    <h3>Host Your Garden Party</h3>
+    <form id="hostSignupForm" enctype="multipart/form-data">
+      <label>Name <input type="text" name="name" required></label>
+      <label>Location <input type="text" name="location" required></label>
+      <label>Preferred Date <input type="date" name="preferredDate" required></label>
+      <label>Venue Size <input type="text" name="venueSize" required></label>
+      <label>Description <textarea name="description" rows="6" placeholder="Tell us about your garden..." required></textarea></label>
+      <label>Upload Image <input type="file" name="image" accept="image/*"></label>
+      <button type="submit">Submit Host Application</button>
+      <p id="hostMsg" style="margin-top:1rem;text-align:center;"></p>
+    </form>
+  </div>
+
+  <!-- Member Search & Messenger -->
+  <div class="card">
+    <h3>Member Chat</h3>
+    <input type="text" id="memberSearch" placeholder="Search members…">
+    <div id="membersList"></div>
+  </div>
+
+</div>
+
+<!-- Messenger Toggle Button -->
+<button id="messengerToggle">💬<span id="chatBadge" class="badge"></span></button>
+
+<!-- Messenger Modal -->
+<div id="messengerModal">
+  <div id="messengerHeader">
+    Chat with <span id="chatWith">All</span>
+    <span id="closeMessenger">×</span>
+  </div>
+  <div id="messages"></div>
+  <div id="typingIndicator"></div>
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Type a message…" />
+    <button id="emojiBtn">😊</button>
+    <button id="imageBtn">📷</button>
+    <button id="sendBtn">Send</button>
+    <input type="file" id="imageInput" accept="image/*" hidden>
+  </div>
+  <div id="emojiPicker"></div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+// --- RSVP Function with Event Chat ---
+async function rsvpEvent(eventId){
+  const msg = document.getElementById(
+    eventId==='official-launch'?"rsvpMsgOfficial":"rsvpMsgGarden"
+  );
+  msg.textContent="Saving RSVP...";
+  try{
+    const res = await fetch("/api/rsvp",{method:"POST",credentials:"include",
+      headers:{"Content-Type":"application/json"},body:JSON.stringify({eventId})
+    });
+    if(res.status===401){msg.textContent="Please log in.";return;}
+    if(res.status===403){msg.textContent="Please accept the waiver first.";return;}
+    if(!res.ok){msg.textContent="RSVP failed.";return;}
+    msg.textContent="✅ RSVP confirmed! Opening chat…";
+
+    // Open chat room for this event
+    currentRoom = eventId;
+    chatWith.textContent = "Event: " + eventId.replace(/-/g," ");
+    messagesDiv.innerHTML="";
+    modal.style.display="flex";
+  } catch(err){msg.textContent="Network error.";}
+}
+
+// --- Host Signup ---
+document.getElementById("hostSignupForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const formData=new FormData(e.target);
+  const msg=document.getElementById("hostMsg");
+  try{
+    const res = await fetch("/api/host-signup",{method:"POST",body:formData});
+    if(res.ok){msg.textContent="✅ Thank you! Your host application has been sent.";msg.style.color="green";e.target.reset();}
+    else{msg.textContent="❌ Submission failed. Please try again.";msg.style.color="red";}
+  } catch(err){msg.textContent="❌ Network error. Please try again.";msg.style.color="red";}
+});
+
+// --- Messenger ---
+const socket = io();
+const modal = document.getElementById("messengerModal");
+const toggleBtn = document.getElementById("messengerToggle");
+const closeBtn = document.getElementById("closeMessenger");
+const messagesDiv = document.getElementById("messages");
+const membersList = document.getElementById("membersList");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const emojiBtn = document.getElementById("emojiBtn");
+const imageBtn = document.getElementById("imageBtn");
+const imageInput = document.getElementById("imageInput");
+const typingDiv = document.getElementById("typingIndicator");
+const badge = document.getElementById("chatBadge");
+const emojiPicker = document.getElementById("emojiPicker");
+const chatWith = document.getElementById("chatWith");
+const memberSearch = document.getElementById("memberSearch");
+
+let currentRoom = "global";
+let unread = 0;
+
+// Modal toggle
+toggleBtn.onclick=()=>{modal.style.display="flex";unread=0;badge.style.display="none";}
+closeBtn.onclick=()=>modal.style.display="none";
+
+// Send message
+sendBtn.onclick=sendMessage;
+chatInput.onkeypress=e=>{if(e.key==="Enter")sendMessage();}
+function sendMessage(){
+  const text=chatInput.value.trim(); if(!text)return;
+  socket.emit("chatMessage",{room:currentRoom,text,type:"text"});
+  chatInput.value="";
+}
+
+// Typing indicator
+let typingTimer;
+chatInput.oninput=()=>{
+  socket.emit("typing",currentRoom);
+  clearTimeout(typingTimer);
+  typingTimer=setTimeout(()=>socket.emit("stopTyping",currentRoom),800);
+};
+
+// Emoji picker
+["😀","😂","😍","🥰","😎","👍","🎉","🌹"].forEach(e=>{
+  const s=document.createElement("span");
+  s.textContent=e; s.onclick=()=>chatInput.value+=e;
+  emojiPicker.appendChild(s);
+});
+emojiBtn.onclick=()=>emojiPicker.style.display=emojiPicker.style.display==="flex"?"none":"flex";
+
+// Image send
+imageBtn.onclick=()=>imageInput.click();
+imageInput.onchange=()=>{
+  const file=imageInput.files[0]; const r=new FileReader();
+  r.onload=e=>socket.emit("chatMessage",{room:currentRoom,text:e.target.result,type:"image"});
+  r.readAsDataURL(file);
+};
+
+// Receive messages
+socket.on("chatMessage",msg=>{
+  const div=document.createElement("div");
+  div.className="message "+(msg.self?"self":"other");
+  div.innerHTML=msg.type==="image"?`<img src="${msg.text}"> ✔✔`:`${msg.text} ✔✔`;
+  messagesDiv.appendChild(div);
+  messagesDiv.scrollTop=messagesDiv.scrollHeight;
+  if(modal.style.display!=="flex"){unread++;badge.textContent=unread;badge.style.display="inline-block";}
+});
+
+// Typing events
+socket.on("typing",u=>typingDiv.textContent=u+" is typing…");
+socket.on("stopTyping",()=>typingDiv.textContent="");
+
+// Online members
+socket.on("members",members=>{
+  membersList.innerHTML="";
+  members.forEach(m=>{
+    const d=document.createElement("div");
+    d.className="member";
+    d.textContent=m.username;
+    const status=document.createElement("span");
+    status.className="status "+(m.online?"online":"offline");
+    d.prepend(status);
+    d.onclick=()=>{currentRoom=m.username;chatWith.textContent=m.username;messagesDiv.innerHTML="";modal.style.display="flex";}
+    membersList.appendChild(d);
+  });
+});
+
+// Member search filter
+memberSearch.oninput=()=>{
+  const filter=memberSearch.value.toLowerCase();
+  membersList.querySelectorAll(".member").forEach(m=>{
+    m.style.display=m.textContent.toLowerCase().includes(filter)?"flex":"none";
+  });
+};
+</script>
+
+</body>
+</html>
