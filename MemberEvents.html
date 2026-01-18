@@ -364,9 +364,51 @@ btn.onclick = async () => {
   <button id="sendBtnPopup">Send</button>
 </div>
 <script src="/socket.io/socket.io.js"></script>
-<script>
+      <script>
 const socket = io();
 
+const modal = document.getElementById("messengerModal");
+const toggleBtn = document.getElementById("messengerToggle");
+const closeBtn = document.getElementById("closeMessenger");
+const messagesDiv = document.getElementById("messages");
+const membersList = document.getElementById("membersList");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const emojiBtn = document.getElementById("emojiBtn");
+const imageBtn = document.getElementById("imageBtn");
+const imageInput = document.getElementById("imageInput");
+const typingDiv = document.getElementById("typingIndicator");
+const badge = document.getElementById("chatBadge");
+const emojiPicker = document.getElementById("emojiPicker");
+
+let currentRoom = "general";
+let unread = 0;
+
+const socket = io();
+const sendBtn = document.getElementById("sendBtn");
+const input = document.getElementById("chatInput");
+const messages = document.getElementById("messages");
+
+sendBtn.onclick = () => {
+  socket.emit("chatMessage", input.value);
+  input.value = "";
+};
+
+socket.on("message", msg => {
+  const div = document.createElement("div");
+  div.textContent = `${msg.username}: ${msg.text}`;
+  messages.appendChild(div);
+});
+
+socket.on("history", msgs => {
+  msgs.forEach(m => {
+    const div = document.createElement("div");
+    div.textContent = `${m.username}: ${m.text}`;
+    messages.appendChild(div);
+  });
+});
+
+const socket = io();
 const toggleBtn = document.getElementById("messengerToggle");
 const modal = document.getElementById("messengerModal");
 const closeBtn = document.getElementById("closeMessenger");
@@ -398,52 +440,8 @@ closeBtn.onclick = () => modal.style.display = "none";
 
   <div id="emojiPicker"></div>
 </div>
-  <script>
-const socket = io();
 
-const modal = document.getElementById("messengerModal");
-const toggleBtn = document.getElementById("messengerToggle");
-const closeBtn = document.getElementById("closeMessenger");
-const messagesDiv = document.getElementById("messages");
-const membersList = document.getElementById("membersList");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
-const emojiBtn = document.getElementById("emojiBtn");
-const imageBtn = document.getElementById("imageBtn");
-const imageInput = document.getElementById("imageInput");
-const typingDiv = document.getElementById("typingIndicator");
-const badge = document.getElementById("chatBadge");
-const emojiPicker = document.getElementById("emojiPicker");
-
-let currentRoom = "general";
-let unread = 0;
-
-const socket = io();
-
-const sendBtn = document.getElementById("sendBtn");
-const input = document.getElementById("chatInput");
-const messages = document.getElementById("messages");
-
-sendBtn.onclick = () => {
-  socket.emit("chatMessage", input.value);
-  input.value = "";
-};
-
-socket.on("message", msg => {
-  const div = document.createElement("div");
-  div.textContent = `${msg.username}: ${msg.text}`;
-  messages.appendChild(div);
-});
-
-socket.on("history", msgs => {
-  msgs.forEach(m => {
-    const div = document.createElement("div");
-    div.textContent = `${m.username}: ${m.text}`;
-    messages.appendChild(div);
-  });
-});
-</div>
-
+<script>
 // Toggle modal
 toggleBtn.onclick = () => {
   modal.style.display = "flex";
