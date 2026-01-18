@@ -516,7 +516,38 @@ fetch("/api/admin/members")
   <td>Check</td>
   <td>Date</td>
 </tr>
+<script>
+    async function loadMembers(){
+  const res = await fetch("/api/admin/members", {
+    credentials:"include"
+  });
 
+  if(res.status === 401){
+    location.href = "LoggedOut.html";
+    return;
+  }
+
+  const members = await res.json();
+  const tbody = document.querySelector("#membersTable tbody");
+  tbody.innerHTML = "";
+
+  members.forEach(m => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.email}</td>
+        <td>${m.active ? "Active" : "Inactive"}</td>
+        <td>
+          <button onclick="toggleMember(${m.id})">
+            ${m.active ? "Disable" : "Enable"}
+          </button>
+          <button onclick="deleteMember(${m.id})">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+</script>
 <script>
 async function loadMembers(){
   const res = await fetch("/api/admin/members");
