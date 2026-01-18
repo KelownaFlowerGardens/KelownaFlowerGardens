@@ -484,7 +484,7 @@ button{
 
     
 <script>
-fetch("/api/admin/members")
+fetch("/api/admin/members", { credentials: "include" })
   .then(r => r.json())
   .then(data => {
     document.getElementById("memberRows").innerHTML =
