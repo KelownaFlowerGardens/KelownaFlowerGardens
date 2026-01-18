@@ -257,6 +257,23 @@ if (
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+  <script>
+(async () => {
+  const res = await fetch("/api/member/dashboard", {
+    credentials: "include"
+  });
+
+  if (res.status === 401) {
+    location.href = "Login.html";
+  }
+
+  if (res.status === 403) {
+    location.href = "Success.html"; // waiver popup page
+  }
+})();
+</script>
+
+  <script>
 const socket = io();
 
 const toggleBtn = document.getElementById("messengerToggle");
