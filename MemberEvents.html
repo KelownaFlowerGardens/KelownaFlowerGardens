@@ -392,7 +392,7 @@ sendBtn.onclick = () => {
   input.value = "";
 };
 
-socket.on("message", msg => {
+socket.on("chatMessage", msg => {
   const div = document.createElement("div");
   div.textContent = `${msg.username}: ${msg.text}`;
   messages.appendChild(div);
