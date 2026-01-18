@@ -264,6 +264,70 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
+    
+// Typing indicator
+let typingTimer;
+chatInput.oninput = () => {
+  socket.emit("typing", currentRoom);
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(()=>socket.emit("stopTyping",currentRoom),800);
+};
+
+// Emoji picker
+["😀","😂","😍","🥰","😎","👍","🎉","🌹"].forEach(e=>{
+  const s=document.createElement("span");
+  s.textContent=e;
+  s.onclick=()=>chatInput.value+=e;
+  emojiPicker.appendChild(s);
+});
+emojiBtn.onclick = ()=>emojiPicker.style.display =
+  emojiPicker.style.display==="flex"?"none":"flex";
+
+// Image send
+imageBtn.onclick=()=>imageInput.click();
+imageInput.onchange=()=>{
+  const file=imageInput.files[0];
+  const r=new FileReader();
+  r.onload=e=>socket.emit("chatMessage",{room:currentRoom,text:e.target.result,type:"image"});
+  r.readAsDataURL(file);
+};
+
+// Receive messages
+socket.on("chatMessage",msg=>{
+  const div=document.createElement("div");
+  div.className="message "+(msg.self?"self":"other");
+  div.innerHTML = msg.type==="image"
+    ? `<img src="${msg.text}"> ✔✔`
+    : `${msg.text} ✔✔`;
+  messagesDiv.appendChild(div);
+  messagesDiv.scrollTop=messagesDiv.scrollHeight;
+
+  if(modal.style.display!=="flex"){
+    unread++;
+    badge.textContent=unread;
+    badge.style.display="inline-block";
+  }
+});
+
+// Typing events
+socket.on("typing",u=>typingDiv.textContent=u+" is typing…");
+socket.on("stopTyping",()=>typingDiv.textContent="");
+
+// Online members
+socket.on("members",members=>{
+  membersList.innerHTML="";
+  members.forEach(m=>{
+    const d=document.createElement("div");
+    d.className="member";
+    d.innerHTML=`<span class="status ${m.online?'online':'offline'}"></span>${m.username}`;
+    d.onclick=()=>{
+      currentRoom=[m.username,"YOU"].sort().join("#");
+      messagesDiv.innerHTML="";
+    };
+    membersList.appendChild(d);
+  });
+});
+    
 // --- RSVP Function with Event Chat ---
 async function rsvpEvent(eventId){
   const msg = document.getElementById(
