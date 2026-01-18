@@ -181,8 +181,7 @@ if (
 </script>
 
 <body>
-  <button id="messengerToggle">💬</button>
-<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
 
 <header>
   <img src="01126.jpg" alt="Flowers of the Okanagan">
@@ -262,7 +261,36 @@ fetch("/api/rsvp/12/qrcode")
   <input id="chatInputPopup">
   <button id="sendBtnPopup">Send</button>
 </div>
-<script src="/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js">
+const socket = io();
+
+const modal = document.getElementById("messengerModal");
+const toggleBtn = document.getElementById("messengerToggle");
+const closeBtn = document.getElementById("closeMessenger");
+const messagesDiv = document.getElementById("messages");
+const membersList = document.getElementById("membersList");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const emojiBtn = document.getElementById("emojiBtn");
+const imageBtn = document.getElementById("imageBtn");
+const imageInput = document.getElementById("imageInput");
+const typingDiv = document.getElementById("typingIndicator");
+const badge = document.getElementById("chatBadge");
+const emojiPicker = document.getElementById("emojiPicker");
+
+let currentRoom = "general";
+let unread = 0;
+
+const socket = io();
+
+const toggleBtn = document.getElementById("messengerToggle");
+const modal = document.getElementById("messengerModal");
+const closeBtn = document.getElementById("closeMessenger");
+
+toggleBtn.onclick = () => modal.style.display = "flex";
+closeBtn.onclick = () => modal.style.display = "none";
+
+</script>
 <script>
   <script>
 (async () => {
@@ -280,16 +308,7 @@ fetch("/api/rsvp/12/qrcode")
 })();
 </script>
 
-  <script>
-const socket = io();
-
-const toggleBtn = document.getElementById("messengerToggle");
-const modal = document.getElementById("messengerModal");
-const closeBtn = document.getElementById("closeMessenger");
-
-toggleBtn.onclick = () => modal.style.display = "flex";
-closeBtn.onclick = () => modal.style.display = "none";
-</script>
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
 <button id="messengerToggle">💬
   <span id="chatBadge" class="badge"></span>
 </button>
@@ -315,25 +334,6 @@ closeBtn.onclick = () => modal.style.display = "none";
   <div id="emojiPicker"></div>
 </div>
 <script>
-const socket = io();
-
-const modal = document.getElementById("messengerModal");
-const toggleBtn = document.getElementById("messengerToggle");
-const closeBtn = document.getElementById("closeMessenger");
-const messagesDiv = document.getElementById("messages");
-const membersList = document.getElementById("membersList");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
-const emojiBtn = document.getElementById("emojiBtn");
-const imageBtn = document.getElementById("imageBtn");
-const imageInput = document.getElementById("imageInput");
-const typingDiv = document.getElementById("typingIndicator");
-const badge = document.getElementById("chatBadge");
-const emojiPicker = document.getElementById("emojiPicker");
-
-let currentRoom = "general";
-let unread = 0;
-
 // Toggle modal
 toggleBtn.onclick = () => {
   modal.style.display = "flex";
