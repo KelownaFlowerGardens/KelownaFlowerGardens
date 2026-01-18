@@ -398,7 +398,26 @@ closeBtn.onclick = () => modal.style.display = "none";
 
   <div id="emojiPicker"></div>
 </div>
-    <script>
+  <script>
+const socket = io();
+
+const modal = document.getElementById("messengerModal");
+const toggleBtn = document.getElementById("messengerToggle");
+const closeBtn = document.getElementById("closeMessenger");
+const messagesDiv = document.getElementById("messages");
+const membersList = document.getElementById("membersList");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const emojiBtn = document.getElementById("emojiBtn");
+const imageBtn = document.getElementById("imageBtn");
+const imageInput = document.getElementById("imageInput");
+const typingDiv = document.getElementById("typingIndicator");
+const badge = document.getElementById("chatBadge");
+const emojiPicker = document.getElementById("emojiPicker");
+
+let currentRoom = "general";
+let unread = 0;
+
 const socket = io();
 
 const sendBtn = document.getElementById("sendBtn");
@@ -424,25 +443,6 @@ socket.on("history", msgs => {
   });
 });
 </div>
-<script>
-const socket = io();
-
-const modal = document.getElementById("messengerModal");
-const toggleBtn = document.getElementById("messengerToggle");
-const closeBtn = document.getElementById("closeMessenger");
-const messagesDiv = document.getElementById("messages");
-const membersList = document.getElementById("membersList");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
-const emojiBtn = document.getElementById("emojiBtn");
-const imageBtn = document.getElementById("imageBtn");
-const imageInput = document.getElementById("imageInput");
-const typingDiv = document.getElementById("typingIndicator");
-const badge = document.getElementById("chatBadge");
-const emojiPicker = document.getElementById("emojiPicker");
-
-let currentRoom = "general";
-let unread = 0;
 
 // Toggle modal
 toggleBtn.onclick = () => {
