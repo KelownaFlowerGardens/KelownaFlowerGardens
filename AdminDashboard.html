@@ -550,7 +550,7 @@ fetch("/api/admin/members", { credentials: "include" })
 </script>
 <script>
 async function loadMembers(){
-  const res = await fetch("/api/admin/members");
+  const res = await     fetch("/api/admin/members", { credentials: "include" });
   const data = await res.json();
 
   document.querySelector("#members tbody").innerHTML =
