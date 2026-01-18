@@ -518,7 +518,7 @@ fetch("/api/admin/members", { credentials: "include" })
 </tr>
 <script>
     async function loadMembers(){
-  const res = await fetch("/api/admin/members", {
+  const res = await     fetch("/api/admin/members", { credentials: "include" }), {
     credentials:"include"
   });
 
