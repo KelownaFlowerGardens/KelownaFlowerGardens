@@ -3,133 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/x-icon" href="KFGL.jpg">
-<title>Member Dashboard</title>
+<title>Admin Dashboard | Kelowna Flower Gardens</title>
+
+<link rel="icon" href="KFGL.jpg">
 
 <style>
 :root{
   --pink:#F68686;
-  --light:#FDD7D7;
-  --muted:#666;
   --radius:14px;
-  --max:1200px;
 }
-
-*{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:linear-gradient(180deg,var(--pink),#fff);
-  color:#333;
+  font-family:system-ui;
+  background:#fafafa;
 }
 
-/* ---------- HEADER ---------- */
 header{
-  text-align:center;
-  padding:1rem;
-}
-
-header img{
-  width:100%;
-  max-height:360px;
-  object-fit:cover;
-  border-radius:var(--radius);
-}
-
-header h1{
-  color:var(--pink);
-  margin:1rem 0 .25rem;
-}
-
-header p{
-  color:var(--muted);
-  margin:0;
-}
-
-/* ---------- TOP NAV ---------- */
-nav{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:.5rem;
-  margin:1rem 0;
-}
-
-nav a{
-  text-decoration:none;
-  padding:.5rem .9rem;
-  background:#fff;
-  color:var(--pink);
-  border-radius:20px;
-  font-weight:600;
-  font-size:.95rem;
-}
-
-nav a:hover{
   background:var(--pink);
-  color:#fff;
+  color:white;
+  padding:1rem;
+  text-align:center;
 }
 
-/* ---------- LAYOUT ---------- */
-.wrapper{
-  display:flex;
-  max-width:var(--max);
+main{
+  max-width:1100px;
   margin:auto;
   padding:1rem;
-  gap:1.5rem;
 }
 
-/* ---------- CONTENT ---------- */
-.content{
-  flex:1;
-}
-
-.content img{
-  max-width:100%;
-  height:auto;
-  border-radius:var(--radius);
-  margin:1rem 0;
-}
-
-/* ---------- SIDEBAR ---------- */
-.sidebar{
-  width:260px;
-  background:#fff;
-  border-radius:var(--radius);
-  padding:1rem;
-}
-
-.sidebar h5{
-  margin:.75rem 0;
-  color:var(--pink);
-}
-
-.sidebar a,
-.dropdown-btn{
-  display:block;
+table{
   width:100%;
-  padding:.6rem;
-  margin:.2rem 0;
-  background:#fff;
-  color:var(--pink);
+  border-collapse:collapse;
+  background:white;
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+
+th, td{
+  padding:.75rem;
+  border-bottom:1px solid #eee;
+}
+
+th{
+  background:#f5f5f5;
+}
+
+button{
   border:none;
-  text-align:left;
-  font-size:.95rem;
+  padding:.4rem .8rem;
+  border-radius:8px;
   cursor:pointer;
 }
 
-.sidebar a:hover,
-.dropdown-btn:hover{
-  background:var(--pink);
-  color:#fff;
-}
+.enable{background:#2ecc71;color:white}
+.disable{background:#e67e22;color:white}
+.delete{background:#e74c3c;color:white}
 
-.dropdown-container{
-  display:none;
-  padding-left:1rem;
-}
 
 /* ---------- MOBILE MENU ---------- */
 .menu-btn{
