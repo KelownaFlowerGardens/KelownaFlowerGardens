@@ -592,7 +592,7 @@ loadMembers();
 
 <script>
 async function loadHosts() {
-  const res = await fetch("http://localhost:3000/api/admin/hosts", {
+  const res = await     fetch("/api/admin/members", { credentials: "include" }), {
     credentials: "include"
   });
   const hosts = await res.json();
