@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Member Dashboard</title>
+<link rel="icon" type="image/x-icon" href="KFGL.jpg">
 <link rel="stylesheet" href="style.css">
 
 <style>
@@ -24,11 +25,13 @@ body {
   color:#333;
 }
 
+/* Header */
 header { text-align:center; padding:1rem; }
 header img { width:100%; max-height:360px; object-fit:cover; border-radius:var(--radius);}
 header h1 { color:var(--pink); margin:1rem 0 .25rem;}
 header p { color:var(--muted); margin:0;}
 
+/* Navigation */
 nav {
   display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem; margin:1rem 0;
 }
@@ -38,6 +41,7 @@ nav a {
 }
 nav a:hover { background:var(--pink); color:#fff; }
 
+/* Layout */
 .wrapper { display:flex; max-width:var(--max); margin:auto; padding:1rem; gap:1.5rem; }
 .sidebar { width:260px; background:#fff; border-radius:var(--radius); padding:1rem; }
 .sidebar h5 { margin:.75rem 0; color:var(--pink); }
@@ -74,13 +78,17 @@ nav a:hover { background:var(--pink); color:#fff; }
 .member-dropdown .logout{ color:#c0392b; }
 .member-dropdown .logout:hover{ background:#c0392b; color:white; }
 
+/* Status badges */
 .status { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:6px; }
 .online { background:#2ecc71; }
 .offline { background:#aaa; }
 
+/* Badge */
 .badge {
-  position:absolute; top:-5px; right:-5px; background:red; color:white;
-  font-size:12px; padding:2px 6px; border-radius:50%; display:none;
+  position:absolute; top:-6px; right:-6px;
+  background:red; color:white;
+  font-size:12px; padding:2px 6px;
+  border-radius:50%; display:none;
 }
 
 /* Dashboard cards */
@@ -89,39 +97,64 @@ nav a:hover { background:var(--pink); color:#fff; }
 h1{color:#F68686}
 a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; background:#F68686; color:#fff; text-decoration:none; font-weight:600; }
 
-#messengerModal {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-
-
-#messengerModal {
-  <div id="messengerModal">
-  position: fixed; bottom: 70px; right: 20px; width: 300px; max-height: 400px;
-  background: #fff; border-radius: 14px; box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  display: none; flex-direction: column; overflow: hidden; z-index: 10000;
+/* Messenger toggle and modal */
+#messengerToggle{
+  position:fixed; bottom:20px; right:20px;
+  background:#F68686; color:#fff;
+  border:none; border-radius:50px;
+  padding:.7rem 1.2rem;
+  font-size:1.2rem; cursor:pointer;
+  z-index:9999;
 }
 
-#messengerHeader {
-  background: #F68686; color: #fff; padding: 0.6rem 1rem; font-weight: bold; display: flex; justify-content: space-between; cursor: pointer;
+#messengerModal{
+  position:fixed; bottom:80px; right:20px;
+  width:320px; height:460px;
+  background:#fff; border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+  display:none; flex-direction:column;
+  z-index:10000;
 }
 
-#membersListPopup { padding: 0.5rem; border-bottom: 1px solid #eee; max-height: 80px; overflow-y: auto; }
-#membersListPopup .memberItem { display: flex; align-items: center; gap: 0.5rem; padding: 0.2rem 0; cursor: pointer; }
-#membersListPopup .memberItem:hover { background: #FDD7D7; border-radius:6px; }
+#messengerHeader{
+  background:#F68686; color:#fff;
+  padding:.7rem; font-weight:600;
+  display:flex; justify-content:space-between;
+}
 
-#chatWindowPopup { flex:1; padding:0.5rem; overflow-y:auto; }
-.message.self { text-align:right; }
-.message.other { text-align:left; }
-.message img.msgAvatar { width:30px; height:30px; border-radius:50%; margin-right:4px; vertical-align:middle; }
+#membersList{
+  max-height:70px; overflow:auto;
+  padding:.4rem; border-bottom:1px solid #eee;
+}
 
-#chatInputPopup { border:1px solid #ccc; padding:0.5rem; width:calc(100% - 60px); margin:0.3rem; border-radius:12px; }
-#sendBtnPopup { background:#F68686; color:#fff; border:none; padding:0.5rem 0.8rem; border-radius:12px; cursor:pointer; margin-right:0.3rem; }
+.member{
+  display:flex; align-items:center;
+  gap:.4rem; cursor:pointer;
+}
 
+#messages{
+  flex:1; padding:.5rem;
+  overflow-y:auto; font-size:.9rem;
+}
+
+.message.self{ text-align:right }
+.message.other{ text-align:left }
+.message img{ max-width:180px; border-radius:8px }
+
+.chat-input{
+  display:flex; gap:4px;
+  padding:.4rem;
+}
+#chatInput{ flex:1; padding:.4rem }
+#emojiPicker{
+  display:none; padding:.4rem;
+  flex-wrap:wrap; gap:4px;
+}
+#emojiPicker span{ cursor:pointer }
 </style>
 </head>
 <body>
-  <button id="messengerToggle">💬</button>
+
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
 <header>
@@ -136,13 +169,13 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
     <a href="MemberAwards.html">Awards</a>
     <a href="MemberRoses.html">Roses</a>
     <a href="MemberValley Art.html">Valley Art</a>
-    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+    <a href="MemberBridalBouquets.html">Bridal Bouquets</a>
+    <a href="MemberEvents.html">Events</a>
     <a href="MemberResources.html">Resources</a>
     <a href="MemberCalendar.html">Calendar</a>
     <a href="MembersDashboard.html">Members</a>
     <a href="MemberContact.html">Contact</a>
   </nav>
-  <div class="nav-auth" id="nav-auth"></div>
 </header>
 
 <div class="wrapper">
@@ -167,6 +200,12 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
       </ul>
     </div>
 
+    <!-- RSVP / Events Section -->
+    <div class="card" id="eventsSection">
+      <h3>Upcoming Events & RSVP</h3>
+      <ul id="eventsList"></ul>
+    </div>
+
     <div class="card">
       <a class="button" href="MemberRoses.html">View Rose Database</a>
       <a class="button" href="MemberCalendar.html">Events Calendar</a>
@@ -175,492 +214,142 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
   </div>
 </div>
 
-<style>
-/* Toggle Button */
-#messengerToggle {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  background: #F68686;
-  color: #fff;
-  border: none;
-  padding: 0.7rem 1rem;
-  border-radius: 50px;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-.badge {
-  position:absolute;
-  top:-5px;
-  right:-5px;
-  background:red;
-  color:white;
-  font-size:12px;
-  padding:2px 6px;
-  border-radius:50%;
-  display:none;
-}
+<!-- Messenger toggle and modal -->
+<button id="messengerToggle">💬<span id="chatBadge" class="badge"></span></button>
 
-/* Modal */
-#messengerModal {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-  width: 320px;
-  max-height: 450px;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 10000;
-  font-family: system-ui;
-}
-
-#messengerHeader {
-  background: #F68686;
-  color: #fff;
-  padding: 0.6rem 1rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-#messengerHeader span { cursor: pointer; }
-
-#membersListPopup {
-  padding: 0.5rem;
-  border-bottom: 1px solid #eee;
-  max-height: 80px;
-  overflow-y: auto;
-}
-
-#membersListPopup .memberItem {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.2rem 0;
-  cursor: pointer;
-}
-#membersListPopup .memberItem:hover { background: #FDD7D7; border-radius:6px; }
-
-#chatWindowPopup {
-  flex: 1;
-  padding: 0.5rem;
-  overflow-y: auto;
-  display:flex;
-  flex-direction:column;
-}
-
-.message.self { text-align: right; }
-.message.other { text-align: left; }
-
-.message img.msgAvatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  vertical-align: middle;
-  margin-right: 4px;
-}
-
-.receipt { font-size:12px; color:#999; margin-left:6px; }
-
-.status { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:6px; }
-.online { background:#2ecc71; }
-.offline { background:#aaa; }
-</style>
-
-
-<div id="messengerModal" ondragover="event.preventDefault();" ondrop="handleDrop(event)">
+<div id="messengerModal">
   <div id="messengerHeader">
-    💬 Members Chat
+    Members Chat
     <span id="closeMessenger">×</span>
   </div>
-  <div id="membersListPopup">
-    <h4>Online Members</h4>
-    <div id="membersContainerPopup"></div>
+  <div id="membersList"></div>
+  <div id="messages"></div>
+  <div id="typingIndicator"></div>
+
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Type a message…" />
+    <button id="emojiBtn">😊</button>
+    <button id="imageBtn">📷</button>
+    <button id="sendBtn">Send</button>
+    <input type="file" id="imageInput" accept="image/*" hidden>
   </div>
-  <div id="chatWindowPopup">
-    <div id="messagesPopup"></div>
-    <div id="typingIndicator" style="font-size:0.8rem; color:#666; padding:0.3rem 0;"></div>
-  </div>
-  <div style="display:flex; gap:4px; padding:0.3rem;">
-    <input type="text" id="chatInputPopup" placeholder="Type a message..." style="flex:1; border-radius:12px; padding:0.5rem; border:1px solid #ccc;">
-    <button id="sendBtnPopup" style="border:none; background:#F68686; color:#fff; border-radius:12px; padding:0.5rem 0.8rem;">Send</button>
-    <input type="file" id="imageInput" accept="image/*" style="display:none;">
-    <button id="imageBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">📷</button>
-    <button id="emojiBtn" style="border:none; background:#F68686; color:#fff; border-radius:12px;">😊</button>
-  </div>
-  
-<script>
-  // Send message
-  sendBtn.onclick = () => {
-    const text = chatInput.value.trim();
-    if(!text) return;
-    socket.emit("chatMessage",{text,room:currentRoom});
-    chatInput.value="";
-  };
-  chatInput.addEventListener("keypress", e=>{if(e.key==="Enter") sendBtn.click();});
-
-
-  let typingTimeout;
-
-// Detect typing
-chatInput.addEventListener("input", () => {
-  socket.emit("typing", currentRoom);
-  clearTimeout(typingTimeout);
-  typingTimeout = setTimeout(() => {
-    socket.emit("stopTyping", currentRoom);
-  }, 1000);
-});
-
-
-  let receiptHTML = "";
-  if(msg.username === username && msg.readBy && msg.readBy.includes(msg.roomMember)){
-    receiptHTML = `<span class="receipt">✔✔</span>`;
-  }
-
-  if(msg.type === "image"){
-    div.innerHTML = `${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ''}
-      <strong>${msg.username}</strong>: <br/>
-      <img src="${msg.text}" style="max-width:200px; border-radius:10px;"> ${receiptHTML}`;
-  } else {
-    div.innerHTML = `${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ''}
-      <span><strong>${msg.username}</strong>: ${msg.text}</span> ${receiptHTML}`;
-  }
-
-  messagesDiv.appendChild(div);
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-
-// Show typing indicator
-const typingDiv = document.createElement("div");
-typingDiv.id = "typingIndicator";
-typingDiv.style.fontSize = "0.8rem";
-typingDiv.style.color = "#666";
-messagesDiv.appendChild(typingDiv);
-
-socket.on("userTyping", (user) => {
-  typingDiv.textContent = `${user} is typing...`;
-});
-
-socket.on("userStopTyping", (user) => {
-  typingDiv.textContent = "";
-});
-
-  // Send text
-  sendBtn.onclick = () => {
-    const text = chatInput.value.trim();
-    if(!text) return;
-    socket.emit("chatMessage",{text, room:currentRoom, type:"text"});
-    chatInput.value="";
-  };
-
-  chatInput.addEventListener("keypress", e => { if(e.key==="Enter") sendBtn.click(); });
-
-  // Send emoji
-  emojiBtn.onclick = () => {
-    const emoji = prompt("Enter emoji or text:");
-    if(!emoji) return;
-    socket.emit("chatMessage",{text:emoji, room:currentRoom, type:"text"});
-  };
-
-  // Send image
-  imageInput.addEventListener("change", e => {
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      socket.emit("chatMessage",{text:reader.result, room:currentRoom, type:"image"});
-    };
-    reader.readAsDataURL(file);
-    imageInput.value = "";
-  });
-
-  // Click emoji button to trigger file input
-  // (you can also add a dedicated image button if needed)
-  // document.getElementById("imageBtn").onclick = ()=> imageInput.click();
-
-
-  // Online members
-  socket.on("updateMembers", members=>{
-    membersContainer.innerHTML="";
-    members.forEach(member=>{
-      if(member.username===username) return;
-      const div = document.createElement("div");
-      div.className="memberItem";
-      div.innerHTML = `<img src="${member.avatar || '/default-avatar.png'}" class="msgAvatar">${member.username}`;
-      div.onclick=()=>{
-        currentRoom=[username, member.username].sort().join("#");
-        socket.emit("startPrivateChat",member.username);
-        messagesDiv.innerHTML="";
-      };
-      membersContainer.appendChild(div);
-    });
-  });
-
-
-  closeBtn.onclick = ()=>messengerModal.style.display="none";
-
-  if("Notification" in window) Notification.requestPermission();
-})();
-
-  
-<!-- Emoji + Image Input added -->
-  <!-- Emoji picker container -->
-  <div id="emojiPicker" style="display:none; border-top:1px solid #eee; padding:0.5rem; max-height:150px; overflow-y:auto;"></div>
+  <div id="emojiPicker"></div>
 </div>
 
-<style>
-/* Toggle Button & Modal same as before */
-#messengerToggle { position: fixed; bottom: 20px; right: 20px; z-index: 9999; background:#F68686; color:#fff; border:none; padding:0.7rem 1rem; border-radius:50px; font-size:1.2rem; cursor:pointer; }
-.badge { position:absolute; top:-5px; right:-5px; background:red; color:white; font-size:12px; padding:2px 6px; border-radius:50%; display:none; }
-#messengerModal { position: fixed; bottom: 70px; right: 20px; width: 320px; max-height: 500px; background: #fff; border-radius: 14px; box-shadow:0 8px 20px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow:hidden; z-index:10000; font-family: system-ui; }
-#messengerHeader { background: #F68686; color:#fff; padding:0.6rem 1rem; font-weight:bold; display:flex; justify-content:space-between; cursor:pointer; }
-#messengerHeader span{cursor:pointer;}
-#membersListPopup { padding:0.5rem; border-bottom:1px solid #eee; max-height:80px; overflow-y:auto;}
-#membersListPopup .memberItem { display:flex; align-items:center; gap:0.5rem; padding:0.2rem 0; cursor:pointer; }
-#membersListPopup .memberItem:hover { background:#FDD7D7; border-radius:6px; }
-#chatWindowPopup { flex:1; padding:0.5rem; overflow-y:auto; display:flex; flex-direction:column; }
-.message.self { text-align:right; }
-.message.other { text-align:left; }
-.message img.msgAvatar { width:30px; height:30px; border-radius:50%; vertical-align:middle; margin-right:4px; }
-.receipt { font-size:12px; color:#999; margin-left:6px; }
-.status { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:6px; }
-.online { background:#2ecc71; }
-.offline { background:#aaa; }
-#emojiPicker { display:flex; flex-wrap:wrap; gap:4px; }
-#emojiPicker span { cursor:pointer; font-size:1.2rem; padding:4px; }
-</style>
-  
-<script>
-
-    // --- Functions ---
-  // Render messages with read receipt
-function renderMessage(msg) {
-  const div = document.createElement("div");
-  div.className = "message " + (msg.username === username ? "self" : "other");
-    if(messengerModal.style.display!=="flex" && msg.username!==username){
-      unreadCount++;
-      badge.textContent = unreadCount;
-      badge.style.display="inline-block";
-      if(Notification.permission==="granted"){
-        new Notification(`New message from ${msg.username}`,{body:msg.type==="text"?msg.text:"📷 Image", icon:msg.avatar});
-    div.className = "message " + (msg.username===username?"self":"other");
-    if(msg.type==="image"){
-      div.innerHTML = `${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}
-      <strong>${msg.username}</strong>: <br/><img src="${msg.text}" style="max-width:200px; border-radius:10px;">`;
-    } else {
-      div.innerHTML = `${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}
-      <span><strong>${msg.username}</strong>: ${msg.text}</span>`;
-    }
-    messagesDiv.appendChild(div);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-    let receiptHTML = "";
-    if(msg.username === username && msg.readBy && msg.readBy.includes(msg.roomMember)){
-      receiptHTML = `<span class="receipt">✔✔</span>`;
-    }
-
-    if(msg.type==="image"){
-      div.innerHTML = `${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ''}
-        <strong>${msg.username}</strong>: <br/>
-        <img src="${msg.text}" style="max-width:200px; border-radius:10px;"> ${receiptHTML}`;
-    } else {
-      div.innerHTML = `${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ''}
-        <span><strong>${msg.username}</strong>: ${msg.text}</span> ${receiptHTML}`;
-    }
-    messagesDiv.appendChild(div);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-   div.className="message "+(msg.username===username?"self":"other");
-    if(msg.type==="image"){
-      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<strong>${msg.username}</strong>:<br/><img src="${msg.text}" style="max-width:200px; border-radius:10px;">`;
-    } else {
-      div.innerHTML=`${msg.avatar?`<img src="${msg.avatar}" class="msgAvatar">`:''}<span><strong>${msg.username}</strong>: ${msg.text}</span>`;
-    }
-    messagesDiv.appendChild(div);
-    scrollBtn.style.display = (messagesDiv.scrollTop + messagesDiv.clientHeight < messagesDiv.scrollHeight-50) ? "block" : "none";
-    if(messengerModal.style.display==="flex") messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-
-  // --- Send message ---
-  sendBtn.onclick = () => {
-    const text = chatInput.value.trim();
-    if(!text) return;
-    socket.emit("chatMessage", { text, room: currentRoom });
-    chatInput.value = "";
-  };
-  chatInput.addEventListener("keypress", e => { if(e.key==="Enter") sendBtn.click(); });
-
-  // --- Typing indicator ---
-  let typingTimeout;
-  chatInput.addEventListener("input", () => {
-    socket.emit("typing", currentRoom);
-    clearTimeout(typingTimeout);
-    typingTimeout = setTimeout(()=>socket.emit("stopTyping", currentRoom), 1000);
-  });
-
-  // --- Online members ---
-  socket.on("updateMembers", members => {
-    membersContainer.innerHTML="";
-    members.forEach(member => {
-      if(member.username===username) return;
-      const div = document.createElement("div");
-      div.className="memberItem";
-      div.innerHTML = `<span class="status ${member.online?"online":"offline"}"></span>
-        <img src="${member.avatar||'/default-avatar.png'}" class="msgAvatar"> ${member.username}`;
-      div.onclick = () => {
-        currentRoom = [username, member.username].sort().join("#");
-        socket.emit("startPrivateChat", member.username);
-        messagesDiv.innerHTML="";
-      };
-      membersContainer.appendChild(div);
-    });
-  });
-
-  // --- Typing events ---
-  socket.on("userTyping", user => { typingDiv.textContent=`${user} is typing...`; });
-  socket.on("userStopTyping", user => { typingDiv.textContent=""; });
-
-</script>
-
-  
 <script src="/socket.io/socket.io.js"></script>
 <script>
-(async()=>{
-  const messengerModal = document.getElementById("messengerModal");
-  const toggleBtn = document.getElementById("messengerToggle");
-  const closeBtn = document.getElementById("closeMessenger");
-  const messagesDiv = document.getElementById("messagesPopup");
-  const chatInput = document.getElementById("chatInputPopup");
-  const sendBtn = document.getElementById("sendBtnPopup");
-  const membersContainer = document.getElementById("membersContainerPopup");
-  const typingDiv = document.getElementById("typingIndicator");
-  const badge = document.getElementById("chatBadge");
-  const emojiPicker = document.getElementById("emojiPicker");
-  const emojiBtn = document.getElementById("emojiBtn");
-  const imageBtn = document.getElementById("imageBtn");
-  const imageInput = document.getElementById("imageInput");
-  const scrollBtn = document.getElementById("scrollBottomBtn");
+// Dummy user data
+const username = "Member1";
+document.getElementById("username").textContent = username;
 
-  // --- Emoji list ---
-  const emojis = ["😀","😂","😍","🥰","😎","😢","👍","🙏","🎉","💐","🌹","🍀"];
-  emojis.forEach(e=>{
-    const span=document.createElement("span");
-    span.textContent=e;
-    span.onclick=()=>{ chatInput.value+=e; chatInput.focus(); };
-    emojiPicker.appendChild(span);
-  });
+// Dummy events list
+const events = [
+  {id:"event1", name:"Spring Garden Party"},
+  {id:"event2", name:"Rose Competition"},
+  {id:"event3", name:"Autumn Flower Show"}
+];
+const eventsList = document.getElementById("eventsList");
+events.forEach(e=>{
+  const li = document.createElement("li");
+  li.innerHTML = `<strong>${e.name}</strong> 
+                  <button onclick="joinEventChat('${e.id}')">Join Chat</button>`;
+  eventsList.appendChild(li);
+});
 
-  
-  // --- Send text message ---
-  sendBtn.onclick=()=>{
-    const text=chatInput.value.trim();
-    if(!text) return;
-    socket.emit("chatMessage",{text,room:currentRoom,type:"text"});
-    chatInput.value="";
-  };
-  chatInput.addEventListener("keypress",e=>{if(e.key==="Enter") sendBtn.click();});
+// Chat logic
+const socket = io();
+const modal = document.getElementById("messengerModal");
+const toggleBtn = document.getElementById("messengerToggle");
+const closeBtn = document.getElementById("closeMessenger");
+const messagesDiv = document.getElementById("messages");
+const membersList = document.getElementById("membersList");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const badge = document.getElementById("chatBadge");
+const emojiBtn = document.getElementById("emojiBtn");
+const emojiPicker = document.getElementById("emojiPicker");
+const imageBtn = document.getElementById("imageBtn");
+const imageInput = document.getElementById("imageInput");
+const typingDiv = document.getElementById("typingIndicator");
 
-  // --- Typing indicator ---
-  let typingTimeout;
-  chatInput.addEventListener("input",()=>{
-    socket.emit("typing",currentRoom);
-    clearTimeout(typingTimeout);
-    typingTimeout=setTimeout(()=>socket.emit("stopTyping",currentRoom),1000);
-  });
-;
+let currentRoom = "general";
+let unread = 0;
 
-  // --- Online members ---
-  socket.on("updateMembers",members=>{
-    membersContainer.innerHTML="";
-    members.forEach(member=>{
-      if(member.username===username) return;
-      const div=document.createElement("div");
-      div.className="memberItem";
-      div.innerHTML=`<span class="status ${member.online?"online":"offline"}"></span><img src="${member.avatar||'/default-avatar.png'}" class="msgAvatar"> ${member.username}`;
-      div.onclick=()=>{
-        currentRoom=[username,member.username].sort().join("#");
-        socket.emit("startPrivateChat",member.username);
-        messagesDiv.innerHTML="";
-      };
-      membersContainer.appendChild(div);
-    });
-  });
-
-  // --- Typing events ---
-  socket.on("userTyping",user=>{typingDiv.textContent=`${user} is typing...`;});
-  socket.on("userStopTyping",user=>{typingDiv.textContent="";});
-
-  // --- Emoji toggle ---
-  emojiBtn.onclick=()=>{ emojiPicker.style.display = emojiPicker.style.display==="flex"?"none":"flex"; };
-
-  // --- Image upload ---
-  imageBtn.onclick=()=>{ imageInput.click(); };
-  imageInput.onchange=()=>{
-    const file=imageInput.files[0];
-    if(!file) return;
-    const reader=new FileReader();
-    reader.onload=e=>{ socket.emit("chatMessage",{text:e.target.result, room:currentRoom, type:"image"}); };
-    reader.readAsDataURL(file);
-  };
-
-  // --- Scroll to bottom ---
-  scrollBtn.onclick=()=>{ messagesDiv.scrollTop = messagesDiv.scrollHeight; scrollBtn.style.display="none"; };
-  messagesDiv.onscroll=()=>{ scrollBtn.style.display = (messagesDiv.scrollTop + messagesDiv.clientHeight < messagesDiv.scrollHeight-50) ? "block" : "none"; };
-
-})();
-</script>
-  
-<script>
-  // Online members
-  socket.on("updateMembers", members=>{
-    membersContainer.innerHTML="";
-    members.forEach(member=>{
-      if(member.username===username) return;
-      const div = document.createElement("div");
-      div.className="memberItem";
-      div.innerHTML = `<img src="${member.avatar || '/default-avatar.png'}" class="msgAvatar">${member.username}`;
-      div.onclick=()=>{
-        currentRoom=[username, member.username].sort().join("#");
-        socket.emit("startPrivateChat",member.username);
-        messagesDiv.innerHTML="";
-      };
-      membersContainer.appendChild(div);
-    });
-  });
-  
-// --- Toggle modal ---
-  toggleBtn.onclick = ()=>{
-    messengerModal.style.display="flex";
-    unreadCount=0;
-    badge.style.display="none";
-    socket.emit("markRoomRead",currentRoom);
-  };
-  closeBtn.onclick = ()=>messengerModal.style.display="none";
-
-  // Request notification permission
-  if("Notification" in window) Notification.requestPermission();
-})();
-</script>
-  
-<script>
-function handleDrop(event){
-  event.preventDefault();
-  const file = event.dataTransfer.files[0];
-  if(!file) return;
-  if(!file.type.startsWith("image/")) return alert("Only images allowed!");
-  const reader = new FileReader();
-  reader.onload = e => {
-    socket.emit("chatMessage",{text:e.target.result, room:currentRoom, type:"image"});
-  };
-  reader.readAsDataURL(file);
+function joinEventChat(eventId){
+  currentRoom = eventId;
+  messagesDiv.innerHTML = "";
+  modal.style.display = "flex";
 }
+
+// Toggle modal
+toggleBtn.onclick = () => { modal.style.display="flex"; unread=0; badge.style.display="none"; };
+closeBtn.onclick = () => modal.style.display="none";
+
+// Send message
+sendBtn.onclick = sendMessage;
+chatInput.onkeypress = e => { if(e.key==="Enter") sendMessage(); };
+
+function sendMessage(){
+  const text = chatInput.value.trim();
+  if(!text) return;
+  socket.emit("chatMessage",{room:currentRoom,text,type:"text",username});
+  chatInput.value="";
+}
+
+// Typing indicator
+let typingTimer;
+chatInput.oninput = () => {
+  socket.emit("typing", currentRoom, username);
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(()=>socket.emit("stopTyping", currentRoom, username),800);
+};
+
+// Emoji picker
+["😀","😂","😍","🥰","😎","👍","🎉","🌹"].forEach(e=>{
+  const span = document.createElement("span");
+  span.textContent = e;
+  span.onclick = ()=>chatInput.value+=e;
+  emojiPicker.appendChild(span);
+});
+emojiBtn.onclick = ()=>emojiPicker.style.display = emojiPicker.style.display==="flex"?"none":"flex";
+
+// Image upload
+imageBtn.onclick = ()=>imageInput.click();
+imageInput.onchange = ()=>{
+  const file=imageInput.files[0];
+  const reader=new FileReader();
+  reader.onload=e=>socket.emit("chatMessage",{room:currentRoom,text:e.target.result,type:"image",username});
+  reader.readAsDataURL(file);
+};
+
+// Receive messages
+socket.on("chatMessage", msg=>{
+  if(msg.room !== currentRoom) return;
+  const div = document.createElement("div");
+  div.className="message "+(msg.username===username?"self":"other");
+  div.innerHTML = msg.type==="image"? `<img src="${msg.text}">` : `<strong>${msg.username}:</strong> ${msg.text}`;
+  messagesDiv.appendChild(div);
+  messagesDiv.scrollTop=messagesDiv.scrollHeight;
+});
+
+// Typing events
+socket.on("typing",(room,user)=>{
+  if(room===currentRoom) typingDiv.textContent=user+" is typing…";
+});
+socket.on("stopTyping",(room,user)=>{
+  if(room===currentRoom) typingDiv.textContent="";
+});
+
+// Dummy online members
+socket.on("members",(members)=>{
+  membersList.innerHTML="";
+  members.forEach(m=>{
+    const div=document.createElement("div");
+    div.className="member";
+    div.innerHTML=`<span class="status ${m.online?'online':'offline'}"></span>${m.username}`;
+    membersList.appendChild(div);
+  });
+});
 </script>
-  <button id="messengerToggle">💬</button>
 </body>
 </html>
