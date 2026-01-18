@@ -258,48 +258,19 @@ async function rsvpEvent(eventId){
       
     <div class="card">
      <section class="content-section form-section centered">
-  <h2>Host Sign Up</h2>
+         <form id="hostSignupForm" enctype="multipart/form-data">
+  <label>Name <input type="text" name="name" required></label>
+  <label>Location <input type="text" name="location" required></label>
+  <label>Preferred Date <input type="date" name="preferredDate" required></label>
+  <label>Venue Size <input type="text" name="venueSize" required></label>
+  <label>Description
+    <textarea name="description" rows="6" placeholder="Tell us about your garden..." required></textarea>
+  </label>
+  <label>Upload Image <input type="file" name="image" accept="image/*"></label>
 
-  <form id="hostSignupForm" enctype="multipart/form-data">
-
-    <label>
-      Name
-      <input type="text" name="name" required>
-    </label>
-
-    <label>
-      Location
-      <input type="text" name="location" placeholder="City or Address" required>
-    </label>
-
-    <label>
-      Preferred Date
-      <input type="date" name="preferredDate" required>
-    </label>
-
-    <label>
-      Venue Size
-      <input type="text" name="venueSize" placeholder="Approx. number of guests" required>
-    </label>
-
-    <label>
-      Description
-      <textarea
-        name="description"
-        rows="6"
-        placeholder="Tell us about your garden, accessibility, parking, and anything else we should know"
-        required></textarea>
-    </label>
-
-    <label>
-      Upload Image
-      <input type="file" name="image" accept="image/*">
-    </label>
-
-    <button type="submit">Submit Host Application</button>
-
-    <p id="hostMsg" style="margin-top:1rem;text-align:center;"></p>
-  </form>
+  <button type="submit">Submit Host Application</button>
+  <p id="hostMsg" style="margin-top:1rem;text-align:center;"></p>
+</form>
        <style>
          textarea {
   width: 100%;
@@ -313,6 +284,34 @@ async function rsvpEvent(eventId){
        </style>
 
          <script>
+document.getElementById("hostSignupForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const msg = document.getElementById("hostMsg");
+
+  try {
+    const res = await fetch("/api/host-signup", {
+      method: "POST",
+      body: formData
+    });
+
+    if (res.ok) {
+      msg.textContent = "✅ Thank you! Your host application has been sent.";
+      msg.style.color = "green";
+      e.target.reset();
+    } else {
+      msg.textContent = "❌ Submission failed. Please try again.";
+      msg.style.color = "red";
+    }
+  } catch (err) {
+    msg.textContent = "❌ Network error. Please try again.";
+    msg.style.color = "red";
+  }
+});
+</script>
+
+         <script>
+             
 const btn = document.getElementById("rsvpBtn");
 const eventId = btn.dataset.event;
 let rsvped = false;
@@ -333,31 +332,6 @@ btn.onclick = async () => {
   }
 };
 </script>
-
-<script>
-document.getElementById("hostSignupForm").addEventListener("submit", async e => {
-  e.preventDefault();
-
-  const formData = new FormData(e.target);
-
- const res = await fetch("/api/host-signup", { 
-    method: "POST",
-    body: formData
-  });
-
-  const msg = document.getElementById("hostMsg");
-
-  if (res.ok) {
-    msg.textContent = "Thank you! Your host application has been sent.";
-    msg.style.color = "green";
-    e.target.reset();
-  } else {
-    msg.textContent = "Submission failed. Please try again.";
-    msg.style.color = "red";
-  }
-});
-</script>
-
 </section>
 
     </div>
