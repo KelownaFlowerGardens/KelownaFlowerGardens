@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard | Kelowna Flower Gardens</title>
+
+<link rel="icon" href="KFGL.jpg">
+
+<style>
+:root{
+  --pink:#F68686;
+  --radius:14px;
+}
+
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#fafafa;
+}
+
+header{
+  background:var(--pink);
+  color:white;
+  padding:1rem;
+  text-align:center;
+}
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:1rem;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+
+th, td{
+  padding:.75rem;
+  border-bottom:1px solid #eee;
+}
+
+th{
+  background:#f5f5f5;
+}
+
+button{
+  border:none;
+  padding:.4rem .8rem;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.enable{background:#2ecc71;color:white}
+.disable{background:#e67e22;color:white}
+.delete{background:#e74c3c;color:white}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Admin Dashboard</h1>
+  <p>Kelowna Flower Gardens</p>
+</header>
+
+<main>
+
+<h2>Members</h2>
+
+<table id="membersTable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Username</th>
+      <th>Status</th>
+      <th>Paid</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+</main>
+
+<script>
+async function loadMembers(){
+  const res = await fetch("/api/admin/members", {
+    credentials:"include"
+  });
+
+  if(res.status === 401){
+    location.href = "LoggedOut.html";
+    return;
+  }
+
+  const members = await res.json();
+  const tbody = document.querySelector("#membersTable tbody");
+  tbody.innerHTML = "";
+
+  members.forEach(m => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.email}</td>
+        <td>${m.username}</td>
+        <td>${m.active ? "Active" : "Inactive"}</td>
+        <td>${m.paid ? "Yes" : "No"}</td>
+        <td>
+          <button class="${m.active ? "disable" : "enable"}"
+            onclick="toggleMember(${m.id})">
+            ${m.active ? "Disable" : "Enable"}
+          </button>
+          <button class="delete"
+            onclick="deleteMember(${m.id})">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function toggleMember(id){
+  await fetch("/api/admin/toggle-member", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    credentials:"include",
+    body: JSON.stringify({ id })
+  });
+  loadMembers();
+}
+
+async function deleteMember(id){
+  if(confirm("Delete this member?")){
+    await fetch("/api/admin/delete-member", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      credentials:"include",
+      body: JSON.stringify({ id })
+    });
+    loadMembers();
+  }
+}
+
+loadMembers();
+</script>
+
+</body>
+</html>
