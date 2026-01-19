@@ -315,120 +315,52 @@ select{
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script>
-// Dummy user data
+// Logged-in user (replace with real auth later)
 const username = "Member1";
 document.getElementById("username").textContent = username;
 
-// Dummy events list
+// EVENTS LIST (now RSVP only)
 const events = [
-  {id:"event1", name:"Spring Garden Party"},
-  {id:"event2", name:"Rose Competition"},
-  {id:"event3", name:"Autumn Flower Show"}
+  {
+    id: "spring-garden-party",
+    name: "Spring Garden Party",
+    date: "2026-05-31"
+  },
+  {
+    id: "rose-competition",
+    name: "Rose Competition",
+    date: "2026-06-15"
+  },
+  {
+    id: "autumn-flower-show",
+    name: "Autumn Flower Show",
+    date: "2026-09-20"
+  }
 ];
+
 const eventsList = document.getElementById("eventsList");
-events.forEach(e=>{
+
+events.forEach(event => {
   const li = document.createElement("li");
-  li.innerHTML = `<strong>${e.name}</strong> 
-                  <button onclick="joinEventChat('${e.id}')">Join Chat</button>`;
+  li.innerHTML = `
+    <strong>${event.name}</strong><br>
+    <small>${new Date(event.date).toDateString()}</small><br>
+    <button class="rsvp-btn"
+      onclick="openRSVP(
+        '${event.name}',
+        '${event.date}',
+        '${event.id}'
+      )">
+      🌸 RSVP
+    </button>
+  `;
   eventsList.appendChild(li);
 });
-
-// Chat logic
-const socket = io();
-const modal = document.getElementById("messengerModal");
-const toggleBtn = document.getElementById("messengerToggle");
-const closeBtn = document.getElementById("closeMessenger");
-const messagesDiv = document.getElementById("messages");
-const membersList = document.getElementById("membersList");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
-const badge = document.getElementById("chatBadge");
-const emojiBtn = document.getElementById("emojiBtn");
-const emojiPicker = document.getElementById("emojiPicker");
-const imageBtn = document.getElementById("imageBtn");
-const imageInput = document.getElementById("imageInput");
-const typingDiv = document.getElementById("typingIndicator");
-
-let currentRoom = "general";
-let unread = 0;
-
-function joinEventChat(eventId){
-  currentRoom = eventId;
-  messagesDiv.innerHTML = "";
-  modal.style.display = "flex";
-}
-
-// Toggle modal
-toggleBtn.onclick = () => { modal.style.display="flex"; unread=0; badge.style.display="none"; };
-closeBtn.onclick = () => modal.style.display="none";
-
-// Send message
-sendBtn.onclick = sendMessage;
-chatInput.onkeypress = e => { if(e.key==="Enter") sendMessage(); };
-
-function sendMessage(){
-  const text = chatInput.value.trim();
-  if(!text) return;
-  socket.emit("chatMessage",{room:currentRoom,text,type:"text",username});
-  chatInput.value="";
-}
-
-// Typing indicator
-let typingTimer;
-chatInput.oninput = () => {
-  socket.emit("typing", currentRoom, username);
-  clearTimeout(typingTimer);
-  typingTimer = setTimeout(()=>socket.emit("stopTyping", currentRoom, username),800);
-};
-
-// Emoji picker
-["😀","😂","😍","🥰","😎","👍","🎉","🌹"].forEach(e=>{
-  const span = document.createElement("span");
-  span.textContent = e;
-  span.onclick = ()=>chatInput.value+=e;
-  emojiPicker.appendChild(span);
-});
-emojiBtn.onclick = ()=>emojiPicker.style.display = emojiPicker.style.display==="flex"?"none":"flex";
-
-// Image upload
-imageBtn.onclick = ()=>imageInput.click();
-imageInput.onchange = ()=>{
-  const file=imageInput.files[0];
-  const reader=new FileReader();
-  reader.onload=e=>socket.emit("chatMessage",{room:currentRoom,text:e.target.result,type:"image",username});
-  reader.readAsDataURL(file);
-};
-
-// Receive messages
-socket.on("chatMessage", msg=>{
-  if(msg.room !== currentRoom) return;
-  const div = document.createElement("div");
-  div.className="message "+(msg.username===username?"self":"other");
-  div.innerHTML = msg.type==="image"? `<img src="${msg.text}">` : `<strong>${msg.username}:</strong> ${msg.text}`;
-  messagesDiv.appendChild(div);
-  messagesDiv.scrollTop=messagesDiv.scrollHeight;
-});
-
-// Typing events
-socket.on("typing",(room,user)=>{
-  if(room===currentRoom) typingDiv.textContent=user+" is typing…";
-});
-socket.on("stopTyping",(room,user)=>{
-  if(room===currentRoom) typingDiv.textContent="";
-});
-
-// Dummy online members
-socket.on("members",(members)=>{
-  membersList.innerHTML="";
-  members.forEach(m=>{
-    const div=document.createElement("div");
-    div.className="member";
-    div.innerHTML=`<span class="status ${m.online?'online':'offline'}"></span>${m.username}`;
-    membersList.appendChild(div);
-  });
-});
+;
 </script>
+
   <!-- RSVP POPUP -->
 <div id="rsvpOverlay" style="display:none;">
   <div id="rsvpPopup">
