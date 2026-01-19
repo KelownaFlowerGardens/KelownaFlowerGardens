@@ -315,22 +315,22 @@ select{
     <h3>Member Chat</h3>
     <input type="text" id="memberSearch" placeholder="Search members…">
     <div id="membersList"></div>
-<div id="messengerModal">
-  <div id="messengerHeader">
+<div id="messengerModal"></div>
+  <div id="messengerHeader"></div>
       Chat with <span id="chatWith">All</span>
     💬 Members Chat
     <span id="closeMessenger">×</span>
   <div id="messagesPopup"></div>
   <div id="messages"></div>
   <div id="typingIndicator"></div>
-  <div class="chat-input">
+  <div class="chat-input"></div>
     <input id="chatInput" placeholder="Type a message…" />
     <button id="emojiBtn">😊</button>
     <button id="imageBtn">📷</button>
     <button id="sendBtn">Send</button>
     <input type="file" id="imageInput" accept="image/*" hidden>
   <div id="emojiPicker"></div>
-  <input id="chatInputPopup">
+  <input id="chatInputPopup"></div>
   <button id="sendBtnPopup">Send</button>
 <script src="/socket.io/socket.io.js"></script>
 
@@ -599,8 +599,6 @@ closeBtn.onclick = () => modal.style.display = "none";
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
   <span id="chatBadge" class="badge"></span>
 </button>
-
- 
 
 <script>
 // Toggle modal
