@@ -685,6 +685,7 @@ document.getElementById("hostSignupForm").addEventListener("submit",async e=>{
   } catch(err){msg.textContent="❌ Network error. Please try again.";msg.style.color="red";}
 });
 
+
 // --- Messenger ---
 const socket = io();
 const modal = document.getElementById("messengerModal");
@@ -705,6 +706,14 @@ const memberSearch = document.getElementById("memberSearch");
 
 let currentRoom = "global";
 let unread = 0;
+let allMembers = [];
+
+/* =========================
+   PERMISSIONS (PUSH)
+========================= */
+if ("Notification" in window && Notification.permission !== "granted") {
+  Notification.requestPermission();
+}
 
 // Modal toggle
 toggleBtn.onclick=()=>{modal.style.display="flex";unread=0;badge.style.display="none";}
