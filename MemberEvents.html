@@ -756,7 +756,12 @@ memberSearch.oninput=()=>{
   membersList.querySelectorAll(".member").forEach(m=>{
     m.style.display=m.textContent.toLowerCase().includes(filter)?"flex":"none";
   });
+    .card, .wrapper, .sidebar {
+  position: relative;
+  z-index: 1; /* lower than chat modal */
+}
 };
+        
     <!-- RSVP POPUP -->
 <div id="rsvpOverlay" style="display:none;">
   <div id="rsvpPopup">
