@@ -323,7 +323,7 @@ select{
   <div id="messagesPopup"></div>
   <div id="messages"></div>
   <div id="typingIndicator"></div>
-  <div class="chat-input"></div>
+  <div class="chat-input">
     <input id="chatInput" placeholder="Type a message…" />
     <button id="emojiBtn">😊</button>
     <button id="imageBtn">📷</button>
@@ -331,7 +331,7 @@ select{
     <input type="file" id="imageInput" accept="image/*" hidden>
   <div id="emojiPicker"></div>
   <input id="chatInputPopup"></div>
-  <button id="sendBtnPopup">Send</button>
+  <button id="sendBtnPopup">Send</button></div>
 <script src="/socket.io/socket.io.js"></script>
 
       <!-- SEARCH -->
@@ -347,20 +347,6 @@ select{
 <!-- Messenger Toggle Button -->
 <button id="messengerToggle">💬<span id="chatBadge" class="badge"></span></button>
 
-  <div id="membersList"></div>
-
-  <div id="messages"></div>
-  <div id="typingIndicator"></div>
-
-  <div class="chat-input">
-    <input id="chatInput" placeholder="Type a message…" />
-    <button id="emojiBtn">😊</button>
-    <button id="imageBtn">📷</button>
-    <button id="sendBtn">Send</button>
-    <input type="file" id="imageInput" accept="image/*" hidden>
-  </div>
-
-  <div id="emojiPicker"></div>
 
    <script>
 /* =========================
