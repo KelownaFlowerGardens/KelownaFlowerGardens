@@ -393,6 +393,7 @@ events.forEach(event => {
 let selectedEventId = null;
 
 /* OPEN POPUP */
+    
 function openRSVP(title, date, eventId){
   selectedEventId = eventId;
 
@@ -417,31 +418,45 @@ function closeRSVP(){
 }
 
 /* SUBMIT RSVP */
-async function submitPopupRSVP(){
-  const status = document.getElementById("rsvpSelect").value;
-  const msg = document.getElementById("popupStatus");
+async function submitPopupRSVP() {
+  const msg = document.getElementById("rsvpPopupMsg");
+  msg.textContent = "Submitting RSVP...";
 
-  msg.textContent = "Submitting RSVP…";
-
-  try{
-    const res = await fetch("/api/rsvp",{
-      method:"POST",
-      credentials:"include",
-      headers:{ "Content-Type":"application/json" },
-      body:JSON.stringify({
-        eventId: selectedEventId,
-        response: status
+  try {
+    const res = await fetch("/api/rsvp", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        eventId: window.activeEventId
       })
     });
 
-    if(!res.ok) throw new Error();
+    if (res.status === 409) {
+      msg.textContent = "❌ This event is fully booked (35 attendees).";
+      msg.style.color = "red";
+      return;
+    }
 
-    msg.textContent = "✅ RSVP saved. Organizer notified.";
-    setTimeout(closeRSVP, 1500);
+    if (res.status === 401) {
+      msg.textContent = "Please log in to RSVP.";
+      return;
+    }
 
-  }catch{
-    msg.textContent = "❌ Failed to submit RSVP.";
+    if (!res.ok) {
+      msg.textContent = "RSVP failed. Please try again.";
+      return;
+    }
+
+    msg.textContent = "✅ RSVP confirmed!";
+    msg.style.color = "green";
+
+  } catch (err) {
+    msg.textContent = "Network error. Please try again.";
   }
+}
+
+
 }
 </script>
 
