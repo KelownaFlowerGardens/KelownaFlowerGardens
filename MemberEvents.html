@@ -319,15 +319,14 @@ select{
 
 </div>
 
-<!-- Messenger Toggle Button -->
-<button id="messengerToggle">💬<span id="chatBadge" class="badge"></span></button>
-
-<!-- Messenger Modal -->
+    <div class="card">
 <div id="messengerModal">
   <div id="messengerHeader">
-    Chat with <span id="chatWith">All</span>
+      Chat with <span id="chatWith">All</span>
+    💬 Members Chat
     <span id="closeMessenger">×</span>
   </div>
+  <div id="messagesPopup"></div>
   <div id="messages"></div>
   <div id="typingIndicator"></div>
   <div class="chat-input">
@@ -339,10 +338,114 @@ select{
   </div>
   <div id="emojiPicker"></div>
 </div>
-
+  <input id="chatInputPopup">
+  <button id="sendBtnPopup">Send</button>
+</div>
 <script src="/socket.io/socket.io.js"></script>
+
+            
+<!-- Messenger Toggle Button -->
+<button id="messengerToggle">💬<span id="chatBadge" class="badge"></span></button>
+
+      <script>
+const socket = io();
+
+const modal = document.getElementById("messengerModal");
+const toggleBtn = document.getElementById("messengerToggle");
+const closeBtn = document.getElementById("closeMessenger");
+const messagesDiv = document.getElementById("messages");
+const membersList = document.getElementById("membersList");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const emojiBtn = document.getElementById("emojiBtn");
+const imageBtn = document.getElementById("imageBtn");
+const imageInput = document.getElementById("imageInput");
+const typingDiv = document.getElementById("typingIndicator");
+const badge = document.getElementById("chatBadge");
+const emojiPicker = document.getElementById("emojiPicker");
+
+let currentRoom = "general";
+let unread = 0;
+
+const socket = io();
+const sendBtn = document.getElementById("sendBtn");
+const input = document.getElementById("chatInput");
+const messages = document.getElementById("messages");
+
+sendBtn.onclick = () => {
+  socket.emit("chatMessage", input.value);
+  input.value = "";
+};
+
+socket.on("chatMessage", msg => {
+  const div = document.createElement("div");
+  div.textContent = `${msg.username}: ${msg.text}`;
+  messages.appendChild(div);
+});
+
+socket.on("history", msgs => {
+  msgs.forEach(m => {
+    const div = document.createElement("div");
+    div.textContent = `${m.username}: ${m.text}`;
+    messages.appendChild(div);
+  });
+});
+
+const socket = io();
+const toggleBtn = document.getElementById("messengerToggle");
+const modal = document.getElementById("messengerModal");
+const closeBtn = document.getElementById("closeMessenger");
+
+toggleBtn.onclick = () => modal.style.display = "flex";
+closeBtn.onclick = () => modal.style.display = "none";
+</script>
+      <button id="messengerToggle">💬</button>
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+  <span id="chatBadge" class="badge"></span>
+</button>
+
+  <div id="messengerHeader">
+    Members Chat
+    <span id="closeMessenger">×</span>
+  </div>
+
+  <div id="membersList"></div>
+
+  <div id="messages"></div>
+  <div id="typingIndicator"></div>
+
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Type a message…" />
+    <button id="emojiBtn">😊</button>
+    <button id="imageBtn">📷</button>
+    <button id="sendBtn">Send</button>
+    <input type="file" id="imageInput" accept="image/*" hidden>
+  </div>
+
+  <div id="emojiPicker"></div>
+</div>
+
 <script>
-    
+// Toggle modal
+toggleBtn.onclick = () => {
+  modal.style.display = "flex";
+  unread = 0;
+  badge.style.display = "none";
+};
+closeBtn.onclick = () => modal.style.display = "none";
+
+// Send message
+sendBtn.onclick = sendMessage;
+chatInput.onkeypress = e => e.key==="Enter" && sendMessage();
+
+function sendMessage(){
+  const text = chatInput.value.trim();
+  if(!text) return;
+  socket.emit("chatMessage",{room:currentRoom,text,type:"text"});
+  chatInput.value="";
+}
+
+
 // Typing indicator
 let typingTimer;
 chatInput.oninput = () => {
@@ -405,30 +508,10 @@ socket.on("members",members=>{
     membersList.appendChild(d);
   });
 });
-    
-// --- RSVP Function with Event Chat ---
-async function rsvpEvent(eventId){
-  const msg = document.getElementById(
-    eventId==='1st Garden Party'?"rsvpMsgOfficial":"rsvpMsgGarden"
-  );
-  msg.textContent="Saving RSVP...";
-  try{
-    const res = await fetch("/api/rsvp",{method:"POST",credentials:"include",
-      headers:{"Content-Type":"application/json"},body:JSON.stringify({eventId})
-    });
-    if(res.status===401){msg.textContent="Please log in.";return;}
-    if(res.status===403){msg.textContent="Please accept the waiver first.";return;}
-    if(!res.ok){msg.textContent="RSVP failed.";return;}
-    msg.textContent="✅ RSVP confirmed! Opening chat…";
+</script>
 
-    // Open chat room for this event
-    currentRoom = eventId;
-    chatWith.textContent = "Event: " + eventId.replace(/-/g," ");
-    messagesDiv.innerHTML="";
-    modal.style.display="flex";
-  } catch(err){msg.textContent="Network error.";}
-}
 
+    <script>
 // --- Host Signup ---
 document.getElementById("hostSignupForm").addEventListener("submit",async e=>{
   e.preventDefault();
