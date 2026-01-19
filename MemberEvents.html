@@ -343,11 +343,217 @@ select{
 </div>
 <script src="/socket.io/socket.io.js"></script>
 
+      <!-- SEARCH -->
+  <input
+    id="memberSearch"
+    placeholder="Search members…"
+    style="padding:.5rem;margin:.4rem;border-radius:8px;border:1px solid #ccc"
+  />
+
+  <!-- MEMBERS -->
+  <div id="membersList"></div>
             
 <!-- Messenger Toggle Button -->
 <button id="messengerToggle">💬<span id="chatBadge" class="badge"></span></button>
 
-      <script>
+  <div id="membersList"></div>
+
+  <div id="messages"></div>
+  <div id="typingIndicator"></div>
+
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Type a message…" />
+    <button id="emojiBtn">😊</button>
+    <button id="imageBtn">📷</button>
+    <button id="sendBtn">Send</button>
+    <input type="file" id="imageInput" accept="image/*" hidden>
+  </div>
+
+  <div id="emojiPicker"></div>
+</div>
+
+   <script>
+/* =========================
+   SETUP
+========================= */
+const socket = io();
+const username = window.loggedInUsername || "YOU";
+
+const modal = document.getElementById("messengerModal");
+const toggleBtn = document.getElementById("messengerToggle");
+const closeBtn = document.getElementById("closeMessenger");
+const messagesDiv = document.getElementById("messages");
+const membersList = document.getElementById("membersList");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const emojiBtn = document.getElementById("emojiBtn");
+const imageBtn = document.getElementById("imageBtn");
+const imageInput = document.getElementById("imageInput");
+const typingDiv = document.getElementById("typingIndicator");
+const badge = document.getElementById("chatBadge");
+const emojiPicker = document.getElementById("emojiPicker");
+const chatWith = document.getElementById("chatWith");
+const searchInput = document.getElementById("memberSearch");
+
+let currentRoom = null;
+let unread = 0;
+let allMembers = [];
+
+/* =========================
+   PERMISSIONS (PUSH)
+========================= */
+if ("Notification" in window && Notification.permission !== "granted") {
+  Notification.requestPermission();
+}
+
+/* =========================
+   OPEN / CLOSE
+========================= */
+toggleBtn.onclick = () => {
+  modal.style.display = "flex";
+  unread = 0;
+  badge.style.display = "none";
+};
+closeBtn.onclick = () => modal.style.display = "none";
+
+/* =========================
+   SEND MESSAGE
+========================= */
+sendBtn.onclick = sendMessage;
+chatInput.onkeypress = e => e.key === "Enter" && sendMessage();
+
+function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text || !currentRoom) return;
+
+  socket.emit("chatMessage", {
+    room: currentRoom,
+    text,
+    type: "text",
+    username
+  });
+
+  chatInput.value = "";
+}
+
+/* =========================
+   TYPING
+========================= */
+let typingTimer;
+chatInput.oninput = () => {
+  if (!currentRoom) return;
+  socket.emit("typing", currentRoom, username);
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(
+    () => socket.emit("stopTyping", currentRoom),
+    800
+  );
+};
+
+/* =========================
+   EMOJIS
+========================= */
+["😀","😂","😍","🥰","😎","👍","🎉","🌹"].forEach(e => {
+  const s = document.createElement("span");
+  s.textContent = e;
+  s.onclick = () => chatInput.value += e;
+  emojiPicker.appendChild(s);
+});
+emojiBtn.onclick = () =>
+  emojiPicker.style.display =
+    emojiPicker.style.display === "flex" ? "none" : "flex";
+
+/* =========================
+   IMAGE UPLOAD
+========================= */
+imageBtn.onclick = () => imageInput.click();
+imageInput.onchange = () => {
+  const file = imageInput.files[0];
+  if (!file || !currentRoom) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    socket.emit("chatMessage", {
+      room: currentRoom,
+      text: e.target.result,
+      type: "image",
+      username
+    });
+  };
+  reader.readAsDataURL(file);
+};
+
+/* =========================
+   RECEIVE MESSAGES
+========================= */
+socket.on("chatMessage", msg => {
+  if (msg.room !== currentRoom) {
+    unread++;
+    badge.textContent = unread;
+    badge.style.display = "inline-block";
+
+    if (Notification.permission === "granted") {
+      new Notification(`New message from ${msg.username}`, {
+        body: msg.type === "image" ? "📷 Image" : msg.text
+      });
+    }
+    return;
+  }
+
+  const div = document.createElement("div");
+  div.className = "message " + (msg.username === username ? "self" : "other");
+  div.innerHTML =
+    msg.type === "image"
+      ? `<strong>${msg.username}:</strong><br><img src="${msg.text}">`
+      : `<strong>${msg.username}:</strong> ${msg.text}`;
+
+  messagesDiv.appendChild(div);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+});
+
+/* =========================
+   TYPING EVENTS
+========================= */
+socket.on("typing", (room, user) => {
+  if (room === currentRoom) typingDiv.textContent = `${user} is typing…`;
+});
+socket.on("stopTyping", room => {
+  if (room === currentRoom) typingDiv.textContent = "";
+});
+
+/* =========================
+   MEMBERS + SEARCH
+========================= */
+socket.on("members", members => {
+  allMembers = members.filter(m => m.username !== username);
+  renderMembers(allMembers);
+});
+
+searchInput.oninput = () => {
+  const q = searchInput.value.toLowerCase();
+  renderMembers(allMembers.filter(m =>
+    m.username.toLowerCase().includes(q)
+  ));
+};
+
+function renderMembers(list) {
+  membersList.innerHTML = "";
+  list.forEach(m => {
+    const div = document.createElement("div");
+    div.className = "member";
+    div.innerHTML =
+      `<span class="status ${m.online ? "online" : "offline"}"></span>
+       ${m.username}`;
+
+    div.onclick = () => {
+      currentRoom = [username, m.username].sort().join("#");
+      chatWith.textContent = m.username;
+      messagesDiv.innerHTML = "";
+    };
+    membersList.appendChild(div);
+  });
+}
+
 const socket = io();
 
 const modal = document.getElementById("messengerModal");
@@ -404,26 +610,7 @@ closeBtn.onclick = () => modal.style.display = "none";
   <span id="chatBadge" class="badge"></span>
 </button>
 
-  <div id="messengerHeader">
-    Members Chat
-    <span id="closeMessenger">×</span>
-  </div>
-
-  <div id="membersList"></div>
-
-  <div id="messages"></div>
-  <div id="typingIndicator"></div>
-
-  <div class="chat-input">
-    <input id="chatInput" placeholder="Type a message…" />
-    <button id="emojiBtn">😊</button>
-    <button id="imageBtn">📷</button>
-    <button id="sendBtn">Send</button>
-    <input type="file" id="imageInput" accept="image/*" hidden>
-  </div>
-
-  <div id="emojiPicker"></div>
-</div>
+ 
 
 <script>
 // Toggle modal
