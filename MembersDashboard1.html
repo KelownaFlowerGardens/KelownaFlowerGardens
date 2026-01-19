@@ -151,6 +151,84 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
   flex-wrap:wrap; gap:4px;
 }
 #emojiPicker span{ cursor:pointer }
+  #rsvpOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+#rsvpPopup{
+  background:#fff;
+  border-radius:16px;
+  padding:1.8rem;
+  width:90%;
+  max-width:360px;
+  text-align:center;
+}
+
+#rsvpPopup h3{
+  color:#F68686;
+  margin-top:0;
+}
+
+.calendar-btn{
+  display:inline-block;
+  margin:.6rem 0;
+  padding:.5rem 1rem;
+  background:#F68686;
+  color:#fff;
+  border-radius:20px;
+  text-decoration:none;
+  font-weight:600;
+}
+
+.rsvp-label{
+  display:block;
+  margin:1rem 0;
+  font-weight:600;
+}
+
+select{
+  width:100%;
+  padding:.5rem;
+  margin-top:.4rem;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.popup-actions{
+  display:flex;
+  gap:.6rem;
+  justify-content:center;
+  margin-top:1rem;
+}
+
+.confirm-btn{
+  background:#F68686;
+  color:#fff;
+  border:none;
+  padding:.6rem 1.2rem;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+.cancel-btn{
+  background:#ddd;
+  border:none;
+  padding:.6rem 1.2rem;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+#popupStatus{
+  margin-top:.8rem;
+  font-size:.9rem;
+}
+
 </style>
 </head>
 <body>
@@ -351,5 +429,90 @@ socket.on("members",(members)=>{
   });
 });
 </script>
+  <!-- RSVP POPUP -->
+<div id="rsvpOverlay" style="display:none;">
+  <div id="rsvpPopup">
+    <h3 id="popupTitle"></h3>
+    <p id="popupDate"></p>
+
+    <a id="calendarLink" target="_blank" class="calendar-btn">
+      ➕ Add to Calendar
+    </a>
+
+    <label class="rsvp-label">
+      RSVP Status
+      <select id="rsvpSelect">
+        <option value="yes">Yes, attending</option>
+        <option value="maybe">Maybe</option>
+        <option value="no">Not attending</option>
+      </select>
+    </label>
+
+    <div class="popup-actions">
+      <button onclick="submitPopupRSVP()" class="confirm-btn">Confirm RSVP</button>
+      <button onclick="closeRSVP()" class="cancel-btn">Cancel</button>
+    </div>
+
+    <div id="popupStatus"></div>
+  </div>
+</div>
+
+  <script>
+let selectedEventId = null;
+
+/* OPEN POPUP */
+function openRSVP(title, date, eventId){
+  selectedEventId = eventId;
+
+  document.getElementById("popupTitle").textContent = title;
+  document.getElementById("popupDate").textContent =
+    "Event Date: " + new Date(date).toDateString();
+
+  /* Google Calendar link */
+  const start = date.replace(/-/g,"") + "T180000";
+  const end   = date.replace(/-/g,"") + "T210000";
+
+  document.getElementById("calendarLink").href =
+    `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}`;
+
+  document.getElementById("rsvpOverlay").style.display="flex";
+  document.getElementById("popupStatus").textContent="";
+}
+
+/* CLOSE POPUP */
+function closeRSVP(){
+  document.getElementById("rsvpOverlay").style.display="none";
+}
+
+/* SUBMIT RSVP */
+async function submitPopupRSVP(){
+  const status = document.getElementById("rsvpSelect").value;
+  const msg = document.getElementById("popupStatus");
+
+  msg.textContent = "Submitting RSVP…";
+
+  try{
+    const res = await fetch("/api/rsvp",{
+      method:"POST",
+      credentials:"include",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({
+        eventId: selectedEventId,
+        response: status
+      })
+    });
+
+    if(!res.ok) throw new Error();
+
+    msg.textContent = "✅ RSVP saved. Organizer notified.";
+    setTimeout(closeRSVP, 1500);
+
+  }catch{
+    msg.textContent = "❌ Failed to submit RSVP.";
+  }
+}
+</script>
+
+
 </body>
 </html>
