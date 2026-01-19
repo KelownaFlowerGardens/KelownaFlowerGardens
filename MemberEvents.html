@@ -247,6 +247,20 @@ select{
   font-size:.9rem;
 }
 
+    .card,
+.chat-input,
+.chat-input * {
+  pointer-events: auto;
+  position: relative;
+  z-index: 10;
+}
+
+    #membersList,
+#messages {
+  position: relative;
+  z-index: 5;
+}
+
 </style>
 </head>
 <body>
@@ -332,7 +346,18 @@ select{
 <!-- Messenger Toggle Button -->
 <button id="messengerToggle">💬<span id="chatBadge" class="badge"></span></button>
 
-   <script>
+
+       <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+       .card,
+.chat-input,
+.chat-input * {
+  pointer-events: auto;
+  position: relative;
+  z-index: 10;
+}
+
 /* =========================
    SETUP
 ========================= */
@@ -379,22 +404,39 @@ closeBtn.onclick = () => modal.style.display = "none";
 /* =========================
    SEND MESSAGE
 ========================= */
-sendBtn.onclick = sendMessage;
-chatInput.onkeypress = e => e.key === "Enter" && sendMessage();
 
-function sendMessage() {
+           function sendMessage() {
   const text = chatInput.value.trim();
-  if (!text || !currentRoom) return;
+
+  if (!currentRoom) {
+    alert("Please select a member to chat with first.");
+    return;
+  }
+
+  if (!text) return;
 
   socket.emit("chatMessage", {
     room: currentRoom,
     text,
-    type: "text",
-    username
+    type: "text"
   });
 
   chatInput.value = "";
 }
+
+sendBtn.onclick = sendMessage;
+chatInput.onkeypress = e => e.key === "Enter" && sendMessage();
+
+           sendBtn.addEventListener("click", () => {
+  console.log("SEND BUTTON CLICKED");
+});
+emojiBtn.addEventListener("click", () => {
+  console.log("EMOJI BUTTON CLICKED");
+});
+imageBtn.addEventListener("click", () => {
+  console.log("IMAGE BUTTON CLICKED");
+});
+
 
 /* =========================
    TYPING
