@@ -14,3 +14,9 @@ fetch("/api/members")
   `).join("");
 });
 </script>
+
+<script>
+if(new URLSearchParams(location.search).get("reminder")){
+  alert("Please complete your profile to continue.");
+}
+</script>
