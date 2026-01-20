@@ -1,0 +1,16 @@
+<div id="members"></div>
+
+<script>
+fetch("/api/members")
+.then(r=>r.json())
+.then(list=>{
+  document.getElementById("members").innerHTML = list.map(m=>`
+    <div class="card">
+      <img src="${m.avatar || 'avatar-default.png'}">
+      <h3>${m.full_name || m.username}</h3>
+      <p>${m.location || ""}</p>
+      <p>${m.bio || ""}</p>
+    </div>
+  `).join("");
+});
+</script>
