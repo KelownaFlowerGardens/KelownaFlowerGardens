@@ -368,9 +368,9 @@ fetch("http://localhost:3000/api/session", {
     <div class="member-name">Welcome, Member</div>
 
     <a href="MembersDashboard.html">🌸 Dashboard</a>
-    <a href="Profile.html">👤 Profile</a>
-    <a href="Calendar.html">📅 Calendar</a>
-    <a href="Logout.html" class="logout">🚪 Log Out</a>
+    <a href="MyAccounte.html">👤 My Account</a>
+    <a href="MemberCalendar.html">📅 Calendar</a>
+    <a href="Loggedout.html" class="logout">🚪 Log Out</a>
   </div>
 </div>
 </header>
@@ -425,10 +425,7 @@ document.getElementById("profileForm").addEventListener("submit", async e => {
     msg.textContent = "Network error.";
   }
 });
-</script>
 
-
-<style>
 body{
   margin:0;
   font-family:system-ui;
@@ -509,9 +506,9 @@ a.button{
 </div>
 </div>
   <div class="card">
-    <a class="button" href="/Roses.html">View Rose Database</a>
+    <a class="button" href="MemberRoses.html">View Rose Database</a>
       <a></a>
-    <a class="button" href="/Calendar.html">Events Calendar</a>
+    <a class="button" href="MemberCalendar.html">Events Calendar</a>
   </div>
     <section class="card">
   <h3>My Events</h3>
@@ -564,7 +561,7 @@ fetch("http://localhost:3000/api/my-selections", {
     <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const res = await fetch("/api/session", { credentials: "include" });
-  if (!res.ok) return window.location.href = "/Login.html";
+  if (!res.ok) return window.location.href = "Login.html";
   const user = await res.json();
 
   const avatarPreview = document.getElementById("avatarPreview");
