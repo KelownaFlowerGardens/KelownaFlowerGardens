@@ -132,21 +132,7 @@ nav a:hover{
     display:block;
   }
 }
-    <!-- LOGGED IN AVATAR -->
-<div class="member-avatar">
-  <button class="avatar-btn" onclick="toggleMemberMenu()">
-    <img src="KFGL.jpg" alt="Member Avatar">
-  </button>
-
-  <div class="member-dropdown" id="memberMenu">
-    <div class="member-name">Welcome, Member</div>
-
-    <a href="MembersDashboard.html">🌸 Dashboard</a>
-    <a href="Profile.html">👤 Profile</a>
-    <a href="Calendar.html">📅 Calendar</a>
-    <a href="Logout.html" class="logout">🚪 Log Out</a>
-  </div>
-</div>
+ 
 /* ---------- MEMBER AVATAR ---------- */
 .member-avatar{
   position:relative;
@@ -372,7 +358,21 @@ fetch("http://localhost:3000/api/session", {
     <a href="MemberContact.html">Contact</a>
 </nav>
     <div class="nav-auth" id="nav-auth"></div>
+   <!-- LOGGED IN AVATAR -->
+<div class="member-avatar">
+  <button class="avatar-btn" onclick="toggleMemberMenu()">
+    <img src="KFGL.jpg" alt="Member Avatar">
+  </button>
 
+  <div class="member-dropdown" id="memberMenu">
+    <div class="member-name">Welcome, Member</div>
+
+    <a href="MembersDashboard.html">🌸 Dashboard</a>
+    <a href="Profile.html">👤 Profile</a>
+    <a href="Calendar.html">📅 Calendar</a>
+    <a href="Logout.html" class="logout">🚪 Log Out</a>
+  </div>
+</div>
 </header>
     <div class="login-avatar">...</div>  <!-- logged out -->
 <div class="member-avatar">...</div> <!-- logged in -->
