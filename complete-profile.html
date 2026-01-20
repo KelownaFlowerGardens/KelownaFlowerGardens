@@ -393,8 +393,11 @@ fetch("http://localhost:3000/api/session", {
     <label>About You</label>
     <textarea name="bio" rows="4" placeholder="Your gardening interests…"></textarea>
 
-    <label>Profile Photo</label>
-    <input type="file" name="avatar" accept="image/*">
+   <label>Profile Photo</label>
+<input type="file" id="avatarInput" accept="image/*">
+<canvas id="cropCanvas" width="200" height="200" style="display:none"></canvas>
+<input type="hidden" name="avatarBase64" id="avatarBase64">
+
 
     <button type="submit">Save & Continue</button>
     <p id="msg"></p>
@@ -402,7 +405,31 @@ fetch("http://localhost:3000/api/session", {
   </form>
 </div>
 
-<script>
+ <script>
+const input = document.getElementById("avatarInput");
+const canvas = document.getElementById("cropCanvas");
+const ctx = canvas.getContext("2d");
+const output = document.getElementById("avatarBase64");
+
+input.addEventListener("change", e => {
+  const file = e.target.files[0];
+  const img = new Image();
+  img.onload = () => {
+    const size = Math.min(img.width, img.height);
+    ctx.clearRect(0,0,200,200);
+    ctx.drawImage(
+      img,
+      (img.width-size)/2,
+      (img.height-size)/2,
+      size,size,
+      0,0,200,200
+    );
+    canvas.style.display = "block";
+    output.value = canvas.toDataURL("image/jpeg", 0.9);
+  };
+  img.src = URL.createObjectURL(file);
+});
+
 document.getElementById("profileForm").addEventListener("submit", async e => {
   e.preventDefault();
   const msg = document.getElementById("msg");
