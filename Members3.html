@@ -109,18 +109,6 @@ nav a:hover{
   border-radius:6px;
 }
 
-}
-  <div class="nav-auth avatar-wrap">
-  <button class="avatar-btn">
-    <img src="avatar-default.png" alt="Member Avatar">
-  </button>
-
-  <div class="avatar-menu">
-    <a href="MembersDashboard.html">Dashboard</a>
-    <a href="Profile.html">My Profile</a>
-    <a href="LoggedOut.html">Log Out</a>
-  </div>
-  
 /* FORM */
 label{
   display:block;
@@ -148,6 +136,19 @@ button{
   cursor:pointer;
 }
 
+</div>
+
+}
+  <div class="nav-auth avatar-wrap">
+  <button class="avatar-btn">
+    <img src="avatar-default.png" alt="Member Avatar">
+  </button>
+
+  <div class="avatar-menu">
+    <a href="MembersDashboard.html">Dashboard</a>
+    <a href="Profile.html">My Profile</a>
+    <a href="LoggedOut.html">Log Out</a>
+  </div>
 </div>
 
 </style>
@@ -184,19 +185,46 @@ button{
 <main class="page-content">
 
   <section class="content-section centered">
+    <h1>Become a Member</h1>
+
+    <p>
+      Membership includes participation in the <strong>Six Weeks of Summer</strong> —
+      a rotating series of garden parties hosted by members.
+      The annual <em>Flower Garden of the Valley</em> award is presented at the final event.
+    </p>
+
+  <div class="card">
+    <h3>Member Benefits</h3>
+    <ul>
+      <li>Garden Party Event Access</li>
+      <li>Flower Garden Awards Voting</li>
+      <li>Member-Only Resources - Newsletters</li>
+      <li>Garden Party Hosting</li>
+      <li>Discounts at Affiliated Businesses</li>
+      <li>Online Retail</li>
+    </ul>
+  </div>
+
+    <p class="muted">
+      Membership availability is limited. Prices may increase annually for new members.
+      Returning members retain their original rate.
+    </p>
+  </section>
+
+ <section class="content-section centered">
    
-<div class="form-card">
+   <form id="signupForm" class="form-card">
   <h2>Join Kelowna Flower Gardens</h2>
-
+     
   <!-- ACCOUNT CREATION -->
-  <label>Username</label>
-  <input id="username" type="text" required>
+     <label>Username</label>
+<input name="username" id="username" required>
 
-  <label>Password</label>
-  <input id="password" type="password" required>
+<label>Password</label>
+<input name="password" id="password" type="password" required>
 
-  <label>Confirm Password</label>
-  <input id="confirm" type="password" required>
+<label>Confirm Password</label>
+<input id="confirm" type="password" required>
 
   <!-- PROFILE -->
   <label>Email</label>
@@ -206,43 +234,103 @@ button{
   <label>Membership Type</label>
   <select id="plan">
     <option value="annual">Annual — $56</option>
-    <option value="student">Silken — $1</option>
   </select>
 
-  <!-- PAYMENT (NO SHIPPING) -->
-  <label>Payment Method</label>
-  <select id="payment">
-    <option>Credit Card</option>
-    <option>PayPal</option>
-  </select>
-
-  <button onclick="submitSignup()">Continue to Payment</button>
+      <button type="submit">Create Account & Continue</button>
 
   <p id="error" style="color:red;text-align:center"></p>
+   </form>
 </div>
 
-<script>
-function submitSignup(){
-  const pass = password.value;
-  const confirm = document.getElementById("confirm").value;
 
-  if(pass !== confirm){
-    document.getElementById("error").textContent =
-      "Passwords do not match";
-    return;
+    <script>
+document.getElementById("signupForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  
+  const msg = document.getElementById("signupMsg");
+
+  const data = {
+    name: name.value,
+    email: email.value,
+    username: username.value,
+    password: password.value
+  };
+
+      // 1️⃣ Create account
+    const registerRes = await fetch("http://localhost:3000/api/register", {
+      method:"POST",
+      credentials:"include",
+      headers:{ "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: usernameVal,
+        email: emailVal,
+        password: passwordVal,
+        plan: planVal
+      })
+    });
+
+  if (res.ok) {
+    msg.textContent = "Account created — proceed to payment below.";
+    msg.style.color = "green";
+  } else {
+    msg.textContent = "Username or email already exists.";
+    msg.style.color = "red";
+  }
+});
+  const error = document.getElementById("error");
+   const msg = document.getElementById("signupMsg");
+      error.textContent = "";
+        msg.textContent = "";
+document.getElementById("password").value
+
+ const usernameVal = document.getElementById("username").value.trim();
+  const emailVal = document.getElementById("email").value.trim();
+  const passwordVal = document.getElementById("password").value;
+  const confirmVal = document.getElementById("confirm").value;
+
+
+  if (passwordVal !== confirmVal) {
+    error.textContent = "Passwords do not match";
+    return;   
+    document.getElementById("confirm").value
   }
 
-  /* TEMP STORAGE (replace with backend later) */
-  sessionStorage.setItem("pendingUser", JSON.stringify({
-    username: username.value,
-    email: email.value,
-    plan: plan.value
-  }));
+  const res = await fetch("http://localhost:3000/api/register", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+       username: document.getElementById("username").value,
+       email: document.getElementById("email").value,
+       password: passwordVal,
+       plan: document.getElementById("plan").value
+    })
+  });
 
-  /* Redirect to payment */
-  window.location.href = "Payment.html";
-}
+      
+  if (res.ok) {
+     msg.textContent = "Account created — proceed to payment below.";
+    error.textContent = "";
+    setTimeout(() => { 
+    window.location.href = "Payment.html";
+      }, 1000);
+  } else {
+    error.textContent = "Username or email already exists";
+  }
+});
+
 </script>
+
+  <!-- PRICING -->
+  <section class="content-section centered">
+    <h2>Membership </h2>
+    <p>Annual Membership: <strong>$50.00 CAD</strong></p>
+    <p>PST (12%): $6.00</p>
+    <p><strong>Total: $56.00 CAD</strong></p>
+  </section>
+
+    </script>
+  </section>
 
 </main>
 
@@ -262,35 +350,7 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
   });
 });
 </script>
-<script>
-document.getElementById("signupForm").addEventListener("submit", async e => {
-  e.preventDefault();
-
-  const msg = document.getElementById("signupMsg");
-
-  const data = {
-    name: name.value,
-    email: email.value,
-    username: username.value,
-    password: password.value
-  };
-
-  const res = await fetch("http://localhost:3000/api/register", {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
-
-  if (res.ok) {
-    msg.textContent = "Account created — proceed to payment below.";
-    msg.style.color = "green";
-  } else {
-    msg.textContent = "Username or email already exists.";
-    msg.style.color = "red";
-  }
-});
-</script>
+   
 
 </body>
 </html>
