@@ -235,26 +235,42 @@ button{
   <select id="plan">
     <option value="annual">Annual — $56</option>
   </select>
-
-      <button type="submit">Create Account & Continue</button>
-
+<button type="submit">Continue to Payment</button>
   <p id="error" style="color:red;text-align:center"></p>
    </form>
-</div>
 
-
-    <script>
+   <script>
 document.getElementById("signupForm").addEventListener("submit", async e => {
   e.preventDefault();
-  
-  const msg = document.getElementById("signupMsg");
 
-  const data = {
-    name: name.value,
-    email: email.value,
-    username: username.value,
-    password: password.value
-  };
+  const error = document.getElementById("error");
+  error.textContent = "";
+
+  if (password.value !== confirm.value) {
+    error.textContent = "Passwords do not match";
+    return;
+  }
+
+  const res = await fetch("http://localhost:3000/api/register", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      email: email.value,
+      password: password.value,
+      plan: plan.value
+    })
+  });
+
+  if (res.ok) {
+    // ✅ THIS is what transitions the page
+    window.location.href = "Payment.html";
+  } else {
+    error.textContent = "Username or email already exists";
+  }
+});
+
 
       // 1️⃣ Create account
     const registerRes = await fetch("http://localhost:3000/api/register", {
@@ -270,7 +286,7 @@ document.getElementById("signupForm").addEventListener("submit", async e => {
     });
 
   if (res.ok) {
-    msg.textContent = "Account created — proceed to payment below.";
+    msg.textContent = "Account created — proceed to";
     msg.style.color = "green";
   } else {
     msg.textContent = "Username or email already exists.";
@@ -306,8 +322,7 @@ document.getElementById("password").value
        plan: document.getElementById("plan").value
     })
   });
-
-      
+   
   if (res.ok) {
      msg.textContent = "Account created — proceed to payment below.";
     error.textContent = "";
@@ -318,9 +333,7 @@ document.getElementById("password").value
     error.textContent = "Username or email already exists";
   }
 });
-
 </script>
-
   <!-- PRICING -->
   <section class="content-section centered">
     <h2>Membership </h2>
@@ -328,7 +341,6 @@ document.getElementById("password").value
     <p>PST (12%): $6.00</p>
     <p><strong>Total: $56.00 CAD</strong></p>
   </section>
-
     </script>
   </section>
 
@@ -342,7 +354,6 @@ document.getElementById("password").value
 function toggleMenu(){
   document.getElementById("sidebar").classList.toggle("active");
 }
-
 document.querySelectorAll(".dropdown-btn").forEach(btn=>{
   btn.addEventListener("click",()=>{
     const box = btn.nextElementSibling;
