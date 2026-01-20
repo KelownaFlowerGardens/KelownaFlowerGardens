@@ -241,10 +241,11 @@ button{
   <p id="error" style="color:red;text-align:center"></p>
    </form>
 </div>
+   
     <script>
 document.getElementById("signupForm").addEventListener("submit", async e => {
   e.preventDefault();
-
+  
   const msg = document.getElementById("signupMsg");
 
   const data = {
@@ -270,11 +271,19 @@ document.getElementById("signupForm").addEventListener("submit", async e => {
   }
 });
   const error = document.getElementById("error");
-  error.textContent = "";
+   const msg = document.getElementById("signupMsg");
+      error.textContent = "";
+        msg.textContent = "";
+document.getElementById("password").value
 
-  if (password.value !== confirm.value) {
+
+  const passwordVal = document.getElementById("password").value;
+  const confirmVal = document.getElementById("confirm").value;
+
+  if (passwordVal !== confirmVal) {
     error.textContent = "Passwords do not match";
-    return;
+    return;   
+    document.getElementById("confirm").value
   }
 
   const res = await fetch("http://localhost:3000/api/register", {
@@ -282,19 +291,25 @@ document.getElementById("signupForm").addEventListener("submit", async e => {
     credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      username: username.value,
-      email: email.value,
-      password: password.value,
-      plan: plan.value
+       username: document.getElementById("username").value,
+       email: document.getElementById("email").value,
+       password: passwordVal,
+       plan: document.getElementById("plan").value
     })
   });
 
+      
   if (res.ok) {
+     msg.textContent = "Account created — proceed to payment below.";
+    error.textContent = "";
+    setTimeout(() => { 
     window.location.href = "Payment.html";
+      }, 1000);
   } else {
     error.textContent = "Username or email already exists";
   }
 });
+
 </script>
 
   <!-- PRICING -->
