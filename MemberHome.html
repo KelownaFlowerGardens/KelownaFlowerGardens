@@ -466,7 +466,9 @@ fetch("http://localhost:3000/api/session", {
   </div>
 </div>
   </nav>
-
+<div class="nav-auth" id="nav-auth">
+  <!-- Filled by JS -->
+</div>
  
 </header>
 
@@ -552,6 +554,63 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
     const box = btn.nextElementSibling;
     box.style.display = box.style.display === "block" ? "none" : "block";
   });
+});
+</script>
+
+    <script>
+fetch("http://localhost:3000/api/session", {
+  credentials: "include"
+})
+.then(res => res.json())
+.then(data => {
+  const navAuth = document.getElementById("nav-auth");
+
+  // LOGGED OUT
+  if (!data.loggedIn) {
+    navAuth.innerHTML = `
+      <a href="Login.html" class="auth-btn login-btn">Login</a>
+      <a href="Members.html" class="auth-btn join-btn">Become a Member</a>
+    `;
+    return;
+  }
+
+  // LOGGED IN
+  const avatar = data.user.avatar || "avatar-default.png";
+
+  navAuth.innerHTML = `
+    <div class="avatar-wrap">
+      <button class="avatar-btn" id="avatarBtn">
+        <img src="${avatar}" alt="Member Avatar">
+      </button>
+
+      <div class="avatar-menu" id="avatarMenu">
+        <a href="MembersDashboard.html">Dashboard</a>
+        <a href="MyAccount.html">My Account</a>
+        <a href="#" id="logoutBtn">Log Out</a>
+      </div>
+    </div>
+  `;
+
+  const avatarBtn = document.getElementById("avatarBtn");
+  const avatarMenu = document.getElementById("avatarMenu");
+
+  avatarBtn.onclick = e => {
+    e.stopPropagation();
+    avatarMenu.style.display =
+      avatarMenu.style.display === "block" ? "none" : "block";
+  };
+
+  document.addEventListener("click", () => {
+    avatarMenu.style.display = "none";
+  });
+
+  document.getElementById("logoutBtn").onclick = async () => {
+    await fetch("http://localhost:3000/api/logout", {
+      method: "POST",
+      credentials: "include"
+    });
+    window.location.href = "LoggedOut.html";
+  };
 });
 </script>
 
