@@ -199,6 +199,7 @@ footer{
   .menu-btn{
     display:block;
   }
+    
 }
     <div class="nav-auth avatar-wrap">
   <button class="avatar-btn">
@@ -273,10 +274,99 @@ footer{
     margin-top:.5rem;
   }
 }
+/* ---------- AVATAR LOGIN ---------- */
+.avatar-wrap{
+  position:relative;
+  margin-left:auto;
+}
 
+.avatar-btn{
+  border:none;
+  background:none;
+  cursor:pointer;
+  padding:0;
+}
+
+.avatar-btn img{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #F68686;
+}
+
+/* Dropdown */
+.avatar-menu{
+  display:none;
+  position:absolute;
+  right:0;
+  top:120%;
+  background:white;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,.18);
+  overflow:hidden;
+  min-width:180px;
+  z-index:999;
+}
+
+.avatar-menu a{
+  display:block;
+  padding:.75rem 1rem;
+  text-decoration:none;
+  color:#F68686;
+  font-weight:500;
+}
+
+.avatar-menu a:hover{
+  background:#FDD7D7;
+}
+
+/* Show on hover (desktop) */
+.avatar-wrap:hover .avatar-menu{
+  display:block;
+}
+
+/* Mobile-safe */
+@media (max-width:768px){
+  .avatar-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin-top:.5rem;
+  }
 
 </style>
 </head>
+
+    
+  <div class="nav-auth avatar-wrap">
+  <button class="avatar-btn">
+    <img src="avatar-default.png" alt="Member Avatar">
+  </button>
+
+    
+  <div class="avatar-menu">
+    <a href="MembersDashboard.html">Dashboard</a>
+    <a href="MyAccount.html">My Account</a>
+    <a href="Loggedout.html">Log Out</a>
+  </div></div></div>
+
+    
+<script>
+const avatarBtn = document.getElementById("avatarBtn");
+const avatarMenu = document.getElementById("avatarMenu");
+
+avatarBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  avatarMenu.style.display =
+    avatarMenu.style.display === "block" ? "none" : "block";
+});
+
+document.addEventListener("click", () => {
+  avatarMenu.style.display = "none";
+});
+</script>
+
 
     <script>
 function toggleLogin(){
