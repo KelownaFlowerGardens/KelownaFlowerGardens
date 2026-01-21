@@ -153,6 +153,19 @@ nav a:hover{
   </nav>
 </header>
 
+  <script>
+(async () => {
+  const res = await fetch("/api/payment/session", {
+    credentials: "include"
+  });
+
+  if (!res.ok) {
+    // Not logged in or no pending payment
+    window.location.href = "Members.html";
+  }
+})();
+</script>
+
 <div class="wrapper">
 
   <main class="content">
