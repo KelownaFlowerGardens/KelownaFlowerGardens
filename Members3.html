@@ -242,6 +242,21 @@ function isStrongPassword(password) {
   return strongRegex.test(password);
 }
 </script>
+<script>
+const passwordInput = document.getElementById("password");
+const help = document.getElementById("passwordHelp");
+
+passwordInput.addEventListener("input", () => {
+  if (isStrongPassword(passwordInput.value)) {
+    help.style.color = "green";
+    help.textContent = "Strong password ✔";
+  } else {
+    help.style.color = "#666";
+    help.textContent =
+      "Minimum 8 characters, including uppercase, lowercase, number, and symbol";
+  }
+});
+</script>
 
 <button type="submit">Continue to Payment</button>
   
