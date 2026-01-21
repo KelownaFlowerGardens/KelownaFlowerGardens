@@ -238,8 +238,18 @@ button{
 <button type="submit">Continue to Payment</button>
   <p id="error" style="color:red;text-align:center"></p>
    </form>
-
-   <script>
+   
+  <!-- PRICING -->
+  <section class="content-section centered">
+    <h2>Membership </h2>
+    <p>Annual Membership: <strong>$50.00 CAD</strong></p>
+    <p>PST (12%): $6.00</p>
+    <p><strong>Total: $56.00 CAD</strong></p>
+  </section>
+    </script>
+  </section>
+  
+<script>
 document.getElementById("signupForm").addEventListener("submit", async e => {
   e.preventDefault();
 
@@ -270,79 +280,7 @@ document.getElementById("signupForm").addEventListener("submit", async e => {
     error.textContent = "Username or email already exists";
   }
 });
-
-
-      // 1️⃣ Create account
-    const registerRes = await fetch("http://localhost:3000/api/register", {
-      method:"POST",
-      credentials:"include",
-      headers:{ "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: usernameVal,
-        email: emailVal,
-        password: passwordVal,
-        plan: planVal
-      })
-    });
-
-  if (res.ok) {
-    msg.textContent = "Account created — proceed to";
-    msg.style.color = "green";
-  } else {
-    msg.textContent = "Username or email already exists.";
-    msg.style.color = "red";
-  }
-});
-  const error = document.getElementById("error");
-   const msg = document.getElementById("signupMsg");
-      error.textContent = "";
-        msg.textContent = "";
-document.getElementById("password").value
-
- const usernameVal = document.getElementById("username").value.trim();
-  const emailVal = document.getElementById("email").value.trim();
-  const passwordVal = document.getElementById("password").value;
-  const confirmVal = document.getElementById("confirm").value;
-
-
-  if (passwordVal !== confirmVal) {
-    error.textContent = "Passwords do not match";
-    return;   
-    document.getElementById("confirm").value
-  }
-
-  const res = await fetch("http://localhost:3000/api/register", {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-       username: document.getElementById("username").value,
-       email: document.getElementById("email").value,
-       password: passwordVal,
-       plan: document.getElementById("plan").value
-    })
-  });
-   
-  if (res.ok) {
-     msg.textContent = "Account created — proceed to payment below.";
-    error.textContent = "";
-    setTimeout(() => { 
-    window.location.href = "Payment.html";
-      }, 1000);
-  } else {
-    error.textContent = "Username or email already exists";
-  }
-});
 </script>
-  <!-- PRICING -->
-  <section class="content-section centered">
-    <h2>Membership </h2>
-    <p>Annual Membership: <strong>$50.00 CAD</strong></p>
-    <p>PST (12%): $6.00</p>
-    <p><strong>Total: $56.00 CAD</strong></p>
-  </section>
-    </script>
-  </section>
 
 </main>
 
