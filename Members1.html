@@ -258,7 +258,6 @@ document.getElementById("signupForm").addEventListener("submit", async e => {
     password: password.value
   };
 
-      // 1️⃣ Create account
     const registerRes = await fetch("http://localhost:3000/api/register", {
       method:"POST",
       credentials:"include",
@@ -330,7 +329,6 @@ document.getElementById("password").value
     <p>PST (12%): $6.00</p>
     <p><strong>Total: $56.00 CAD</strong></p>
   </section>
-
     </script>
   </section>
 
@@ -352,7 +350,5 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
   });
 });
 </script>
-   
-
 </body>
 </html>
