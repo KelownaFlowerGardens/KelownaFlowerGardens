@@ -235,6 +235,14 @@ button{
   <select id="plan">
     <option value="annual">Annual — $56</option>
   </select>
+     <script>
+function isStrongPassword(password) {
+  const strongRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+  return strongRegex.test(password);
+}
+</script>
+
 <button type="submit">Continue to Payment</button>
   
    </form>
@@ -248,9 +256,9 @@ button{
   </section>
     </script>
   </section>
-  
-<script>
-  document.getElementById("signupForm").addEventListener("submit", async e => {
+
+  <script>
+document.getElementById("signupForm").addEventListener("submit", async e => {
   e.preventDefault();
 
   const error = document.getElementById("error");
@@ -258,6 +266,12 @@ button{
 
   const passwordValue = document.getElementById("password").value;
   const confirmValue = document.getElementById("confirm").value;
+
+  if (!isStrongPassword(passwordValue)) {
+    error.textContent =
+      "Password must be at least 8 characters and include uppercase, lowercase, number, and symbol.";
+    return;
+  }
 
   if (passwordValue !== confirmValue) {
     error.textContent = "Passwords do not match";
@@ -282,38 +296,8 @@ button{
     error.textContent = "Username or email already exists";
   }
 });
-
-document.getElementById("signupForm").addEventListener("submit", async e => {
-  e.preventDefault();
-
-  const error = document.getElementById("error");
-  error.textContent = "";
-
-  if (password.value !== confirm.value) {
-    error.textContent = "Passwords do not match";
-    return;
-  }
-
-  const res = await fetch("http://localhost:3000/api/register", {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username: username.value,
-      email: email.value,
-      password: password.value,
-      plan: plan.value
-    })
-  });
-
-  if (res.ok) {
-    // ✅ THIS is what transitions the page
-    window.location.href = "Payment.html";
-  } else {
-    error.textContent = "Username or email already exists";
-  }
-});
 </script>
+
 
 </main>
 
