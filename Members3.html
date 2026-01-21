@@ -167,7 +167,7 @@ button{
     <a href="Home.html">Main</a>
     <a href="GardenDesign.html">Garden Design</a>
       <a href="About.html">About</a>
-    <a href="Regional Species.html">Regional Species</a>
+    <a href="RegionalSpecies.html">Regional Species</a>
       <a href="Awards.html">Awards</a>
     <a href="Roses.html">Roses</a>
       <a href="Valley Art.html">Valley Art</a>
@@ -241,8 +241,7 @@ function isStrongPassword(password) {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
   return strongRegex.test(password);
 }
-</script>
-<script>
+
 const passwordInput = document.getElementById("password");
 const help = document.getElementById("passwordHelp");
 
@@ -251,14 +250,14 @@ passwordInput.addEventListener("input", () => {
     help.style.color = "green";
     help.textContent = "Strong password ✔";
   } else {
-    help.style.color = "#666";
+    help.style.color = "black";
     help.textContent =
       "Minimum 8 characters, including uppercase, lowercase, number, and symbol";
   }
 });
 </script>
 
-<button type="submit" href="Payment.html">Continue to Payment</button>
+<button type="submit">Continue to Payment</button>
   
    </form>
    
@@ -306,14 +305,12 @@ document.getElementById("signupForm").addEventListener("submit", async e => {
   });
 
   if (res.ok) {
-    window.location.href = "Payment.html";
+    window.location. href="Payment.html";
   } else {
-    error.textContent = "Username or email already exists";
+    error.textContent="Username or email already exists";
   }
 });
 </script>
-
-
 </main>
 
 <footer style="text-align:center;padding:2rem;color:var(--muted)">
