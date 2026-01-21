@@ -236,7 +236,7 @@ button{
     <option value="annual">Annual — $56</option>
   </select>
 <button type="submit">Continue to Payment</button>
-  <p id="error" style="color:red;text-align:center"></p>
+  
    </form>
    
   <!-- PRICING -->
@@ -250,6 +250,39 @@ button{
   </section>
   
 <script>
+  document.getElementById("signupForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const error = document.getElementById("error");
+  error.textContent = "";
+
+  const passwordValue = document.getElementById("password").value;
+  const confirmValue = document.getElementById("confirm").value;
+
+  if (passwordValue !== confirmValue) {
+    error.textContent = "Passwords do not match";
+    return;
+  }
+
+  const res = await fetch("http://localhost:3000/api/register", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: document.getElementById("username").value,
+      email: document.getElementById("email").value,
+      password: passwordValue,
+      plan: document.getElementById("plan").value
+    })
+  });
+
+  if (res.ok) {
+    window.location.href = "Payment.html";
+  } else {
+    error.textContent = "Username or email already exists";
+  }
+});
+
 document.getElementById("signupForm").addEventListener("submit", async e => {
   e.preventDefault();
 
