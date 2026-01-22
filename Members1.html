@@ -294,15 +294,6 @@ document.getElementById("password").value
     document.getElementById("confirm").value
   }
 
-  const res = await fetch("http://localhost:3000/api/register", {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-       username: document.getElementById("username").value,
-       email: document.getElementById("email").value,
-       password: passwordVal,
-       plan: document.getElementById("plan").value
     })
   });
 
