@@ -238,12 +238,8 @@ button{
 
   <button onclick="submitSignup()">Continue to Payment</button>
 
- 
-
   <p id="error" style="color:red;text-align:center"></p>
    </form>
-</div>
-
 
     <script>
 document.getElementById("signupForm").addEventListener("submit", async e => {
@@ -293,11 +289,9 @@ document.getElementById("password").value
     return;   
     document.getElementById("confirm").value
   }
-
     })
   });
 
-      
   if (res.ok) {
      msg.textContent = "Account created — proceed to payment below.";
     error.textContent = "";
