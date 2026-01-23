@@ -236,73 +236,50 @@ button{
     <option value="annual">Annual — $56</option>
   </select>
 
-  <button onclick="submitSignup()">Continue to Payment</button>
+<button type="submit">Continue to Payment</button>
 
   <p id="error" style="color:red;text-align:center"></p>
    </form>
 
-    <script>
-document.getElementById("signupForm").addEventListener("submit", async e => {
+   <script>
+document.getElementById("signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-  
-  const msg = document.getElementById("signupMsg");
 
-  const data = {
-    name: name.value,
-    email: email.value,
-    username: username.value,
-    password: password.value
-  };
-
-    const registerRes = await fetch("http://localhost:3000/api/register", {
-      method:"POST",
-      credentials:"include",
-      headers:{ "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: usernameVal,
-        email: emailVal,
-        password: passwordVal,
-        plan: planVal
-      })
-    });
-
-  if (res.ok) {
-    msg.textContent = "Account created — proceed to payment below.";
-    msg.style.color = "green";
-  } else {
-    msg.textContent = "Username or email already exists.";
-    msg.style.color = "red";
-  }
-});
   const error = document.getElementById("error");
-   const msg = document.getElementById("signupMsg");
-      error.textContent = "";
-        msg.textContent = "";
-document.getElementById("password").value
+  error.textContent = "";
 
-  const passwordVal = document.getElementById("password").value;
-  const confirmVal = document.getElementById("confirm").value;
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirm = document.getElementById("confirm").value;
+  const plan = document.getElementById("plan").value;
 
-
-  if (passwordVal !== confirmVal) {
-    error.textContent = "Passwords do not match";
-    return;   
-    document.getElementById("confirm").value
-  }
-    })
+     try {
+  const res = await fetch("/api/register", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, email, password, plan })
   });
 
-  if (res.ok) {
-     msg.textContent = "Account created — proceed to payment below.";
-    error.textContent = "";
-    setTimeout(() => { 
-    window.location.href = "Payment.html";
-      }, 1000);
-  } else {
-    error.textContent = "Username or email already exists";
-  }
-});
+  const data = await res.json();
 
+  if (res.status === 201) {
+    window.location.href = "Payment.html";
+  } else if (res.status === 409) {
+    error.textContent = "Username or email already exists";
+  } else if (res.status === 400) {
+    error.textContent = data.error || "Invalid input";
+  } else if{
+    error.textContent = "Server error. Please try again.";
+  }   else if (password !== confirm) {
+    error.textContent = "Passwords do not match";
+    return;
+  }
+
+} catch (err) {
+  error.textContent = "Unable to connect to server.";
+}
 </script>
 
   <!-- PRICING -->
