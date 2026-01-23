@@ -174,48 +174,6 @@ nav a:hover{
 
   <p id="error" style="color:red;text-align:center"></p>
 </div>
-   
-
-<script>
-  // Node.js example using PayPal REST SDK
-app.post('/api/paypal-verify', async (req, res) => {
-    const { orderID, userID } = req.body;
-    const capture = await paypalClient.orders.capture(orderID);
-    if(capture.status === 'COMPLETED'){
-        await db.members.update({ paid:true }, { where: { id:userID } });
-        // Send email/SMS
-        sendEmail(userID, "Membership payment confirmed");
-        sendSMS(userID, "Membership payment confirmed");
-        res.send({ success:true });
-    } else {
-        res.status(400).send({ error:"Payment not completed" });
-    }
-});
-// On refund
-db.members.update({ paid:false }, { where:{ id:userID }});
-sendEmail(userID, "Membership refunded — access removed");
-
-function submitSignup(){
-  const pass = password.value;
-  const confirm = document.getElementById("confirm").value;
-
-  if(pass !== confirm){
-    document.getElementById("error").textContent =
-      "Passwords do not match";
-    return;
-  }
-  
-POST /api/register-temp
-Body: { username, email, plan, password }
-DB: pending = true, paid = false
-    username: username.value,
-    email: email.value,
-    plan: plan.value
-  UPDATE members SET paid = true, pending = false WHERE id = ?
-  }));
-
-</script>
-
 
   <!-- PRICING -->
   <section class="content-section centered">
