@@ -208,7 +208,42 @@ nav a:hover{
   }).render("#paypal-container-RUM36HA5XFWMU")
 </script>
 
-        <script> window.location.href = "Success.html"; </script>
+          <!-- PRICING -->
+  <section class="content-section centered">
+<section class="content-section centered">
+  <script 
+    src="https://www.paypal.com/sdk/js?client-id=SZFUHL3JY6LUJ&currency=CAD&disable-funding=card">
+  </script>
+
+  <div id="paypal-button-container"></div>
+
+  <script>
+    paypal.Buttons({
+      createOrder: (data, actions) => {
+        return actions.order.create({
+          purchase_units: [{
+            description: "Kelowna Flower Gardens Membership",
+            amount: {
+              value: "56.00"
+          }
+        });
+      },
+
+      onApprove: (data, actions) => {
+        return actions.order.capture().then(async () => {
+
+          // Notify backend that user paid
+          await fetch("http://localhost:3000/api/mark-paid", {
+            method: "POST",
+            credentials: "include"
+          });
+
+          window.location.href = "Success.html";
+        });
+      }
+    }).render("#paypal-button-container");
+  </script>
+    
         
  </div></div>
   </section>
