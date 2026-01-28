@@ -337,7 +337,9 @@ if (!isStrongPassword(passwordValue)) {
   } else {
     error.textContent = "Username or email already exists";
   }
-});
+})
+;
+sessionStorage.setItem("pendingUserId", userId);
 
 </script>
 
