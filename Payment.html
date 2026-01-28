@@ -123,6 +123,25 @@ nav a:hover{
 </div>
 
 </style>
+  <script>
+(async () => {
+  const res = await fetch("http://localhost:3000/api/payment-status", {
+    credentials: "include"
+  });
+
+  if (!res.ok) {
+    window.location.replace("Members.html");
+    return;
+  }
+
+  const data = await res.json();
+
+  if (!data.allowed || data.paid) {
+    window.location.replace("MembersDashboard.html");
+  }
+})();
+</script>
+
   <script 
   src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&disable-funding=venmo&currency=CAD">
 </script>
