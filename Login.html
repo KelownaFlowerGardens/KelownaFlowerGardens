@@ -218,6 +218,68 @@ document.getElementById("logoutBtn").onclick = async () => {
   location.reload();
 };
 </script>
+  <script>import crypto from "crypto";
+import nodemailer from "nodemailer";
+
+app.post("/api/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email required" });
+  }
+
+  // Look up user
+  const user = db.prepare(`
+    SELECT id, email FROM members WHERE email = ?
+  `).get(email);
+
+  // IMPORTANT:
+  // Always return success — do NOT reveal whether email exists
+  if (!user) {
+    return res.json({ success: true });
+  }
+
+  // Generate secure token
+  const token = crypto.randomBytes(32).toString("hex");
+
+  // Token expires in 1 hour
+  const expires = Date.now() + 1000 * 60 * 60;
+
+  // Save token + expiry
+  db.prepare(`
+    UPDATE members
+    SET reset_token = ?, reset_expires = ?
+    WHERE id = ?
+  `).run(token, expires, user.id);
+
+  // Reset link
+  const resetLink = `https://yourdomain.com/reset-password.html?token=${token}`;
+
+  // SEND EMAIL (example)
+  const transporter = nodemailer.createTransport({
+    host: "smtp.yourprovider.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+
+  await transporter.sendMail({
+    from: "Kelowna Flower Gardens <no-reply@yourdomain.com>",
+    to: user.email,
+    subject: "Reset your password",
+    html: `
+      <p>You requested a password reset.</p>
+      <p><a href="${resetLink}">Click here to reset your password</a></p>
+      <p>This link expires in 1 hour.</p>
+    `
+  });
+
+  res.json({ success: true });
+});
+</script>
 
 
 </body>
