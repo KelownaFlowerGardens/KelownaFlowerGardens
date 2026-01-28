@@ -253,7 +253,7 @@ app.post("/api/forgot-password", async (req, res) => {
   `).run(token, expires, user.id);
 
   // Reset link
-  const resetLink = `https://yourdomain.com/reset-password.html?token=${token}`;
+  const resetLink = `https://kelownaflowergardens.com/reset-password.html?token=${token}`;
 
   // SEND EMAIL (example)
   const transporter = nodemailer.createTransport({
