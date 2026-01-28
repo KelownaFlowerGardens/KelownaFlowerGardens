@@ -223,6 +223,11 @@ button{
 <label>Password</label>
 <input name="password" id="password" type="password" required>
 
+<small id="passwordHelp" style="color:#666">
+  Minimum 8 characters, including uppercase, lowercase, number, and symbol
+</small>
+
+
 <label>Confirm Password</label>
 <input id="confirm" type="password" required>
 
@@ -236,6 +241,13 @@ button{
     <option value="annual">Annual — $56</option>
   </select>
 
+     <script>
+function isStrongPassword(password) {
+  const strongRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+  return strongRegex.test(password);
+}
+</script>
 <button type="submit">Continue to Payment</button>
 
   <p id="error" style="color:red;text-align:center"></p>
@@ -280,6 +292,12 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
 
   const passwordValue = document.getElementById("password").value;
   const confirmValue = document.getElementById("confirm").value;
+
+if (!isStrongPassword(passwordValue)) {
+    error.textContent =
+      "Password must be at least 8 characters and include uppercase, lowercase, number, and symbol.";
+    return;
+  }
 
   if (passwordValue !== confirmValue) {
     error.textContent = "Passwords do not match";
