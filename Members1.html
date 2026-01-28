@@ -340,7 +340,11 @@ if (!isStrongPassword(passwordValue)) {
 })
 ;
 sessionStorage.setItem("pendingUserId", userId);
-
+     
+document.getElementById("signupForm").addEventListener("submit", e => {
+  e.preventDefault();
+  e.stopPropagation();
+});
 </script>
 
   <!-- PRICING -->
