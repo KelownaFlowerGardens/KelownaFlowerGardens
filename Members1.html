@@ -286,17 +286,20 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
     error.textContent = "Passwords do not match";
     return;
   }
-
-  const res = await fetch("/api/register", {
+  const res = await fetch("http://localhost:3000/api/register", {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, email, password, plan })
-  });
-
+    body: JSON.stringify({
+      username: document.getElementById("username").value,
+      email: document.getElementById("email").value,
+      password: passwordValue,
+      plan: document.getElementById("plan").value
+    })
   if (res.ok) {
     window.location.href = "Payment.html";
-  } else {
+  } 
+  else {
     error.textContent = "Username or email already exists";
   }
 });
@@ -315,28 +318,7 @@ if (!isStrongPassword(passwordValue)) {
     return;
   }
 
-  if (passwordValue !== confirmValue) {
-    error.textContent = "Passwords do not match";
-    return;
-  }
-
-  const res = await fetch("http://localhost:3000/api/register", {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username: document.getElementById("username").value,
-      email: document.getElementById("email").value,
-      password: passwordValue,
-      plan: document.getElementById("plan").value
-    })
   });
-
-  if (res.ok) {
-    window.location.href = "Payment.html";
-  } else {
-    error.textContent = "Username or email already exists";
-  }
 })
 ;
 sessionStorage.setItem("pendingUserId", userId);
