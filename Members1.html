@@ -272,7 +272,9 @@ function isStrongPassword(password) {
    <script>
 document.getElementById("signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-
+    req.session.userId = user._id;
+req.session.paymentStatus = "pending";
+  
   const error = document.getElementById("error");
   error.textContent = "";
 
@@ -323,12 +325,8 @@ if (!isStrongPassword(passwordValue)) {
 ;
 sessionStorage.setItem("pendingUserId", userId);
      
-document.getElementById("signupForm").addEventListener("submit", e => {
-  e.preventDefault();
-  e.stopPropagation();
 });
-     req.session.userId = user._id;
-req.session.paymentStatus = "pending";
+ 
 </script>
 
   <!-- PRICING -->
