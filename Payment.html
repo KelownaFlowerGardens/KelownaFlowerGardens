@@ -265,6 +265,15 @@ await Users.updateOne(
   { _id: req.session.userId },
   { $set: { paid: true, paidAt: new Date() } }
 );
+(async () => {
+  const res = await fetch("/api/payment/session", {
+    credentials: "include"
+  });
+
+  if (!res.ok) {
+    window.location.href = "Members.html";
+  }
+})();
 
   </script>
     
