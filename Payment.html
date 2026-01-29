@@ -122,6 +122,25 @@ nav a:hover{
   </div>
 </div>
 
+  <script>
+(async () => {
+  const res = await fetch("http://localhost:3000/api/payment-status", {
+    credentials: "include"
+  });
+
+  if (!res.ok) {
+    window.location.replace("Members.html");
+    return;
+  }
+
+  const data = await res.json();
+
+  if (!data.allowed || data.paid) {
+    window.location.replace("Success.html");
+  }
+})();
+</script>
+
 </style>
   <script>
 (async () => {
