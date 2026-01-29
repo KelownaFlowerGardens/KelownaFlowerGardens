@@ -258,6 +258,14 @@ nav a:hover{
         });
       }
     }).render("#paypal-button-container");
+  
+  req.session.paymentStatus = "paid";
+
+await Users.updateOne(
+  { _id: req.session.userId },
+  { $set: { paid: true, paidAt: new Date() } }
+);
+
   </script>
     
         
