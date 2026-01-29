@@ -327,6 +327,8 @@ document.getElementById("signupForm").addEventListener("submit", e => {
   e.preventDefault();
   e.stopPropagation();
 });
+     req.session.userId = user._id;
+req.session.paymentStatus = "pending";
 </script>
 
   <!-- PRICING -->
