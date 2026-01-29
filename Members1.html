@@ -270,14 +270,8 @@ function isStrongPassword(password) {
    </form>
 
    <script>
-document.getElementById("signupForm").addEventListener("submit", async (e) => {
+        document.getElementById("signupForm").addEventListener("submit", async e => {
   e.preventDefault();
-    req.session.userId = user._id;
-req.session.paymentStatus = "pending";
-  
-  const error = document.getElementById("error");
-  error.textContent = "";
-
   const username = document.getElementById("username").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
@@ -304,23 +298,19 @@ req.session.paymentStatus = "pending";
   else {
     error.textContent = "Username or email already exists";
   }
-});
-     document.getElementById("signupForm").addEventListener("submit", async e => {
-  e.preventDefault();
-
-  const error = document.getElementById("error");
+            const error = document.getElementById("error");
   error.textContent = "";
-
-  const passwordValue = document.getElementById("password").value;
-  const confirmValue = document.getElementById("confirm").value;
 
 if (!isStrongPassword(passwordValue)) {
     error.textContent =
       "Password must be at least 8 characters and include uppercase, lowercase, number, and symbol.";
     return;
   }
+    req.session.userId = user._id;
+req.session.paymentStatus = "pending";
 
-  });
+});
+    });
 })
 ;
 sessionStorage.setItem("pendingUserId", userId);
