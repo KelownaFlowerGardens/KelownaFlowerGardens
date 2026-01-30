@@ -1,5 +1,32 @@
 // server.js
 
+app.post("/api/member/accept-waiver", requireLogin, (req, res) => {
+  db.run(
+    "UPDATE members SET waiverAccepted = 1 WHERE id = ?",
+    [req.session.userId],
+    err => {
+      if (err) {
+        return res.status(500).json({ error: "Failed to save waiver" });
+      }
+      res.json({ success: true });
+    }
+  );
+});
+
+if (!user.waiverAccepted) {
+    return res.redirect("/Success.html");
+  }
+  
+
+app.get("/MembersDashboard.html",
+    requireAuth,
+    requireWaiverAccepted,
+    (req, res) => {
+      res.sendFile(__dirname + "/public/MembersDashboard.html");
+    }
+  );
+  
+
 app.use((req, res, next) => {
   console.log(req.method, req.url, req.session.userId || "guest");
   next();
