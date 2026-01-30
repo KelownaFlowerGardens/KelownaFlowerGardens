@@ -48,22 +48,3 @@ CREATE TABLE IF NOT EXISTS users (
 `).run();
 
 module.exports = db;
-app.post("/api/host-signup", upload.single("image"), (req, res) => {
-    const { name, location, preferredDate, venueSize, description } = req.body;
-  
-    db.prepare(`
-      INSERT INTO hosts
-      (name, location, preferred_date, venue_size, description, image_path)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `).run(
-      name,
-      location,
-      preferredDate,
-      venueSize,
-      description,
-      req.file ? req.file.path : null
-    );
-  
-    res.json({ success: true });
-  });
-  
