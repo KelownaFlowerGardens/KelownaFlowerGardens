@@ -1,0 +1,97 @@
+// database.sqlite
+
+new SQLiteStore({
+  db: "sessions.db",
+  dir: "/data"
+});
+
+ALTER TABLE users
+ADD COLUMN show_public BOOLEAN DEFAULT true;
+
+
+ALTER TABLE members ADD COLUMN preference ENUM('email','text') DEFAULT 'email';
+
+ALTER TABLE members
+ADD reset_token VARCHAR(64),
+ADD reset_expires BIGINT;
+
+
+ALTER TABLE members ADD COLUMN phone TEXT;
+ALTER TABLE members ADD COLUMN sms_opt_in INTEGER DEFAULT 0;
+
+
+ALTER TABLE rsvps ADD COLUMN checked_in INTEGER DEFAULT 0;
+
+
+CREATE TABLE IF NOT EXISTS waitlist (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  member_id INTEGER,
+  event_id INTEGER,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(member_id, event_id)
+);
+
+ALTER TABLE events ADD COLUMN capacity INTEGER DEFAULT 0;
+
+ALTER TABLE users ADD COLUMN is_admin BOOLEAN DEFAULT false;
+
+UPDATE users SET is_admin = true WHERE email = 'kelownaflowergardens@gmail.com';
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_username ON users(username);
+
+ALTER TABLE members ADD COLUMN reset_token TEXT;
+ALTER TABLE members ADD COLUMN reset_expires INTEGER;
+ALTER TABLE members ADD COLUMN role TEXT DEFAULT 'member';
+ALTER TABLE members ADD COLUMN active INTEGER DEFAULT 1;
+UPDATE members SET role='admin' WHERE email='kelownaflowergardens@gmail.com';
+User fills form
+→ Backend /api/register
+→ User stored in DB (status: pending)
+→ Session created
+→ Redirect to payment
+→ PayPal webhook confirms payment
+→ Backend updates user to active
+
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE,
+  email TEXT UNIQUE,
+  password TEXT,
+  plan TEXT,
+  status TEXT DEFAULT 'pending',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE users ADD COLUMN paypal_order_id TEXT;
+ALTER TABLE users ADD COLUMN paid_at DATETIME;
+
+CREATE TABLE messages (
+  id SERIAL PRIMARY KEY,
+  room TEXT,
+  sender_id INT,
+  text TEXT,
+  image TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+ALTER TABLE messages
+ADD COLUMN delivered BOOLEAN DEFAULT false,
+ADD COLUMN read BOOLEAN DEFAULT false;
+ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'member';
+
+CREATE TABLE IF NOT EXISTS member_selections (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  member_id INTEGER,
+  member_name TEXT,
+  selection TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE users
+ADD COLUMN waiverAccepted INTEGER DEFAULT 0;
+
+ALTER TABLE users
+ADD COLUMN waiverAcceptedAt DATETIME;
+ALTER TABLE members
+ADD COLUMN waiverAccepted INTEGER DEFAULT 0;
+
+
