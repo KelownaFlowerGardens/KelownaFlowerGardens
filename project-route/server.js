@@ -1240,7 +1240,7 @@ const cors = require("cors");
 const SQLite = require("better-sqlite3");
 
 db.prepare(`
-  CREATE TABLE IF NOT EXISTS users (
+  CREATE TABLE IF NOT EXISTS members (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     email TEXT UNIQUE,
@@ -1860,7 +1860,7 @@ const db = new Database("db.sqlite");
 
 // ----- Create users table if missing -----
 db.prepare(`
-  CREATE TABLE IF NOT EXISTS users (
+  CREATE TABLE IF NOT EXISTS members (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE,
     email TEXT UNIQUE,
