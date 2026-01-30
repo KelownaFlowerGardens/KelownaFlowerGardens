@@ -282,16 +282,13 @@ function isStrongPassword(password) {
     error.textContent = "Passwords do not match";
     return;
   }
-  const res = await fetch("http://localhost:3000/api/register", {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username: document.getElementById("username").value,
-      email: document.getElementById("email").value,
-      password: passwordValue,
-      plan: document.getElementById("plan").value
-    })
+          fetch("/api/register", {
+  method: "POST",
+  credentials: "include",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ username, email, password, plan })
+});
+
   if (res.ok) {
     window.location.href = "Payment.html";
   } 
@@ -306,10 +303,7 @@ if (!isStrongPassword(passwordValue)) {
       "Password must be at least 8 characters and include uppercase, lowercase, number, and symbol.";
     return;
   }
-    req.session.userId = user._id;
-req.session.paymentStatus = "pending";
-
-});
+    
     });
 })
 ;
