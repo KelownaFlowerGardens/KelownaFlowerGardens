@@ -1,5 +1,7 @@
 // server.js
 
+const requireAdmin = require("./middleware/requireAdmin");
+
 GET /api/admin/hosts
 POST /api/admin/hosts/:id/status
 
