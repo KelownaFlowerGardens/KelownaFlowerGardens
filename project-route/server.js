@@ -1,5 +1,16 @@
 // server.js
 
+const path = require("path");
+const Database = require("better-sqlite3");
+
+const dbPath = path.join(
+  process.env.RENDER === "true" ? "/var/data" : __dirname,
+  "database.sqlite"
+);
+
+const db = new Database(dbPath);
+
+
 app.post("/api/admin/delete-member", requireAdmin, (req, res) => {
   const { id } = req.body;
 
