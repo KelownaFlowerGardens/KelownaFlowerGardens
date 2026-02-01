@@ -1,5 +1,23 @@
 // requireAdmin.js
 
+app.post("/api/admin/hosts/:id/status", requireAdmin, (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!["approved", "rejected"].includes(status)) {
+    return res.status(400).json({ error: "Invalid status" });
+  }
+
+  db.prepare(`
+    UPDATE hosts
+    SET status = ?
+    WHERE id = ?
+  `).run(status, id);
+
+  res.json({ success: true });
+});
+
+
 app.get("/api/admin/hosts", requireAdmin, (req, res) => {
   const hosts = db.prepare(`
     SELECT *
