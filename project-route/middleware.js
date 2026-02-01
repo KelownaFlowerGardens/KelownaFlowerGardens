@@ -7,6 +7,13 @@ function requireAdmin(req, res, next) {
   next();
 }
 
+function requireAdmin(req, res, next) {
+  if (!req.session.userId || !req.session.isAdmin) {
+    return res.sendStatus(403);
+  }
+  next();
+}
+
 app.get("/Payment.html", requireAuth);
 app.get("/MembersDashboard.html", requireAuth, requirePayment);
 
@@ -68,4 +75,5 @@ export function isAdmin(req, res, next) {
     next();
   }
   
+
   
