@@ -432,8 +432,25 @@ fetch("/api/admin/members", { credentials: "include" })
   <td>Date</td>
 </tr>
 
+  <button onclick="setHostStatus(3, 'approved')">Approve</button>
+<button onclick="setHostStatus(3, 'rejected')">Reject</button>
 <script>
 
+async function setHostStatus(id, status) {
+  const res = await fetch(`/api/admin/hosts/${id}/status`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ status })
+  });
+
+  if (!res.ok) {
+    alert("Failed to update host status");
+    return;
+  }
+
+  loadHosts(); // refresh list
+}
   async function loadHosts() {
   const res = await fetch("/api/admin/hosts", {
     method: "GET",
