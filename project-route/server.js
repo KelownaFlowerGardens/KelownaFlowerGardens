@@ -1,5 +1,16 @@
 // server.js
 
+app.get("/api/admin/members", requireAdmin, (req, res) => {
+  const members = db.prepare(`
+    SELECT id, name, email, username, active, paid, created_at
+    FROM users
+    ORDER BY created_at DESC
+  `).all();
+
+  res.json(members);
+});
+
+
 const requireAdmin = require("./middleware/requireAdmin");
 
 GET /api/admin/hosts
