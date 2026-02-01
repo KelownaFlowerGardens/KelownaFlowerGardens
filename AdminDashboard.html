@@ -363,9 +363,7 @@ button{
 }
 </style>
 </head>
-
 <body>
-
 <main>
 
 <h2>Members</h2>
@@ -435,8 +433,12 @@ fetch("/api/admin/members", { credentials: "include" })
 </tr>
 
 <script>
+
 async function loadMembers(){
-  const res = await fetch("/api/admin/members", {
+  const res = await 
+      GET /api/admin/hosts
+POST /api/admin/hosts/:id/status
+  {
     credentials:"include"
   });
 
