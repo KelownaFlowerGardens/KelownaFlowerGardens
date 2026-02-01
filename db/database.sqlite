@@ -1,5 +1,17 @@
 // database.sqlite
 
+CREATE TABLE IF NOT EXISTS payments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  member_id INTEGER,
+  provider TEXT,
+  provider_payment_id TEXT,
+  amount INTEGER,
+  currency TEXT,
+  status TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
 SELECT
   id,
   username,
