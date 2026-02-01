@@ -1,5 +1,17 @@
 // requireAdmin.js
 
+app.get("/api/admin/payments", requireAdmin, (req, res) => {
+  const payments = db.prepare(`
+    SELECT p.*, u.email
+    FROM payments p
+    JOIN users u ON u.id = p.user_id
+    ORDER BY p.created_at DESC
+  `).all();
+
+  res.json(payments);
+});
+
+
 app.post("/api/admin/hosts/:id/status", requireAdmin, (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
