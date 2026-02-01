@@ -1,5 +1,16 @@
 // database.sqlite
 
+SELECT
+  id,
+  username,
+  email,
+  membership_status,
+  waiverAccepted,
+  is_admin,
+  created_at
+FROM members
+ORDER BY created_at DESC;
+
 new SQLiteStore({
   db: "sessions.db",
   dir: "/data"
