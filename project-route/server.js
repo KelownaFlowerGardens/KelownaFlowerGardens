@@ -1,5 +1,8 @@
 // server.js
 
+GET /api/admin/hosts
+POST /api/admin/hosts/:id/status
+
 app.post("/api/host-signup", upload.single("image"), (req, res) => {
     const { name, location, preferredDate, venueSize, description } = req.body;
   
