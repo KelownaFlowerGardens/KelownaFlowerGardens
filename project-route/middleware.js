@@ -1,5 +1,7 @@
 // Middleware.js
 
+app.get("/api/admin/members", requireAdmin, ...)
+
 function requireAdmin(req, res, next) {
   if (!req.session.userId || !req.session.isAdmin) {
     return res.sendStatus(403);
@@ -77,3 +79,4 @@ export function isAdmin(req, res, next) {
   
 
   
+
