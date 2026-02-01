@@ -434,18 +434,20 @@ fetch("/api/admin/members", { credentials: "include" })
 
 <script>
 
-async function loadMembers(){
-  const res = await 
-      GET /api/admin/hosts
-POST /api/admin/hosts/:id/status
-  {
-    credentials:"include"
+  async function loadHosts() {
+  const res = await fetch("/api/admin/hosts", {
+    method: "GET",
+    credentials: "include"
   });
 
-  if(res.status === 401){
+  if (res.status === 401) {
     location.href = "LoggedOut.html";
     return;
   }
+
+  const hosts = await res.json();
+  console.log(hosts); // render into UI
+}
 
   const members = await res.json();
   const tbody = document.querySelector("#membersTable tbody");
