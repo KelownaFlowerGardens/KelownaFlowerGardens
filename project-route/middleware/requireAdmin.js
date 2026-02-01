@@ -1,3 +1,16 @@
+// requireAdmin.js
+
+app.get("/api/admin/hosts", requireAdmin, (req, res) => {
+  const hosts = db.prepare(`
+    SELECT *
+    FROM hosts
+    ORDER BY created_at DESC
+  `).all();
+
+  res.json(hosts);
+});
+
+
 function requireAdmin(req, res, next) {
     if (!req.session || !req.session.userId) {
       return res.status(401).json({ error: "Not authenticated" });
