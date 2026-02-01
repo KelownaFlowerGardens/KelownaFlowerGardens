@@ -1,5 +1,17 @@
 // server.js
 
+app.post("/api/admin/toggle-member", requireAdmin, (req, res) => {
+  const { id } = req.body;
+
+  db.prepare(`
+    UPDATE users
+    SET active = CASE WHEN active = 1 THEN 0 ELSE 1 END
+    WHERE id = ?
+  `).run(id);
+
+  res.json({ success: true });
+});
+
 app.get("/api/admin/members", requireAdmin, (req, res) => {
   const members = db.prepare(`
     SELECT id, name, email, username, active, paid, created_at
