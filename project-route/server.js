@@ -1,5 +1,13 @@
 // server.js
 
+app.post("/api/admin/delete-member", requireAdmin, (req, res) => {
+  const { id } = req.body;
+
+  db.prepare("DELETE FROM users WHERE id = ?").run(id);
+
+  res.json({ success: true });
+});
+
 app.post("/api/admin/toggle-member", requireAdmin, (req, res) => {
   const { id } = req.body;
 
