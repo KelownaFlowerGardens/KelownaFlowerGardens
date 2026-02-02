@@ -1,7 +1,5 @@
 // server.js
 
-const db = new Database(dbPath);
-
 
 app.post("/api/admin/delete-member", requireAdmin, (req, res) => {
   const { id } = req.body;
