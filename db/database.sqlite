@@ -1,5 +1,16 @@
 // database.sqlite
 
+const path = require("path");
+const Database = require("better-sqlite3");
+
+const dbPath = path.join(
+  process.env.RENDER === "true" ? "/var/data" : __dirname,
+  "database.sqlite"
+);
+
+const db = new Database(dbPath);
+
+
 CREATE TABLE IF NOT EXISTS payments (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   member_id INTEGER,
