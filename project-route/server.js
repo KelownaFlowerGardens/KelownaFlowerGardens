@@ -1,5 +1,22 @@
 // server.js
 
+const SQLiteStore = require("better-sqlite3-session-store")(session);
+
+app.use(session({
+  store: new SQLiteStore({
+    client: db
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.RENDER === "true",
+    httpOnly: true,
+    sameSite: "lax"
+  }
+}));
+
+
 db.prepare(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
