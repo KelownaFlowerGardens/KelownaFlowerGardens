@@ -1,5 +1,33 @@
 // server.js
 
+app.post("/api/register", async (req, res) => {
+  const { username, email, password, plan } = req.body;
+
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: "Missing fields" });
+  }
+
+  const hash = await bcrypt.hash(password, 10);
+
+  try {
+    const result = db.prepare(`
+      INSERT INTO users
+      (username, email, password_hash, membership_status, paid)
+      VALUES (?, ?, ?, 'pending', 0)
+    `).run(username, email, hash);
+
+    req.session.userId = result.lastInsertRowid;
+    req.session.paymentStatus = "pending";
+
+    res.json({ success: true });
+  } catch (err) {
+    if (err.code === "SQLITE_CONSTRAINT") {
+      return res.status(409).json({ error: "Duplicate user" });
+    }
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 const SQLiteStore = require("better-sqlite3-session-store")(session);
 
 app.use(session({
