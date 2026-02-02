@@ -1,5 +1,24 @@
 // server.js
 
+app.post("/api/paypal/verify", requireLogin, async (req, res) => {
+  const { orderID } = req.body;
+
+  const capture = await paypalClient.orders.capture(orderID);
+
+  if (capture.status !== "COMPLETED") {
+    return res.status(400).json({ error: "Payment not completed" });
+  }
+
+  db.prepare(`
+    UPDATE users
+    SET paid = 1,
+        membership_status = 'active'
+    WHERE id = ?
+  `).run(req.session.userId);
+
+  res.json({ success: true });
+});
+
 app.get("/Payment.html", requireLogin, (req, res) => {
   const user = db.prepare(`
     SELECT membership_status FROM users WHERE id = ?
