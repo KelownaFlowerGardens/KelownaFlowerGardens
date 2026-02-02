@@ -1,5 +1,17 @@
 // server.js
 
+app.get("/Payment.html", requireLogin, (req, res) => {
+  const user = db.prepare(`
+    SELECT membership_status FROM users WHERE id = ?
+  `).get(req.session.userId);
+
+  if (!user || user.membership_status !== "pending") {
+    return res.redirect("/Members.html");
+  }
+
+  res.sendFile(__dirname + "/public/Payment.html");
+});
+
 app.post("/api/register", async (req, res) => {
   const { username, email, password, plan } = req.body;
 
