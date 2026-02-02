@@ -1,5 +1,7 @@
 // database.sqlite
 
+SELECT username, membership_status, paid FROM users;
+
 const path = require("path");
 const Database = require("better-sqlite3");
 
