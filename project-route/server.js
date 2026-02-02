@@ -1,5 +1,17 @@
 // server.js
 
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE,
+    username TEXT UNIQUE,
+    password_hash TEXT,
+    active INTEGER DEFAULT 1,
+    paid INTEGER DEFAULT 0,
+    is_admin INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`).run();
 
 app.post("/api/admin/delete-member", requireAdmin, (req, res) => {
   const { id } = req.body;
