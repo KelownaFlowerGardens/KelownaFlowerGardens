@@ -1,5 +1,7 @@
 // database.sqlite
 
+SELECT paid, membership_status FROM users WHERE id = ?;
+
 SELECT username, membership_status, paid FROM users;
 
 const path = require("path");
