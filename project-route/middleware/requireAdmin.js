@@ -1,5 +1,31 @@
 // requireAdmin.js
 
+app.get("/api/admin/events/:id/rsvps.csv", requireAdmin, (req, res) => {
+  const { id } = req.params;
+
+  const rows = db.prepare(`
+    SELECT
+      u.name,
+      u.email,
+      r.created_at,
+      r.checked_in
+    FROM rsvps r
+    JOIN users u ON u.id = r.user_id
+    WHERE r.event_id = ?
+  `).all(id);
+
+  let csv = "Name,Email,RSVP Date,Checked In\n";
+
+  rows.forEach(row => {
+    csv += `"${row.name}","${row.email}","${row.created_at}","${row.checked_in ? "Yes" : "No"}"\n`;
+  });
+
+  res.setHeader("Content-Type", "text/csv");
+  res.setHeader("Content-Disposition", "attachment; filename=rsvps.csv");
+  res.send(csv);
+});
+
+
 app.get("/api/admin/payments", requireAdmin, (req, res) => {
   const payments = db.prepare(`
     SELECT p.*, u.email
