@@ -1953,7 +1953,7 @@ fetch("http://localhost:3000/api/session", {
 
   // Logout
   document.getElementById("logoutBtn").onclick = async () => {
-    await fetch("http://localhost:3000/api/logout", {
+    await fetch("/api/logout", {
       method: "POST",
       credentials: "include"
     });
