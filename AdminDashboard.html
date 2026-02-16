@@ -382,6 +382,27 @@ button{
   <tbody></tbody>
 </table>
 
+  <h2>Event RSVPs</h2>
+
+<select id="eventSelect"></select>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>RSVP Date</th>
+      <th>Checked In</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="rsvpTable"></tbody>
+</table>
+
+<a id="downloadCsv" href="#" class="btn">
+  ⬇ Download RSVP CSV
+</a>
+
 <main>
 <td>${r.checked_in ? "✅ Checked In" : "⏳ Not Arrived"}</td>
 
@@ -398,22 +419,80 @@ button{
     <button onclick="deleteMsg(id)">🗑</button>
 <button onclick="muteUser(userId)">🔇</button>
 
-<script>
-fetch("/api/admin/members", { credentials: "include" })
-  .then(r => r.json())
-  .then(data => {
-    document.getElementById("memberRows").innerHTML =
-      data.map(m => `
-        <tr>
-          <td>${m.name}</td>
-          <td>${m.email}</td>
-          <td>${m.paid ? "✅" : "❌"}</td>
-          <td>${m.active ? "✅" : "❌"}</td>
-          <td>${m.paypal_txn_id || "-"}</td>
-        </tr>
-      `).join("");
+  <script>
+async function loadEvents() {
+  const res = await fetch("/api/admin/events", {
+    credentials: "include"
   });
+
+  if (!res.ok) return;
+
+  const events = await res.json();
+  const select = document.getElementById("eventSelect");
+
+  select.innerHTML = "";
+
+  events.forEach(e => {
+    const option = document.createElement("option");
+    option.value = e.id;
+    option.textContent = e.title;
+    select.appendChild(option);
+  });
+
+  if (events.length) {
+    loadRSVPs(events[0].id);
+  }
+}
+
+async function loadRSVPs(eventId) {
+  const res = await fetch(`/api/admin/events/${eventId}/rsvps`, {
+    credentials: "include"
+  });
+
+  if (!res.ok) return;
+
+  const data = await res.json();
+  const table = document.getElementById("rsvpTable");
+  table.innerHTML = "";
+
+  data.forEach(r => {
+    table.innerHTML += `
+      <tr>
+        <td>${r.name}</td>
+        <td>${r.email}</td>
+        <td>${new Date(r.created_at).toLocaleString()}</td>
+        <td>${r.checked_in ? "✅" : "⏳"}</td>
+        <td>
+          ${!r.checked_in ? 
+            `<button onclick="checkIn(${r.id})">Check In</button>` 
+            : ""}
+        </td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("downloadCsv").href =
+    `/api/admin/events/${eventId}/rsvps.csv`;
+}
+
+async function checkIn(rsvpId) {
+  await fetch(`/api/admin/rsvps/${rsvpId}/checkin`, {
+    method: "POST",
+    credentials: "include"
+  });
+
+  const eventId = document.getElementById("eventSelect").value;
+  loadRSVPs(eventId);
+}
+
+document.getElementById("eventSelect")
+  .addEventListener("change", e => {
+    loadRSVPs(e.target.value);
+  });
+
+loadEvents();
 </script>
+
 <h1>Admin Dashboard</h1>
 <table id="members">
   <thead>
