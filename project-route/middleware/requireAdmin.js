@@ -1,5 +1,16 @@
 // requireAdmin.js
 
+app.post("/api/admin/rsvps/:id/checkin", requireAdmin, (req, res) => {
+  db.prepare(`
+    UPDATE rsvps
+    SET checked_in = 1
+    WHERE id = ?
+  `).run(req.params.id);
+
+  res.json({ success: true });
+});
+
+
 app.get("/api/admin/events/:id/rsvps.csv", requireAdmin, (req, res) => {
   const { id } = req.params;
 
