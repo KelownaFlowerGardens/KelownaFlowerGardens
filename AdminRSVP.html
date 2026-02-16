@@ -1,0 +1,45 @@
+<h2>Event RSVPs</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>RSVP Date</th>
+      <th>Checked In</th>
+    </tr>
+  </thead>
+  <tbody id="rsvpTable"></tbody>
+</table>
+
+<script>
+async function loadRSVPs(eventId) {
+  const res = await fetch(`/api/admin/events/${eventId}/rsvps`, {
+    credentials: "include"
+  });
+
+  if (res.status === 401) {
+    location.href = "LoggedOut.html";
+    return;
+  }
+
+  const data = await res.json();
+  const table = document.getElementById("rsvpTable");
+
+  table.innerHTML = "";
+
+  data.forEach(r => {
+    table.innerHTML += `
+      <tr>
+        <td>${r.name}</td>
+        <td>${r.email}</td>
+        <td>${new Date(r.created_at).toLocaleString()}</td>
+        <td>${r.checked_in ? "✅" : "⏳"}</td>
+      </tr>
+    `;
+  });
+}
+
+// Example: Load event 3
+loadRSVPs(3);
+</script>
