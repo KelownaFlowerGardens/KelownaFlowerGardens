@@ -1,5 +1,27 @@
 // server.js
 
+app.get("/api/admin/events/:id/rsvps", requireAdmin, (req, res) => {
+  const { id } = req.params;
+
+  const rsvps = db.prepare(`
+    SELECT
+      r.id,
+      r.checked_in,
+      r.created_at,
+      u.name,
+      u.email,
+      e.title
+    FROM rsvps r
+    JOIN users u ON u.id = r.user_id
+    JOIN events e ON e.id = r.event_id
+    WHERE e.id = ?
+    ORDER BY r.created_at DESC
+  `).all(id);
+
+  res.json(rsvps);
+});
+
+
 app.post("/api/paypal/verify", requireLogin, async (req, res) => {
   const { orderID } = req.body;
 
