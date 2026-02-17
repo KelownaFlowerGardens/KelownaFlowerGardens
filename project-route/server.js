@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS rsvps (
   checkin_token TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE,
   FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
 
   UNIQUE(user_id, event_id)
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS rsvps (
 `).run();
 
   db.prepare(`
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS members (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT,
   email TEXT UNIQUE NOT NULL,
@@ -53,14 +53,14 @@ function sendEventReminders() {
     const attendees = db.prepare(`
       SELECT u.email, u.name
       FROM rsvps r
-      JOIN users u ON u.id = r.user_id
+      JOIN users u ON u.id = r.member_id
       WHERE r.event_id = ?
       AND r.waitlisted = 0
     `).all(event.id);
 
     attendees.forEach(user => {
       transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from: process.env.EMAIL_MEMBER,
         to: user.email,
         subject: `Reminder: ${event.title} Tomorrow`,
         html: `
@@ -86,7 +86,7 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER,
+    user: process.env.EMAIL_MEMBER,
     pass: process.env.EMAIL_PASS
   }
 });
@@ -133,7 +133,7 @@ const token = crypto.randomBytes(24).toString("hex");
 db.prepare(`
   INSERT INTO rsvps (user_id, event_id, checkin_token)
   VALUES (?, ?, ?)
-`).run(userId, eventId, token);
+`).run(memberId, eventId, token);
 
 
 app.get("/api/admin/events/:id/rsvp-analytics", requireAdmin, (req, res) => {
@@ -191,11 +191,11 @@ app.post("/api/paypal/verify", requireLogin, async (req, res) => {
   }
 
   db.prepare(`
-    UPDATE users
+    UPDATE members
     SET paid = 1,
         membership_status = 'active'
     WHERE id = ?
-  `).run(req.session.userId);
+  `).run(req.session.memberId);
 
   res.json({ success: true });
 });
