@@ -1,5 +1,20 @@
 // requireAdmin.js
 
+app.get("/api/admin/members/:id/history", requireAdmin, (req, res) => {
+  const rows = db.prepare(`
+    SELECT
+      e.title,
+      e.event_date,
+      r.checked_in
+    FROM rsvps r
+    JOIN events e ON e.id = r.event_id
+    WHERE r.user_id = ?
+    ORDER BY e.event_date DESC
+  `).all(req.params.id);
+
+  res.json(rows);
+});
+
 
 app.post("/api/admin/rsvps/:id/checkin", requireAdmin, (req, res) => {
   db.prepare(`
