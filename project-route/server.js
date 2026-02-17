@@ -1,5 +1,28 @@
 // server.js
 
+app.get("/api/admin/events/:id/rsvp-analytics", requireAdmin, (req, res) => {
+  const eventId = req.params.id;
+
+  const totals = db.prepare(`
+    SELECT
+      COUNT(*) as total,
+      SUM(CASE WHEN checked_in = 1 THEN 1 ELSE 0 END) as checked_in
+    FROM rsvps
+    WHERE event_id = ?
+  `).get(eventId);
+
+  const total = totals.total || 0;
+  const checked = totals.checked_in || 0;
+
+  res.json({
+    total,
+    checked_in: checked,
+    no_shows: total - checked,
+    attendance_rate: total ? ((checked / total) * 100).toFixed(1) : 0
+  });
+});
+
+
 app.get("/api/admin/events/:id/rsvps", requireAdmin, (req, res) => {
   const { id } = req.params;
 
