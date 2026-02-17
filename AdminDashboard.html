@@ -526,7 +526,18 @@ loadEvents();
 
   <button onclick="setHostStatus(3, 'approved')">Approve</button>
 <button onclick="setHostStatus(3, 'rejected')">Reject</button>
+  
 <script>
+async function loadSection(section) {
+  const res = await fetch(`/admin/sections/${section}.html`);
+  const html = await res.text();
+
+  document.getElementById("content").innerHTML = html;
+
+  if (window[`init_${section}`]) {
+    window[`init_${section}`]();
+  }
+}
 
 async function setHostStatus(id, status) {
   const res = await fetch(`/api/admin/hosts/${id}/status`, {
