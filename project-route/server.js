@@ -1,5 +1,27 @@
 // server.js
 
+app.get("/api/checkin", (req, res) => {
+  const { rsvp, token } = req.query;
+
+  const row = db.prepare(`
+    SELECT id FROM rsvps
+    WHERE id = ? AND checkin_token = ?
+  `).get(rsvp, token);
+
+  if (!row) {
+    return res.status(400).send("Invalid QR");
+  }
+
+  db.prepare(`
+    UPDATE rsvps
+    SET checked_in = 1
+    WHERE id = ?
+  `).run(rsvp);
+
+  res.send("✅ Check-in successful");
+});
+
+
 const crypto = require("crypto");
 
 const token = crypto.randomBytes(24).toString("hex");
