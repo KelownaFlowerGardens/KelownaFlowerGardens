@@ -1,5 +1,7 @@
 // package.js
 
+npm install nodemailer
+
 npm install better-sqlite3-session-store
 
 npm install connect-sqlite3
