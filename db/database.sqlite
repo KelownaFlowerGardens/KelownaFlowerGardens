@@ -1,5 +1,9 @@
 // database.sqlite
 
+
+ALTER TABLE rsvps ADD COLUMN waitlisted INTEGER DEFAULT 0;
+
+
 ALTER TABLE events ADD COLUMN capacity INTEGER DEFAULT 0;
 ALTER TABLE events ADD COLUMN waitlist_enabled INTEGER DEFAULT 1;
 
@@ -136,5 +140,3 @@ ALTER TABLE users
 ADD COLUMN waiverAcceptedAt DATETIME;
 ALTER TABLE members
 ADD COLUMN waiverAccepted INTEGER DEFAULT 0;
-
-
