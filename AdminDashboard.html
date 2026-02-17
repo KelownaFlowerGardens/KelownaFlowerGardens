@@ -573,6 +573,7 @@ loadEvents();
 <button onclick="setHostStatus(3, 'rejected')">Reject</button>
   
 <script>
+
 async function loadSection(section) {
   const res = await fetch(`/admin/sections/${section}.html`);
   const html = await res.text();
