@@ -1,5 +1,43 @@
 // server.js
 
+
+  db.prepare(`CREATE INDEX IF NOT EXISTS idx_rsvps_event ON rsvps(event_id)`).run();
+db.prepare(`CREATE INDEX IF NOT EXISTS idx_rsvps_user ON rsvps(user_id)`).run();
+db.prepare(`CREATE INDEX IF NOT EXISTS idx_events_date ON events(event_date)`).run();
+
+  db.prepare(`
+CREATE TABLE IF NOT EXISTS rsvps (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  event_id INTEGER NOT NULL,
+  waitlisted INTEGER DEFAULT 0,
+  checked_in INTEGER DEFAULT 0,
+  checkin_token TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+
+  UNIQUE(user_id, event_id)
+)
+`).run();
+
+  db.prepare(`
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  email TEXT UNIQUE NOT NULL,
+  username TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  membership_status TEXT DEFAULT 'pending',
+  paid INTEGER DEFAULT 0,
+  active INTEGER DEFAULT 1,
+  is_admin INTEGER DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+`).run();
+
+
 const dbPath = process.env.RENDER === "true"
   ? "/var/data/database.sqlite"
   : "./database.sqlite";
