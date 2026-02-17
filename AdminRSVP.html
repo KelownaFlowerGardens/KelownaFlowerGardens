@@ -141,7 +141,43 @@ async function loadMembers(){
     `;
   });
 }
+  app.post("/api/admin/rsvps/:id/checkin", requireAdmin, (req, res) => {
+  db.prepare(`
+    UPDATE rsvps
+    SET checked_in = 1
+    WHERE id = ?
+  `).run(req.params.id);
 
+  res.json({ success: true });
+});
+
+app.get("/api/admin/events/:id/rsvps", requireAdmin, (req, res) => {
+  const rows = db.prepare(`
+    SELECT
+      r.id,
+      r.checked_in,
+      r.created_at,
+      u.name,
+      u.email
+    FROM rsvps r
+    JOIN users u ON u.id = r.user_id
+    WHERE r.event_id = ?
+    ORDER BY r.created_at DESC
+  `).all(req.params.id);
+
+  res.json(rows);
+});
+
+  
+app.get("/api/admin/events", requireAdmin, (req, res) => {
+  const events = db.prepare(`
+    SELECT id, title FROM events
+    ORDER BY event_date DESC
+  `).all();
+
+  res.json(events);
+});
+  
 async function toggleMember(id){
   await fetch("/api/admin/toggle-member", {
     method:"POST",
