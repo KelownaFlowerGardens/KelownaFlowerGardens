@@ -3618,7 +3618,7 @@ app.post("/api/member-selection", (req, res) => {
 });
 
 /*
-fetch("http://localhost:3000/api/session", {
+fetch("/api/session", {
   credentials: "include"
 })
 .then(res => res.json())
