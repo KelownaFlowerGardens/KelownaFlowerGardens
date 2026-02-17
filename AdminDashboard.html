@@ -684,7 +684,7 @@ async function loadHosts() {
 }
 
 async function setStatus(id, status) {
-  await fetch(`http://localhost:3000/api/admin/hosts/${id}/status`, {
+  await fetch(`/api/admin/hosts/${id}/status`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
