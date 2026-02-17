@@ -1,4 +1,38 @@
-// server.jconst cron = require("node-cron");
+// server.js
+
+function sendEventReminders() {
+  const tomorrow = db.prepare(`
+    SELECT id, title
+    FROM events
+    WHERE date(event_date) = date('now', '+1 day')
+  `).all();
+
+  tomorrow.forEach(event => {
+    const attendees = db.prepare(`
+      SELECT u.email, u.name
+      FROM rsvps r
+      JOIN users u ON u.id = r.user_id
+      WHERE r.event_id = ?
+      AND r.waitlisted = 0
+    `).all(event.id);
+
+    attendees.forEach(user => {
+      transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: user.email,
+        subject: `Reminder: ${event.title} Tomorrow`,
+        html: `
+          Hi ${user.name},<br><br>
+          Just a reminder that you RSVP’d for ${event.title}.
+          We look forward to seeing you!
+        `
+      });
+    });
+  });
+}
+
+
+const cron = require("node-cron");
 
 cron.schedule("0 8 * * *", () => {
   sendEventReminders();
