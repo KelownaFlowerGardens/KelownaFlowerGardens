@@ -1,5 +1,16 @@
 // server.js
 
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
+
 async function loadSection(section) {
   const res = await fetch(`/admin/sections/${section}.html`);
   const html = await res.text();
