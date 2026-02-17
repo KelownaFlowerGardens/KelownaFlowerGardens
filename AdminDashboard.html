@@ -217,23 +217,6 @@ document.addEventListener("click", function(e){
   </head>
 <body>
 
-<div class="admin-container">
-
-  <aside class="sidebar">
-    <h2>Admin</h2>
-    <button onclick="loadSection('members')">Members</button>
-    <button onclick="loadSection('events')">Events</button>
-    <button onclick="loadSection('rsvps')">RSVPs</button>
-    <button onclick="loadSection('payments')">Payments</button>
-    <button onclick="loadSection('analytics')">Analytics</button>
-  </aside>
-
-  <main id="content">
-    Loading...
-  </main>
-
-</div>
-
 <script src="/admin/admin.js"></script>
 <header>
   <img src="01126.jpg" alt="Flowers of the Okanagan">
@@ -256,6 +239,8 @@ document.addEventListener("click", function(e){
     <a href="MemberContact.html">Contact</a>
 </nav>
 </header>
+
+  
     <div class="login-avatar">...</div>  <!-- logged out -->
 <div class="member-avatar">...</div> <!-- logged in -->
 
@@ -389,7 +374,7 @@ button{
 
 <body>
 
-<div class="admin-container">
+  <div class="admin-container">
 
   <aside class="sidebar">
     <h2>Admin</h2>
@@ -573,6 +558,23 @@ loadEvents();
 <button onclick="setHostStatus(3, 'rejected')">Reject</button>
   
 <script>
+
+  db.prepare(`
+CREATE TABLE IF NOT EXISTS rsvps (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  event_id INTEGER NOT NULL,
+  waitlisted INTEGER DEFAULT 0,
+  checked_in INTEGER DEFAULT 0,
+  checkin_token TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+
+  UNIQUE(user_id, event_id)
+)
+`).run();
 
 async function loadSection(section) {
   const res = await fetch(`/admin/sections/${section}.html`);
