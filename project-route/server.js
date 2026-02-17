@@ -1,5 +1,9 @@
 // server.js
 
+const dbPath = process.env.RENDER === "true"
+  ? "/var/data/database.sqlite"
+  : "./database.sqlite";
+
 function sendEventReminders() {
   const tomorrow = db.prepare(`
     SELECT id, title
