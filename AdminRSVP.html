@@ -111,6 +111,23 @@ button{
 
 <script>
 
+  db.prepare(`
+CREATE TABLE IF NOT EXISTS rsvps (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  event_id INTEGER NOT NULL,
+  waitlisted INTEGER DEFAULT 0,
+  checked_in INTEGER DEFAULT 0,
+  checkin_token TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+
+  UNIQUE(user_id, event_id)
+)
+`).run();
+
   function sendEventReminders() {
   const tomorrow = db.prepare(`
     SELECT id, title
