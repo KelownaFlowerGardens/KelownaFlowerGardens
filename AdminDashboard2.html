@@ -5,151 +5,234 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin Dashboard | Kelowna Flower Gardens</title>
 
-<link rel="icon" href="KFGL.jpg">
-
 <style>
-:root{
-  --pink:#F68686;
-  --radius:14px;
-}
-
-body{
+body {
   margin:0;
   font-family:system-ui;
   background:#fafafa;
 }
 
-header{
-  background:var(--pink);
+.admin-container {
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar {
+  width:220px;
+  background:#F68686;
+  padding:1rem;
   color:white;
-  padding:1rem;
-  text-align:center;
 }
 
-main{
-  max-width:1100px;
-  margin:auto;
-  padding:1rem;
-}
-
-table{
+.sidebar button {
+  display:block;
   width:100%;
-  border-collapse:collapse;
-  background:white;
-  border-radius:var(--radius);
-  overflow:hidden;
-}
-
-th, td{
-  padding:.75rem;
-  border-bottom:1px solid #eee;
-}
-
-th{
-  background:#f5f5f5;
-}
-
-button{
+  margin-bottom:.5rem;
+  padding:.6rem;
   border:none;
-  padding:.4rem .8rem;
+  background:white;
+  color:#F68686;
   border-radius:8px;
   cursor:pointer;
 }
 
-.enable{background:#2ecc71;color:white}
-.disable{background:#e67e22;color:white}
-.delete{background:#e74c3c;color:white}
+.sidebar button:hover {
+  background:#ffe3e3;
+}
+
+main {
+  flex:1;
+  padding:2rem;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+th, td {
+  padding:.75rem;
+  border-bottom:1px solid #eee;
+}
+
+th {
+  background:#f5f5f5;
+}
+
+button.action {
+  padding:.4rem .8rem;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.enable { background:#2ecc71;color:white; }
+.disable { background:#e67e22;color:white; }
+.delete { background:#e74c3c;color:white; }
+
 </style>
 </head>
-
 <body>
 
-<header>
-  <h1>Admin Dashboard</h1>
-  <p>Kelowna Flower Gardens</p>
-</header>
+<div class="admin-container">
 
-<main>
+  <aside class="sidebar">
+    <h2>Admin</h2>
+    <button onclick="loadMembers()">Members</button>
+    <button onclick="loadEvents()">Events</button>
+    <button onclick="loadRSVPSection()">RSVPs</button>
+  </aside>
 
-<h2>Members</h2>
+  <main id="content">
+    <h2>Welcome Admin</h2>
+    Select a section.
+  </main>
 
-<table id="membersTable">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Username</th>
-      <th>Status</th>
-      <th>Paid</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
-
-</main>
+</div>
 
 <script>
-async function loadMembers(){
+async function loadMembers() {
   const res = await fetch("/api/admin/members", {
     credentials:"include"
   });
 
-  if(res.status === 401){
-    location.href = "LoggedOut.html";
+  if(!res.ok) {
+    document.getElementById("content").innerHTML =
+      "<p>Failed to load members</p>";
     return;
   }
 
   const members = await res.json();
-  const tbody = document.querySelector("#membersTable tbody");
-  tbody.innerHTML = "";
+
+  let html = `
+    <h2>Members</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Paid</th>
+        <th>Active</th>
+        <th>Actions</th>
+      </tr>
+  `;
 
   members.forEach(m => {
-    tbody.innerHTML += `
+    html += `
       <tr>
         <td>${m.name}</td>
         <td>${m.email}</td>
-        <td>${m.username}</td>
-        <td>${m.active ? "Active" : "Inactive"}</td>
-        <td>${m.paid ? "Yes" : "No"}</td>
+        <td>${m.paid ? "✅" : "❌"}</td>
+        <td>${m.active ? "✅" : "❌"}</td>
         <td>
-          <button class="${m.active ? "disable" : "enable"}"
+          <button class="action ${m.active ? "disable":"enable"}"
             onclick="toggleMember(${m.id})">
-            ${m.active ? "Disable" : "Enable"}
-          </button>
-          <button class="delete"
-            onclick="deleteMember(${m.id})">
-            Delete
+            ${m.active ? "Disable":"Enable"}
           </button>
         </td>
       </tr>
     `;
   });
+
+  html += "</table>";
+
+  document.getElementById("content").innerHTML = html;
 }
 
-async function toggleMember(id){
+async function toggleMember(id) {
   await fetch("/api/admin/toggle-member", {
     method:"POST",
     headers:{ "Content-Type":"application/json" },
     credentials:"include",
-    body: JSON.stringify({ id })
+    body:JSON.stringify({ id })
   });
+
   loadMembers();
 }
 
-async function deleteMember(id){
-  if(confirm("Delete this member?")){
-    await fetch("/api/admin/delete-member", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      credentials:"include",
-      body: JSON.stringify({ id })
-    });
-    loadMembers();
+async function loadEvents() {
+  const res = await fetch("/api/admin/events", {
+    credentials:"include"
+  });
+
+  const events = await res.json();
+
+  let html = "<h2>Events</h2>";
+
+  events.forEach(e => {
+    html += `
+      <div style="margin-bottom:1rem;padding:1rem;background:white;border-radius:12px;">
+        <strong>${e.title}</strong><br>
+        ${e.event_date}<br>
+        Capacity: ${e.capacity}
+      </div>
+    `;
+  });
+
+  document.getElementById("content").innerHTML = html;
+}
+
+async function loadRSVPSection() {
+  document.getElementById("content").innerHTML = `
+    <h2>RSVPs</h2>
+    <select id="eventSelect"></select>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Checked In</th>
+        </tr>
+      </thead>
+      <tbody id="rsvpTable"></tbody>
+    </table>
+  `;
+
+  const res = await fetch("/api/admin/events", {
+    credentials:"include"
+  });
+
+  const events = await res.json();
+  const select = document.getElementById("eventSelect");
+
+  events.forEach(e => {
+    const opt = document.createElement("option");
+    opt.value = e.id;
+    opt.textContent = e.title;
+    select.appendChild(opt);
+  });
+
+  select.addEventListener("change", e => {
+    loadRSVPs(e.target.value);
+  });
+
+  if(events.length) {
+    loadRSVPs(events[0].id);
   }
 }
 
-loadMembers();
+async function loadRSVPs(eventId) {
+  const res = await fetch(`/api/admin/events/${eventId}/rsvps`, {
+    credentials:"include"
+  });
+
+  const data = await res.json();
+  const tbody = document.getElementById("rsvpTable");
+
+  tbody.innerHTML = "";
+
+  data.forEach(r => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${r.name}</td>
+        <td>${r.email}</td>
+        <td>${r.checked_in ? "✅" : "⏳"}</td>
+      </tr>
+    `;
+  });
+}
 </script>
 
 </body>
