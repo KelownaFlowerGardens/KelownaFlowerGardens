@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin Dashboard | Kelowna Flower Gardens</title>
 
+  <link rel="stylesheet" href="/admin/admin.css">
 <link rel="icon" href="KFGL.jpg">
 
 <style>
@@ -212,6 +213,28 @@ document.addEventListener("click", function(e){
 
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
+
+  </head>
+<body>
+
+<div class="admin-container">
+
+  <aside class="sidebar">
+    <h2>Admin</h2>
+    <button onclick="loadSection('members')">Members</button>
+    <button onclick="loadSection('events')">Events</button>
+    <button onclick="loadSection('rsvps')">RSVPs</button>
+    <button onclick="loadSection('payments')">Payments</button>
+    <button onclick="loadSection('analytics')">Analytics</button>
+  </aside>
+
+  <main id="content">
+    Loading...
+  </main>
+
+</div>
+
+<script src="/admin/admin.js"></script>
 <header>
   <img src="01126.jpg" alt="Flowers of the Okanagan">
   <h1>Kelowna Flower Gardens</h1>
@@ -363,7 +386,29 @@ button{
 }
 </style>
 </head>
+
 <body>
+
+<div class="admin-container">
+
+  <aside class="sidebar">
+    <h2>Admin</h2>
+    <button onclick="loadSection('members')">Members</button>
+    <button onclick="loadSection('events')">Events</button>
+    <button onclick="loadSection('rsvps')">RSVPs</button>
+    <button onclick="loadSection('payments')">Payments</button>
+    <button onclick="loadSection('analytics')">Analytics</button>
+  </aside>
+
+  <main id="content">
+    Loading...
+  </main>
+
+</div>
+
+<script src="/admin/admin.js"></script>
+
+
 <main>
 
 <h2>Members</h2>
