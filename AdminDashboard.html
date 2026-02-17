@@ -419,7 +419,20 @@ button{
     <button onclick="deleteMsg(id)">🗑</button>
 <button onclick="muteUser(userId)">🔇</button>
 
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
   <script>
+    '<td>
+  <canvas id="qr-${r.id}"></canvas>
+  <script>
+    QRCode.toCanvas(
+      document.getElementById("qr-${r.id}"),
+      `${window.location.origin}/api/checkin?rsvp=${r.id}&token=${r.checkin_token}`
+    );
+  </script>
+</td>
+
 async function loadEvents() {
   const res = await fetch("/api/admin/events", {
     credentials: "include"
