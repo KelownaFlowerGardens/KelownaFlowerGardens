@@ -2681,14 +2681,14 @@ io.on("connection", socket => {
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
-const { ensureAuthenticated, updateUserAvatar } = require("./routes/auth.js"); // your auth
+const { ensureAuthenticated, updateMemberAvatar } = require("/routes/auth.js"); // your auth
 
 const router = express.Router();
 
 const storage = multer.diskStorage({
-  destination: "./public/uploads/avatars/",
+  destination: "/public/uploads/avatars/",
   filename: (req, file, cb) => {
-    cb(null, req.user.id + path.extname(file.originalname));
+    cb(null, req.member.id + path.extname(file.originalname));
   }
 });
 
@@ -2740,15 +2740,15 @@ socket.on("updateMembers", members => {
     membersContainer.appendChild(div);
   });
 });
-const onlineUsers = new Map(); // userId → { username, avatar }
+const onlineMembers = new Map(); // memberId → { username, avatar }
 io.on("connection", (socket) => {
 
-  socket.on("auth", ({ userId, username, avatar }) => {
-    socket.userId = userId;
+  socket.on("auth", ({ memberId, username, avatar }) => {
+    socket.memberId = memberId;
     socket.username = username;
     socket.avatar = avatar;
 
-    onlineUsers.set(userId, { username, avatar });
+    onlineMembers.set(memberId, { username, avatar });
     io.emit("updateMembers", Array.from(onlineUsers.values()));
   });
   socket.on("updateAvatar", async ({ avatarUrl }) => {
@@ -2762,7 +2762,7 @@ io.on("connection", (socket) => {
   
     // Broadcast avatar update
     io.emit("avatarUpdated", {
-      userId: socket.userId,
+      MemberId: socket.MemberId,
       avatar: avatarUrl
     });
   
@@ -2781,13 +2781,13 @@ io.on("connection", (socket) => {
   const avatarCache = {};
   socket.on("updateMembers", members => {
     members.forEach(m => {
-      avatarCache[m.userId] = m.avatar;
+      avatarCache[m.MemberId] = m.avatar;
     });
   });
   function renderMessage(msg) {
     const div = document.createElement("div");
     div.className = "message";
-    div.dataset.userId = msg.userId;
+    div.dataset.MemberId = msg.userId;
   
     const avatar = avatarCache[msg.userId] || "/default-avatar.png";
   
@@ -2823,7 +2823,7 @@ io.on("connection", (socket) => {
   
     socket.emit("updateAvatar", { avatarUrl: data.avatarUrl });
   });
-  const onlineUsers = new Map();
+  const onlineMembers = new Map();
 
   io.on("connection", socket => {
     socket.on("auth", ({ userId, username, avatar }) => {
@@ -2837,7 +2837,7 @@ io.on("connection", (socket) => {
   
     socket.on("disconnect", () => {
       if (socket.memberId) {
-        onlineUsers.delete(socket.memberId);
+        onlineMembers.delete(socket.memberId);
         io.emit("updateMembers", Array.from(onlineMembers.values()));
       }
     });
