@@ -559,6 +559,10 @@ loadEvents();
   
 <script>
 
+  db.prepare(`CREATE INDEX IF NOT EXISTS idx_rsvps_event ON rsvps(event_id)`).run();
+db.prepare(`CREATE INDEX IF NOT EXISTS idx_rsvps_user ON rsvps(user_id)`).run();
+db.prepare(`CREATE INDEX IF NOT EXISTS idx_events_date ON events(event_date)`).run();
+
   db.prepare(`
 CREATE TABLE IF NOT EXISTS rsvps (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
