@@ -169,6 +169,22 @@ app.get("/api/admin/events/:id/rsvps", requireAdmin, (req, res) => {
   res.json(rows);
 });
 
+  async function loadAnalytics(eventId) {
+  const res = await fetch(`/api/admin/events/${eventId}/rsvp-analytics`, {
+    credentials: "include"
+  });
+
+  const data = await res.json();
+
+  document.getElementById("analytics").innerHTML = `
+    <h3>RSVP Analytics</h3>
+    <p><strong>Total RSVPs:</strong> ${data.total}</p>
+    <p><strong>Checked In:</strong> ${data.checked_in}</p>
+    <p><strong>No Shows:</strong> ${data.no_shows}</p>
+    <p><strong>Attendance Rate:</strong> ${data.attendance_rate}%</p>
+  `;
+}
+
   
 app.get("/api/admin/events", requireAdmin, (req, res) => {
   const events = db.prepare(`
@@ -232,6 +248,7 @@ async function loadRSVPs(eventId) {
 
 // Example: Load event 3
 loadRSVPs(3);
+  
 </script>
 
   
