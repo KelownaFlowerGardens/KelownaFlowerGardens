@@ -1,5 +1,7 @@
 // database.sqlite
 
+ALTER TABLE rsvps ADD COLUMN checkin_token TEXT;
+
 SELECT paid, membership_status FROM users WHERE id = ?;
 
 SELECT username, membership_status, paid FROM users;
