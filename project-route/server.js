@@ -2827,18 +2827,18 @@ io.on("connection", (socket) => {
 
   io.on("connection", socket => {
     socket.on("auth", ({ userId, username, avatar }) => {
-      socket.userId = userId;
+      socket.memberId = memberId;
       socket.username = username;
       socket.avatar = avatar;
   
-      onlineUsers.set(userId, { userId, username, avatar, online: true });
-      io.emit("updateMembers", Array.from(onlineUsers.values()));
+      onlineUsers.set(memberId, { userId, username, avatar, online: true });
+      io.emit("updateMembers", Array.from(onlineMembers.values()));
     });
   
     socket.on("disconnect", () => {
-      if (socket.userId) {
-        onlineUsers.delete(socket.userId);
-        io.emit("updateMembers", Array.from(onlineUsers.values()));
+      if (socket.memberId) {
+        onlineUsers.delete(socket.memberId);
+        io.emit("updateMembers", Array.from(onlineMembers.values()));
       }
     });
   });
