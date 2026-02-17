@@ -667,8 +667,23 @@ async function deleteMember(id){
 loadMembers();
 </script>
 
-
 <script>
+  db.prepare(`
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  email TEXT UNIQUE NOT NULL,
+  username TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  membership_status TEXT DEFAULT 'pending',
+  paid INTEGER DEFAULT 0,
+  active INTEGER DEFAULT 1,
+  is_admin INTEGER DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+`).run();
+
+  
 async function loadHosts() {
   const res = await     fetch("/api/admin/members", { credentials: "include" }), {
     credentials: "include"
