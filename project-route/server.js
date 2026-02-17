@@ -1613,7 +1613,7 @@ app.listen(3000, () => {
   console.log("API running on port 3000");
 });
 
-fetch("https://api.yoursite.com/api/register", {
+fetch("https://api.kelownaflowergardens.com/api/register", {
   method: "POST",
   credentials: "include",
   headers: { "Content-Type": "application/json" },
