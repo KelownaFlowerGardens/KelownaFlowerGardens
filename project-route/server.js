@@ -2972,11 +2972,11 @@ io.on("connection", (socket) => {
     io.emit("messageDeleted", messageId);
   });
 
-  const mutedUsers = new Set();
+  const mutedMembers = new Set();
 
-socket.on("adminMuteUser", userId => {
+socket.on("adminMuteMember", userId => {
   if (socket.role !== "admin") return;
-  mutedUsers.add(userId);
+  mutedMembers.add(userId);
 });
 
 self.addEventListener("push", event => {
