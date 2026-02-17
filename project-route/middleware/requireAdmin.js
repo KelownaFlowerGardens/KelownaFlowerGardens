@@ -1,5 +1,25 @@
 // requireAdmin.js
 
+async function loadMemberHistory(memberId) {
+  const res = await fetch(
+    `/api/admin/members/${memberId}/history`,
+    { credentials: "include" }
+  );
+
+  const data = await res.json();
+
+  const html = data.map(e => `
+    <div class="card">
+      <strong>${e.title}</strong><br>
+      ${e.event_date}<br>
+      ${e.checked_in ? "✅ Attended" : "❌ No Show"}
+    </div>
+  `).join("");
+
+  document.getElementById("memberHistory").innerHTML = html;
+}
+
+
 app.get("/api/admin/members/:id/history", requireAdmin, (req, res) => {
   const rows = db.prepare(`
     SELECT
