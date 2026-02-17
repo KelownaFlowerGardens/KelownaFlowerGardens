@@ -1,5 +1,8 @@
 // database.sqlite
 
+ALTER TABLE events ADD COLUMN capacity INTEGER DEFAULT 0;
+ALTER TABLE events ADD COLUMN waitlist_enabled INTEGER DEFAULT 1;
+
 ALTER TABLE rsvps ADD COLUMN checkin_token TEXT;
 
 SELECT paid, membership_status FROM users WHERE id = ?;
