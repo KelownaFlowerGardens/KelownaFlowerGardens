@@ -101,11 +101,36 @@ button{
     </tr>
   </thead>
   <tbody id="rsvpTable"></tbody>
+  <td>
+  <button onclick="cancelRSVP(${r.id})">Cancel</button>
+</td>
+
 </table>
 </div>
 </main>
 
 <script>
+
+  async function cancelRSVP(id) {
+  if (!confirm("Cancel this RSVP?")) return;
+
+  await fetch(`/api/admin/rsvps/${id}/cancel`, {
+    method: "POST",
+    credentials: "include"
+  });
+
+  const eventId = document.getElementById("eventSelect").value;
+  loadRSVPs(eventId);
+}
+
+
+  app.post("/api/admin/rsvps/:id/cancel", requireAdmin, (req, res) => {
+  db.prepare("DELETE FROM rsvps WHERE id = ?")
+    .run(req.params.id);
+
+  res.json({ success: true });
+});
+
 async function loadMembers(){
   const res = await fetch("/api/admin/members", {
     credentials:"include"
