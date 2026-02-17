@@ -452,6 +452,29 @@ button{
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
+
+<h1>Admin Dashboard</h1>
+<table id="members">
+  <thead>
+    <tr>
+      <th>Name</th><th>Email</th><th>Status</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+<div id="list"></div>
+    <tr>
+  <td>
+    <a href="Success.html?id=12">New Member</a>
+  </td>
+  <td>Check</td>
+  <td>Date</td>
+</tr>
+
+  <button onclick="setHostStatus(3, 'approved')">Approve</button>
+<button onclick="setHostStatus(3, 'rejected')">Reject</button>
+  
+
   <script>
     '<td>
   <canvas id="qr-${r.id}"></canvas>
@@ -460,7 +483,7 @@ button{
       document.getElementById("qr-${r.id}"),
       `${window.location.origin}/api/checkin?rsvp=${r.id}&token=${r.checkin_token}`
     );
-  </script>
+
 </td>
 
 async function loadEvents() {
@@ -534,30 +557,7 @@ document.getElementById("eventSelect")
   });
 
 loadEvents();
-</script>
 
-<h1>Admin Dashboard</h1>
-<table id="members">
-  <thead>
-    <tr>
-      <th>Name</th><th>Email</th><th>Status</th><th>Actions</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
-<div id="list"></div>
-    <tr>
-  <td>
-    <a href="Success.html?id=12">New Member</a>
-  </td>
-  <td>Check</td>
-  <td>Date</td>
-</tr>
-
-  <button onclick="setHostStatus(3, 'approved')">Approve</button>
-<button onclick="setHostStatus(3, 'rejected')">Reject</button>
-  
-<script>
 
   db.prepare(`CREATE INDEX IF NOT EXISTS idx_rsvps_event ON rsvps(event_id)`).run();
 db.prepare(`CREATE INDEX IF NOT EXISTS idx_rsvps_user ON rsvps(user_id)`).run();
