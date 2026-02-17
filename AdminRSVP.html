@@ -110,6 +110,21 @@ button{
 </main>
 
 <script>
+const next = db.prepare(`
+  SELECT id FROM rsvps
+  WHERE event_id = ?
+  AND waitlisted = 1
+  ORDER BY created_at ASC
+  LIMIT 1
+`).get(eventId);
+
+if (next) {
+  db.prepare(`
+    UPDATE rsvps
+    SET waitlisted = 0
+    WHERE id = ?
+  `).run(next.id);
+}
 
   app.post("/api/events/:id/rsvp", requireLogin, (req, res) => {
   const eventId = req.params.id;
