@@ -333,7 +333,26 @@ closeBtn.onclick = () => modal.style.display = "none";
 
   <div id="emojiPicker"></div>
 </div>
+
+    
 <script>
+
+  app.post("/api/rsvp/:id/cancel", requireLogin, (req, res) => {
+  const rsvp = db.prepare(`
+    SELECT user_id FROM rsvps WHERE id = ?
+  `).get(req.params.id);
+
+  if (!rsvp || rsvp.user_id !== req.session.userId) {
+    return res.status(403).json({ error: "Not allowed" });
+  }
+
+  db.prepare(`
+    DELETE FROM rsvps WHERE id = ?
+  `).run(req.params.id);
+
+  res.json({ success: true });
+});
+
 // Toggle modal
 toggleBtn.onclick = () => {
   modal.style.display = "flex";
