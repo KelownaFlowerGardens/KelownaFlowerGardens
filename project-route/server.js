@@ -3362,11 +3362,11 @@ io.on("connection", socket => {
 
   // Typing indicator
   socket.on("typing", (room) => {
-    socket.to(room).emit("userTyping", username);
+    socket.to(room).emit("memberTyping", username);
   });
 
   socket.on("stopTyping", (room) => {
-    socket.to(room).emit("userStopTyping", username);
+    socket.to(room).emit("memberStopTyping", username);
   });
 
   // Mark room as read
