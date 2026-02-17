@@ -1,4 +1,9 @@
-// server.js
+// server.jconst cron = require("node-cron");
+
+cron.schedule("0 8 * * *", () => {
+  sendEventReminders();
+});
+
 
 const nodemailer = require("nodemailer");
 
