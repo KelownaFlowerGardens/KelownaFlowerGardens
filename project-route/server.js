@@ -1,5 +1,15 @@
 // server.js
 
+const crypto = require("crypto");
+
+const token = crypto.randomBytes(24).toString("hex");
+
+db.prepare(`
+  INSERT INTO rsvps (user_id, event_id, checkin_token)
+  VALUES (?, ?, ?)
+`).run(userId, eventId, token);
+
+
 app.get("/api/admin/events/:id/rsvp-analytics", requireAdmin, (req, res) => {
   const eventId = req.params.id;
 
