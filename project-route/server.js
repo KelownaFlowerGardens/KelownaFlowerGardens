@@ -1,5 +1,17 @@
 // server.js
 
+async function loadSection(section) {
+  const res = await fetch(`/admin/sections/${section}.html`);
+  const html = await res.text();
+
+  document.getElementById("content").innerHTML = html;
+
+  if (window[`init_${section}`]) {
+    window[`init_${section}`]();
+  }
+}
+
+
 app.get("/api/checkin", (req, res) => {
   const { rsvp, token } = req.query;
 
