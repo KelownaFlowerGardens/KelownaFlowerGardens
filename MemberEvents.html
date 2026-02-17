@@ -792,6 +792,36 @@ memberSearch.oninput=()=>{
 
 </script>
 <script>
+    app.post("/api/events/:id/rsvp", requireLogin, (req, res) => {
+  const eventId = req.params.id;
+
+  const event = db.prepare(`
+    SELECT capacity FROM events WHERE id = ?
+  `).get(eventId);
+
+  const currentCount = db.prepare(`
+    SELECT COUNT(*) as count
+    FROM rsvps
+    WHERE event_id = ? AND waitlisted = 0
+  `).get(eventId).count;
+
+  let waitlisted = 0;
+
+  if (event.capacity && currentCount >= event.capacity) {
+    waitlisted = 1;
+  }
+
+  db.prepare(`
+    INSERT INTO rsvps (user_id, event_id, waitlisted)
+    VALUES (?, ?, ?)
+  `).run(req.session.userId, eventId, waitlisted);
+
+  res.json({
+    success: true,
+    waitlisted
+  });
+});
+
 let selectedEventId = null;
 
 /* OPEN POPUP */
