@@ -244,9 +244,20 @@ fetch("http://localhost:3000/api/session", {
     <a href="MembersDashboard.html">Members</a>
     <a href="MemberContact.html">Contact</a>
   </nav>
+     <div class="avatar-menu" id="avatarMenu">
+    <a href="MembersDashboard.html">Dashboard</a>
+    <a href="MyAccount.html">My Account</a>
+    <a href="Loggedout.html">Log Out</a>
+  </div>
+</div>
+  </nav>
+<div class="nav-auth" id="nav-auth">
+  <!-- Filled by JS -->
+</div>
 </header>
+    
 <script>
-fetch("http://localhost:3000/api/session", {
+fetch("/api/session", {
   credentials: "include"
 })
 .then(res => res.json())
