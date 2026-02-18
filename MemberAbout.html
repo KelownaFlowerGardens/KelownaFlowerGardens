@@ -217,6 +217,46 @@ fetch("http://localhost:3000/api/session", {
     window.location.href = "LoggedOut.html";
   };
 });
+        .avatar-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.avatar-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background: white;
+  min-width: 160px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.avatar-menu a {
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+  color: #333;
+}
+
+.avatar-menu a:hover {
+  background: #f2f2f2;
+}
+
+.avatar-menu.show {
+  display: block;
+}
+
 </script>
 
     
@@ -244,19 +284,50 @@ fetch("http://localhost:3000/api/session", {
     <a href="MembersDashboard.html">Members</a>
     <a href="MemberContact.html">Contact</a>
   </nav>
-     <div class="avatar-menu" id="avatarMenu">
+</header>
+
+    <div class="avatar-wrapper">
+  <img src="avatar-default.png" id="avatarBtn" class="avatar-img">
+
+  <div class="avatar-menu" id="avatarMenu">
     <a href="MembersDashboard.html">Dashboard</a>
     <a href="MyAccount.html">My Account</a>
     <a href="Loggedout.html">Log Out</a>
   </div>
 </div>
-  </nav>
-<div class="nav-auth" id="nav-auth">
-  <!-- Filled by JS -->
-</div>
-</header>
-    
+
+
 <script>
+const avatarBtn = document.getElementById("avatarBtn");
+const avatarMenu = document.getElementById("avatarMenu");
+
+avatarBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  avatarMenu.classList.toggle("show");
+});
+
+// Close when clicking outside
+document.addEventListener("click", () => {
+  avatarMenu.classList.remove("show");
+});
+    fetch("/api/session", { credentials: "include" })
+.then(res => res.json())
+.then(data => {
+  if(data.loggedIn){
+    document.getElementById("nav-auth").innerHTML = `
+      <div class="avatar-wrapper">
+        <img src="${data.avatar || 'avatar-default.png'}" 
+             id="avatarBtn" class="avatar-img">
+        <div class="avatar-menu" id="avatarMenu">
+          <a href="MembersDashboard.html">Dashboard</a>
+          <a href="MyAccount.html">My Account</a>
+          <a href="/logout">Log Out</a>
+        </div>
+      </div>
+    `;
+  }
+});
+
 fetch("/api/session", {
   credentials: "include"
 })
