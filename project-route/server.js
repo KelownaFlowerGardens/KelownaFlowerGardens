@@ -180,7 +180,31 @@ app.get("/api/admin/events/:id/rsvps", requireAdmin, (req, res) => {
   res.json(rsvps);
 });
 
+app.post("/api/admin/rsvps/:id/checkin", async (req, res) => {
+  try {
+    // Simple admin session check
+    if (!req.session.user || !req.session.user.isAdmin) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
 
+    const rsvpId = req.params.id;
+
+    // Update the RSVP as checked in
+    const result = await db.run(
+      "UPDATE rsvps SET checked_in = 1 WHERE id = ?",
+      [rsvpId]
+    );
+
+    if (result.changes === 0) {
+      return res.status(404).json({ error: "RSVP not found" });
+    }
+
+    res.json({ success: true, message: `RSVP ${rsvpId} checked in` });
+  } catch (err) {
+    console.error("Check-in error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 app.post("/api/paypal/verify", requireLogin, async (req, res) => {
   const { orderID } = req.body;
 
