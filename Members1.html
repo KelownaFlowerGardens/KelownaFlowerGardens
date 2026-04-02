@@ -243,6 +243,14 @@ passwordInput.addEventListener("input", () => {
       "Minimum 8 characters, including uppercase, lowercase, number, and symbol";
   }
 });
+       app.post("/api/register", async (req, res) => {
+
+  const { username, email, password, plan } = req.body;
+
+  console.log(username, email);
+
+  // save to database
+});
 </script>
 
   <!-- PROFILE -->
