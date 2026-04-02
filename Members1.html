@@ -280,7 +280,7 @@ function is StrongPassword(password) {
     error.textContent = "Passwords do not match";
     return;
   }
-          fetch("/api/register", {
+const res = await fetch("/api/register", {
   method: "POST",
   credentials: "include",
   headers: { "Content-Type": "application/json" },
