@@ -390,7 +390,14 @@ events.forEach(event => {
 </div>
 
   <script>
+app.post("/api/register", async (req, res) => {
 
+  const { username, email, password, plan } = req.body;
+
+  console.log(username, email);
+
+  // save to database
+});
     app.post("/api/events/:id/rsvp", requireLogin, (req, res) => {
   const eventId = req.params.id;
 
