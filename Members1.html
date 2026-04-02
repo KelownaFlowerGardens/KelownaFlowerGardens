@@ -221,7 +221,10 @@ button{
 <input id="username" name="username" autocomplete="username" autocorrect="off" autocapitalize="none" spellcheck="false" required>
  
 <label>Password</label>
-<input id="confirm" type="password" autocomplete="new-password" required>
+<input id="password" type="password" autocomplete="new-password" required>
+
+ <label>Confirm Password</label>
+<input id="confirm" type="password" required>
      
 <small id="passwordHelp" style="color:#666">
   Minimum 8 characters, including uppercase, lowercase, number, and symbol
@@ -242,11 +245,6 @@ passwordInput.addEventListener("input", () => {
 });
 </script>
 
-
-
-<label>Confirm Password</label>
-<input id="confirm" type="password" required>
-
   <!-- PROFILE -->
   <label>Email</label>
   <input id="email" type="email" required>
@@ -258,7 +256,7 @@ passwordInput.addEventListener("input", () => {
   </select>
 
      <script>
-function isStrongPassword(password) {
+function is StrongPassword(password) {
   const strongRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
   return strongRegex.test(password);
