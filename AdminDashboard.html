@@ -444,8 +444,58 @@ button{
 </a>
 
     <button onclick="deleteMsg(id)">🗑</button>
-<button onclick="muteUser(userId)">🔇</button>
+  <script>
+async function deleteMsg(id) {
+  if (!confirm("Delete this message?")) return;
 
+  try {
+    const res = await fetch(`/api/admin/messages/${id}`, {
+      method: "DELETE",
+      credentials: "include"
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Failed to delete message");
+      return;
+    }
+
+    // Remove message from UI
+    const msgEl = document.getElementById(`msg-${id}`);
+    if (msgEl) msgEl.remove();
+
+  } catch (err) {
+    console.error("Delete error:", err);
+    alert("Server error while deleting message");
+  }
+}
+  </script>
+<button onclick="muteUser(userId)">🔇</button>
+<script>
+  async function muteUser(userId) {
+  if (!confirm("Mute this user?")) return;
+
+  try {
+    const res = await fetch(`/api/admin/users/${userId}/mute`, {
+      method: "POST",
+      credentials: "include"
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Failed to mute user");
+      return;
+    }
+
+    alert("User muted successfully");
+
+  } catch (err) {
+    console.error("Mute error:", err);
+    alert("Server error while muting user");
+  }
+}</script>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
