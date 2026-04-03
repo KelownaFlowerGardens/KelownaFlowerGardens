@@ -2436,6 +2436,7 @@ app.get("/login/:username", (req, res) => {
     const { Server } = require("socket.io");
     const session = require("express-session");
     const sqlite3 = require("sqlite3").verbose();
+   const db = new sqlite3.Database("./database.sqlite");
     const path = require("path");
     
     const app = express();
