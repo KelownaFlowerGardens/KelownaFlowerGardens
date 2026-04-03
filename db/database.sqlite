@@ -37,13 +37,13 @@ CREATE TABLE IF NOT EXISTS payments (
 
 
 SELECT
-  id,
-  username,
-  email,
-  membership_status,
-  waiverAccepted,
-  is_admin,
-  created_at
+m.name,
+m.email,
+m.username,
+m.active,
+m.paid,
+m.waiverAccepted,
+m.created_at
 FROM users
 ORDER BY created_at DESC;
 
