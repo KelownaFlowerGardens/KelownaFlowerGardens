@@ -2437,6 +2437,9 @@ app.get("/login/:username", (req, res) => {
     const session = require("express-session");
     const sqlite3 = require("sqlite3").verbose();
    const db = new sqlite3.Database("./database.sqlite");
+  db.all("SELECT * FROM users", (err, rows) => {
+  res.json(rows);
+});
     const path = require("path");
     
     const app = express();
