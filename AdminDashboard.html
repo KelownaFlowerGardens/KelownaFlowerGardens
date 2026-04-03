@@ -654,9 +654,9 @@ loadMembers();
   
  async function loadMembers(){
 
-  const res = await fetch("/api/admin/members", {
-    credentials: "include"
-  });
+   const res = await fetch("/api/admin/members", {
+  credentials: "include"
+});
 
   const members = await res.json();
 
