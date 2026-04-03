@@ -471,17 +471,16 @@ button{
   <button onclick="setHostStatus(3, 'approved')">Approve</button>
 <button onclick="setHostStatus(3, 'rejected')">Reject</button>
   
-
-  <script>
     '<td>
   <canvas id="qr-${r.id}"></canvas>
+    </td>
   <script>
     QRCode.toCanvas(
       document.getElementById("qr-${r.id}"),
       `${window.location.origin}/api/checkin?rsvp=${r.id}&token=${r.checkin_token}`
     );
 
-</td>
+</script>
 
 async function loadEvents() {
   const res = await fetch("/api/admin/events", {
