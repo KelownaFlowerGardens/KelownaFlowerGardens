@@ -62,9 +62,7 @@ ALTER TABLE users ADD COLUMN name TEXT;
 ALTER TABLE users
 ADD COLUMN show_public BOOLEAN DEFAULT true;
 
-
-ALTER TABLE users ADD COLUMN preference ENUM('email','text') DEFAULT 'email';
-
+ALTER TABLE members ADD COLUMN preference TEXT DEFAULT 'email';
 ALTER TABLE users
 ADD reset_token VARCHAR(64),
 ADD reset_expires BIGINT;
