@@ -652,11 +652,31 @@ loadMembers();
 
 <script>
   
-  
-async function loadHosts() {
-  const res = await     fetch("/api/admin/members", { credentials: "include" }), {
+ async function loadMembers(){
+
+  const res = await fetch("/api/admin/members", {
     credentials: "include"
   });
+
+  const members = await res.json();
+
+  const tbody = document.querySelector("#membersTable tbody");
+  tbody.innerHTML = "";
+
+  members.forEach(m => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.email}</td>
+        <td>${m.username}</td>
+        <td>${m.active ? "Active" : "Inactive"}</td>
+        <td>${m.paid ? "Yes" : "No"}</td>
+      </tr>
+    `;
+  });
+
+} 
+
   const hosts = await res.json();
 
   const list = document.getElementById("list");
