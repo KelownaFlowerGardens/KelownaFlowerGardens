@@ -530,7 +530,6 @@ async function deleteMsg(id) {
       `${window.location.origin}/api/checkin?rsvp=${r.id}&token=${r.checkin_token}`
     );
 
-</script>
 
 async function loadEvents() {
   const res = await fetch("/api/admin/events", {
@@ -582,7 +581,7 @@ async function loadRSVPs(eventId) {
       </tr>
     `;
   });
-
+<script>
   document.getElementById("downloadCsv").href =
     `/api/admin/events/${eventId}/rsvps.csv`;
 }
@@ -604,14 +603,14 @@ document.getElementById("eventSelect")
 
 loadEvents();
 
-
+<div id="content"></div>
 
 async function loadSection(section) {
   const res = await fetch(`/admin/sections/${section}.html`);
   const html = await res.text();
 
   document.getElementById("content").innerHTML = html;
-
+  
   if (window[`init_${section}`]) {
     window[`init_${section}`]();
   }
