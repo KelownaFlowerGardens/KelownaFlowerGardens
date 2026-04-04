@@ -1428,7 +1428,7 @@ app.get("/MembersDashboard.html",
   requireAuth,
   requireWaiverAccepted,
   (req, res) => {
-    res.sendFile(__dirname + "/public/MembersDashboard.html");
+    res.sendFile(__dirname + "/MembersDashboard.html");
   }
 );
 function requireWaiverAccepted(req, res, next) {
