@@ -1248,7 +1248,7 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
   const { eventId } = req.body;
 
   db.get(
-    `SELECT name, email FROM members WHERE id = ?`,
+    `SELECT name, email FROM users WHERE id = ?`,
     [req.session.userId],
     (err, member) => {
 
@@ -1342,7 +1342,7 @@ document.getElementById("continueBtn").onclick = async () => {
 
 app.post("/api/member/accept-waiver", requireLogin, (req, res) => {
   db.get(
-    "SELECT name, email FROM members WHERE id = ?",
+    "SELECT name, email FROM users WHERE id = ?",
     [req.session.userId],
     (err, member) => {
       if (err || !member) {
