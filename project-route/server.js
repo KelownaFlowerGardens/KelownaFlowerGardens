@@ -444,7 +444,7 @@ app.post("/api/host-signup", upload.single("image"), (req, res) => {
 
 app.post("/api/member/accept-waiver", requireLogin, (req, res) => {
   db.run(
-    "UPDATE members SET waiverAccepted = 1 WHERE id = ?",
+    "UPDATE users SET waiverAccepted = 1 WHERE id = ?",
     [req.session.userId],
     err => {
       if (err) {
@@ -486,7 +486,7 @@ app.post("/api/paypal/capture", async (req, res) => {
 
   if (order.status === "COMPLETED") {
     await db.query(
-      "UPDATE members SET payment_status='paid' WHERE id=?",
+      "UPDATE users SET payment_status='paid' WHERE id=?",
       [req.session.userId]
     );
 
