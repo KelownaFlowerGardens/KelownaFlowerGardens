@@ -2510,7 +2510,7 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// Dummy login check middleware
+// login check middleware
 function requireMember(req, res, next) {
   if (req.session.user && req.session.user.paid) {
     next();
@@ -2560,25 +2560,25 @@ app.get("/login/:username", (req, res) => {
     app.use(express.static("public"));
     app.use(express.json());
     
-    // Dummy login route
+    //  login route
     app.get("/login/:username", (req, res) => {
       req.session.user = { username: req.params.username, paid: true, avatar: "/avatars/default.png" };
       res.send("Logged in as " + req.params.username);
     });
     
     // Middleware to protect members
-    function requireMember(req, res, next) {
+    function requireUser(req, res, next) {
       if (req.session.user && req.session.user.paid) return next();
       res.status(401).send("Unauthorized");
     }
     
     // Serve dashboard
-    app.get("/dashboard", requireMember, (req, res) => {
+    app.get("/dashboard", requireUser, (req, res) => {
       res.sendFile(path.join(__dirname, "public/dashboard.html"));
     });
     
     // API: get last 50 messages
-    app.get("/api/messages/:room", requireMember, (req, res) => {
+    app.get("/api/messages/:room", requireUser, (req, res) => {
       const room = req.params.room;
       db.all("SELECT * FROM messages WHERE room=? ORDER BY id DESC LIMIT 50", [room], (err, rows) => {
         if (err) return res.status(500).send(err);
@@ -2685,17 +2685,17 @@ app.use(express.json());
 app.post("/api/login", (req, res) => {
   const { username } = req.body;
   // Example: fetch member from your DB
-  const member = {
+  const user = {
     username,
     paid: true,
     avatar: "/avatars/default.png" // replace with member avatar from DB
   };
-  req.session.user = member;
-  res.json({ success: true, user: member });
+  req.session.user = user;
+  res.json({ success: true, user: user });
 });
 
 // Middleware to protect members
-function requireMember(req, res, next) {
+function requireUser(req, res, next) {
   if
     
   app.get("/api/session", (req, res) => {
@@ -2706,7 +2706,7 @@ function requireMember(req, res, next) {
     }
   });
 // Store online users in memory
-const onlineMembers = new Map(); // socket.id => { username, avatar }
+const onlineUsers = new Map(); // socket.id => { username, avatar }
 
 io.on("connection", (socket) => {
   const sessionUser = socket.request.session.user;
@@ -2715,9 +2715,9 @@ io.on("connection", (socket) => {
   const username = sessionUser.username;
   const avatar = sessionUser.avatar;
 
-  // Track online members
+  // Track online users
   onlineMembers.set(socket.id, { username, avatar });
-  io.emit("updateMembers", Array.from(onlineMembers.values())); // broadcast member list
+  io.emit("updateUsers", Array.from(onlineUsers.values())); // broadcast member list
 
   // Join default "general" room
   const room = "general";
@@ -2757,8 +2757,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    onlineMembers.delete(socket.id);
-    io.emit("updateMembers", Array.from(onlineMembers.values())); // update list
+    onlineUsers.delete(socket.id);
+    io.emit("updateUsers", Array.from(onlineUsers.values())); // update list
     socket.to(room).emit("message", {
       username: "System",
       avatar: "",
@@ -2768,7 +2768,7 @@ io.on("connection", (socket) => {
   });
 });
 const io = require("socket.io")(server);
-const onlineMembers = {};
+const onlineUsers = {};
 
 io.use((socket, next) => {
   const { username, avatar } = socket.handshake.auth;
@@ -2780,7 +2780,7 @@ io.use((socket, next) => {
 
 io.on("connection", socket => {
   onlineMembers[socket.username] = { avatar: socket.avatar, socketId: socket.id };
-  io.emit("updateMembers", Object.keys(onlineMembers).map(u => ({ username:u, avatar:onlineMembers[u].avatar })));
+  io.emit("updateUsers", Object.keys(onlineUsers).map(u => ({ username:u, avatar:onlineUsers[u].avatar })));
 
   socket.on("chatMessage", ({ text, room }) => {
     const timestamp = new Date().toLocaleTimeString();
@@ -2790,12 +2790,12 @@ io.on("connection", socket => {
   socket.on("startPrivateChat", targetUsername => {
     const room = [socket.username, targetUsername].sort().join("#");
     socket.join(room);
-    if(onlineMembers[targetUsername]) io.sockets.sockets.get(onlineMembers[targetUsername].socketId).join(room);
+    if(onlineUsers[targetUsername]) io.sockets.sockets.get(onlineUsers[targetUsername].socketId).join(room);
   });
 
   socket.on("disconnect", () => {
-    delete onlineMembers[socket.username];
-    io.emit("updateMembers", Object.keys(onlineMembers).map(u => ({ username:u, avatar:onlineMembers[u].avatar })));
+    delete onlineUsers[socket.username];
+    io.emit("updateUsers", Object.keys(onlineUsers).map(u => ({ username:u, avatar:onlineUsers[u].avatar })));
   });
 });
 const express = require("express");
@@ -2835,23 +2835,23 @@ io.on("connection", (socket) => {
   // Handle avatar update
   socket.on("updateAvatar", ({ avatarUrl }) => {
     socket.avatar = avatarUrl;
-    // Broadcast updated member list to all clients
+    // Broadcast updated User list to all clients
     const members = Array.from(io.sockets.sockets.values()).map(s => ({
       username: s.username,
       avatar: s.avatar
     }));
-    io.emit("updateMembers", members);
+    io.emit("updateUsers", members);
   });
 
   // existing chat events...
 });
-socket.on("updateMembers", members => {
+socket.on("updateUsers", Users => {
   membersContainer.innerHTML = "";
-  members.forEach(member => {
+  members.forEach(user => {
     if (member.username === username) return;
     const div = document.createElement("div");
-    div.className = "memberItem";
-    div.innerHTML = `<img src="${member.avatar || '/default-avatar.png'}" class="msgAvatar"> ${member.username}`;
+    div.className = "userItem";
+    div.innerHTML = `<img src="${user.avatar || '/default-avatar.png'}" class="msgAvatar"> ${user.username}`;
     div.onclick = () => {
       currentRoom = [username, member.username].sort().join("#");
       socket.emit("startPrivateChat", member.username);
@@ -2860,16 +2860,16 @@ socket.on("updateMembers", members => {
     membersContainer.appendChild(div);
   });
 });
-const onlineMembers = new Map(); // memberId → { username, avatar }
+const onlineUsers = new Map(); // userId → { username, avatar }
 io.on("connection", (socket) => {
 
   socket.on("auth", ({ memberId, username, avatar }) => {
-    socket.memberId = memberId;
+    socket.userId = userId;
     socket.username = username;
     socket.avatar = avatar;
 
-    onlineMembers.set(memberId, { username, avatar });
-    io.emit("updateMembers", Array.from(onlineUsers.values()));
+    onlineUsers.set(userId, { username, avatar });
+    io.emit("updateUsers", Array.from(onlineUsers.values()));
   });
   socket.on("updateAvatar", async ({ avatarUrl }) => {
     socket.avatar = avatarUrl;
@@ -2882,11 +2882,11 @@ io.on("connection", (socket) => {
   
     // Broadcast avatar update
     io.emit("avatarUpdated", {
-      MemberId: socket.MemberId,
+      UserId: socket.UserId,
       avatar: avatarUrl
     });
   
-    io.emit("updateMembers", Array.from(onlineUsers.values()));
+    io.emit("updateUsers", Array.from(onlineUsers.values()));
   });
   socket.on("chatMessage", ({ text, room }) => {
     const msg = {
@@ -2899,15 +2899,15 @@ io.on("connection", (socket) => {
     io.to(room).emit("message", msg);
   });
   const avatarCache = {};
-  socket.on("updateMembers", members => {
+  socket.on("updateUsers", members => {
     members.forEach(m => {
-      avatarCache[m.MemberId] = m.avatar;
+      avatarCache[m.UserId] = m.avatar;
     });
   });
   function renderMessage(msg) {
     const div = document.createElement("div");
     div.className = "message";
-    div.dataset.MemberId = msg.userId;
+    div.dataset.UserId = msg.userId;
   
     const avatar = avatarCache[msg.userId] || "/default-avatar.png";
   
