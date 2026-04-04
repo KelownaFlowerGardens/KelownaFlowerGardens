@@ -1,6 +1,16 @@
 // server.js
 
+app.get("/api/admin/members", (req,res)=>{
 
+  const users = db.prepare(`
+    SELECT id, username, email, status, created_at
+    FROM users
+    ORDER BY created_at DESC
+  `).all();
+
+  res.json(users);
+
+});
 
 const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
