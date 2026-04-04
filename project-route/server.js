@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS rsvps (
 `).run();
 
   db.prepare(`
-CREATE TABLE IF NOT EXISTS members (
+CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT,
   email TEXT UNIQUE NOT NULL,
@@ -307,11 +307,11 @@ app.post("/api/paypal/verify", requireLogin, async (req, res) => {
   }
 
   db.prepare(`
-    UPDATE members
+    UPDATE users
     SET paid = 1,
         membership_status = 'active'
     WHERE id = ?
-  `).run(req.session.memberId);
+  `).run(req.session.userId);
 
   res.json({ success: true });
 });
@@ -386,7 +386,7 @@ db.prepare(`
   )
 `).run();
 
-app.post("/api/admin/delete-member", requireAdmin, (req, res) => {
+app.post("/api/admin/delete-user", requireAdmin, (req, res) => {
   const { id } = req.body;
 
   db.prepare("DELETE FROM users WHERE id = ?").run(id);
@@ -394,7 +394,7 @@ app.post("/api/admin/delete-member", requireAdmin, (req, res) => {
   res.json({ success: true });
 });
 
-app.post("/api/admin/toggle-member", requireAdmin, (req, res) => {
+app.post("/api/admin/toggle-user", requireAdmin, (req, res) => {
   const { id } = req.body;
 
   db.prepare(`
@@ -406,7 +406,7 @@ app.post("/api/admin/toggle-member", requireAdmin, (req, res) => {
   res.json({ success: true });
 });
 
-app.get("/api/admin/members", requireAdmin, (req, res) => {
+app.get("/api/admin/users", requireAdmin, (req, res) => {
   const members = db.prepare(`
     SELECT id, name, email, username, active, paid, created_at
     FROM users
