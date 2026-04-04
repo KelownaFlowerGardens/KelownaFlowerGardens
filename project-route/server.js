@@ -2282,7 +2282,7 @@ const db = new Database("db.sqlite");
 
 // ----- Create users table if missing -----
 db.prepare(`
-  CREATE TABLE IF NOT EXISTS members (
+  CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE,
     email TEXT UNIQUE,
@@ -2478,7 +2478,7 @@ sendBtn.addEventListener("click", () => {
   chatInput.value = "";
   renderMessages();
 
-  // Simulate other members response (placeholder)
+  // Simulate other users response (placeholder)
   setTimeout(() => {
     messages.push({ text: "Member response: " + text, self: false });
     renderMessages();
@@ -2705,7 +2705,7 @@ function requireMember(req, res, next) {
       res.status(401).json({ loggedIn: false });
     }
   });
-// Store online members in memory
+// Store online users in memory
 const onlineMembers = new Map(); // socket.id => { username, avatar }
 
 io.on("connection", (socket) => {
