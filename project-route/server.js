@@ -1872,7 +1872,7 @@ const db = new SQLite("members.db");
 
 // Create table if it doesn't exist
 db.prepare(`
-  CREATE TABLE IF NOT EXISTS members (
+  CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
@@ -1897,7 +1897,7 @@ app.post("/api/signup", async (req, res) => {
 
   try {
     db.prepare(`
-      INSERT INTO members (name, email, username, password)
+      INSERT INTO users (name, email, username, password)
       VALUES (?, ?, ?, ?)
     `).run(name, email, username, hashed);
 
@@ -1925,7 +1925,7 @@ app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
 
   const user = db.prepare(`
-    SELECT * FROM members WHERE username = ?
+    SELECT * FROM users WHERE username = ?
   `).get(username);
 
   if (!user) {
@@ -1993,7 +1993,7 @@ app.get("/api/admin/members", requireAdmin, async (req, res) => {
   res.json(result.rows);
 });
 
-app.get("/api/admin/members.csv", requireAdmin, async (req, res) => {
+app.get("/api/admin/users.csv", requireAdmin, async (req, res) => {
   const result = await db.query(`
     SELECT 
       name,
@@ -2054,7 +2054,7 @@ function requireAdmin(req, res, next) {
   next();
 }
 
-app.get("/api/admin/members", requireAdmin, (req, res) => {
+app.get("/api/admin/users", requireAdmin, (req, res) => {
   // admin data
 });
 
@@ -2073,7 +2073,7 @@ app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
 
   db.get(
-    "SELECT * FROM members WHERE username = ?",
+    "SELECT * FROM users WHERE username = ?",
     [username],
     async (err, user) => {
       if (!user) {
@@ -2103,7 +2103,7 @@ app.post("/api/password-reset-request", async (req, res) => {
   const { email } = req.body;
 
   const user = db.prepare(
-    "SELECT * FROM members WHERE email = ?"
+    "SELECT * FROM users WHERE email = ?"
   ).get(email);
 
   if (!user) {
@@ -2114,7 +2114,7 @@ app.post("/api/password-reset-request", async (req, res) => {
   const expires = Date.now() + 3600000; // 1 hour
 
   db.prepare(`
-    UPDATE members
+    UPDATE users
     SET reset_token = ?, reset_expires = ?
     WHERE email = ?
   `).run(token, expires, email);
@@ -2153,7 +2153,7 @@ app.post("/api/password-reset", async (req, res) => {
   const { token, newPassword } = req.body;
 
   const user = db.prepare(`
-    SELECT * FROM members
+    SELECT * FROM users
     WHERE reset_token = ?
     AND reset_expires > ?
   `).get(token, Date.now());
@@ -2165,7 +2165,7 @@ app.post("/api/password-reset", async (req, res) => {
   const hashed = await bcrypt.hash(newPassword, 10);
 
   db.prepare(`
-    UPDATE members
+    UPDATE users
     SET password = ?, reset_token = NULL, reset_expires = NULL
     WHERE id = ?
   `).run(hashed, user.id);
@@ -2217,7 +2217,7 @@ fetch("/api/session", {
     <div class="avatar-menu" id="avatarMenu">
       <a href="MembersDashboard.html">Dashboard</a>
       <a href="Profile.html">My Profile</a>
-      <a href="#" id="logoutBtn">Log Out</a>
+      <a href="Loggedout.html" id="logoutBtn">Log Out</a>
     </div>
   `;
 
@@ -2247,7 +2247,7 @@ app.post("/api/password-reset-request", async (req, res) => {
   const { email } = req.body;
 
   const user = db.prepare(
-    "SELECT * FROM members WHERE email = ?"
+    "SELECT * FROM users WHERE email = ?"
   ).get(email);
 
   if (!user) {
