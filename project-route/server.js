@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS rsvps (
   checkin_token TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-  FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
 
   UNIQUE(user_id, event_id)
@@ -145,14 +145,14 @@ function sendEventReminders() {
     const attendees = db.prepare(`
       SELECT u.email, u.name
       FROM rsvps r
-      JOIN users u ON u.id = r.member_id
+      JOIN users u ON u.id = r.user_id
       WHERE r.event_id = ?
       AND r.waitlisted = 0
     `).all(event.id);
 
     attendees.forEach(user => {
       transporter.sendMail({
-        from: process.env.EMAIL_MEMBER,
+        from: process.env.EMAIL_USER,
         to: user.email,
         subject: `Reminder: ${event.title} Tomorrow`,
         html: `
@@ -178,7 +178,7 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_MEMBER,
+    user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   }
 });
@@ -225,7 +225,7 @@ const token = crypto.randomBytes(24).toString("hex");
 db.prepare(`
   INSERT INTO rsvps (user_id, event_id, checkin_token)
   VALUES (?, ?, ?)
-`).run(memberId, eventId, token);
+`).run(userId, eventId, token);
 
 
 app.get("/api/admin/events/:id/rsvp-analytics", requireAdmin, (req, res) => {
@@ -413,7 +413,7 @@ app.get("/api/admin/users", requireAdmin, (req, res) => {
     ORDER BY created_at DESC
   `).all();
 
-  res.json(members);
+  res.json(users);
 });
 
 
@@ -442,7 +442,7 @@ app.post("/api/host-signup", upload.single("image"), (req, res) => {
   });
   
 
-app.post("/api/member/accept-waiver", requireLogin, (req, res) => {
+app.post("/api/user/accept-waiver", requireLogin, (req, res) => {
   db.run(
     "UPDATE users SET waiverAccepted = 1 WHERE id = ?",
     [req.session.userId],
@@ -612,7 +612,7 @@ sendEmail(user.email, `
     const { orderID, userID } = req.body;
     const capture = await paypalClient.orders.capture(orderID);
     if(capture.status === 'COMPLETED'){
-        await db.members.update({ paid:true }, { where: { id:userID } });
+        await db.users.update({ paid:true }, { where: { id:userID } });
         // Send email/SMS
         sendEmail(userID, "Membership payment confirmed");
         sendSMS(userID, "Membership payment confirmed");
@@ -622,7 +622,7 @@ sendEmail(user.email, `
     }
 });
 // On refund
-db.members.update({ paid:false }, { where:{ id:userID }});
+db.users.update({ paid:false }, { where:{ id:userID }});
 sendEmail(userID, "Membership refunded — access removed");
 
 function submitSignup(){
@@ -678,7 +678,7 @@ app.get("/api/payment/session", (req, res) => {
   res.json({ ok: true });
 });
 
-app.get("/api/members", async (req,res)=>{
+app.get("/api/users", async (req,res)=>{
   const [rows] = await db.query(`
     SELECT username, full_name, location, bio, avatar
     FROM users
@@ -712,7 +712,7 @@ DB: pending = true, paid = false
 
 
 // On refund
-db.members.update({ paid:false }, { where:{ id:userID }});
+db.users.update({ paid:false }, { where:{ id:userID }});
 sendEmail(userID, "Membership refunded — access removed");
 
 
@@ -721,7 +721,7 @@ app.post('/api/paypal-verify', async (req, res) => {
   const { orderID, userID } = req.body;
   const capture = await paypalClient.orders.capture(orderID);
   if(capture.status === 'COMPLETED'){
-      await db.members.update({ paid:true }, { where: { id:userID } });
+      await db.users.update({ paid:true }, { where: { id:userID } });
       // Send email/SMS
       sendEmail(userID, "Membership payment confirmed");
       sendSMS(userID, "Membership payment confirmed");
@@ -748,7 +748,7 @@ app.post("/api/reset-password", async (req, res) => {
   const hash = await bcrypt.hash(password, 12);
 
   await db.query(
-    `UPDATE members
+    `UPDATE users
      SET password=?, reset_token=NULL, reset_expires=NULL
      WHERE id=?`,
     [hash, user.id]
@@ -898,8 +898,8 @@ io.on("connection", socket => {
   // Join private room for direct messages
   socket.join(username);
 
-  // Broadcast updated member list
-  io.emit("members", getMembers());
+  // Broadcast updated user list
+  io.emit("users", getUsers());
 
   socket.on("chatMessage", msg => {
     io.to(msg.room).emit("chatMessage", {
@@ -918,11 +918,11 @@ io.on("connection", socket => {
 
   socket.on("disconnect", () => {
     onlineUsers.delete(socket.id);
-    io.emit("members", getMembers());
+    io.emit("users", getUsers());
   });
 });
 
-function getMembers() {
+function getUsers() {
   const unique = [...new Set(onlineUsers.values())];
   return unique.map(u => ({ username: u, online: true }));
 }
@@ -951,7 +951,7 @@ io.on("connection", socket => {
   onlineUsers.set(socket.id, { username });
   socket.join(username);
 
-  io.emit("members", getMembers());
+  io.emit("users", getUsers());
 
   socket.on("chatMessage", msg => {
     io.to(msg.room).emit("chatMessage", msg);
@@ -967,14 +967,14 @@ io.on("connection", socket => {
 
   socket.on("disconnect", () => {
     onlineUsers.delete(socket.id);
-    io.emit("members", getMembers());
+    io.emit("users", getUsers());
   });
 });
 
 /* =========================
    HELPERS
 ========================= */
-function getMembers() {
+function getUsers() {
   const names = {};
   for (const { username } of onlineUsers.values()) {
     names[username] = true;
@@ -1056,7 +1056,7 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
       }
 
       db.run(
-        `INSERT OR IGNORE INTO rsvps (member_id, event_id)
+        `INSERT OR IGNORE INTO rsvps (user_id, event_id)
          VALUES (?, ?)`,
         [userId, eventId],
         () => res.json({ success: true })
@@ -1125,7 +1125,7 @@ app.post("/api/sms/stop", (req,res)=>{
 
 SELECT m.phone
 FROM rsvps r
-JOIN users m ON m.id = r.member_id
+JOIN users m ON m.id = r.user_id
 WHERE m.sms_opt_in = 1
   AND m.phone IS NOT NULL;
 
@@ -1197,7 +1197,7 @@ if (res.status === 202) {
 if (event.capacity > 0 && event.count >= event.capacity) {
 
   db.run(
-    `INSERT OR IGNORE INTO waitlist (member_id, event_id)
+    `INSERT OR IGNORE INTO waitlist (user_id, event_id)
      VALUES (?, ?)`,
     [req.session.userId, eventId]
   );
@@ -1232,7 +1232,7 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
       }
 
       db.run(
-        `INSERT OR IGNORE INTO rsvps (member_id, event_id)
+        `INSERT OR IGNORE INTO rsvps (user_id, event_id)
          VALUES (?, ?)`,
         [req.session.userId, eventId],
         err => {
@@ -1292,7 +1292,7 @@ app.get("/api/admin/rsvps/:eventId", requireAdmin, (req, res) => {
   db.all(
     `SELECT m.name, m.email, r.created_at
      FROM rsvps r
-     JOIN users m ON m.id = r.member_id
+     JOIN users m ON m.id = r.user_id
      WHERE r.event_id = ?`,
     [req.params.eventId],
     (err, rows) => {
@@ -1306,7 +1306,7 @@ app.post("/api/rsvp/cancel", requireLogin, (req, res) => {
   const { eventId } = req.body;
 
   db.run(
-    `DELETE FROM rsvps WHERE member_id = ? AND event_id = ?`,
+    `DELETE FROM rsvps WHERE user_id = ? AND event_id = ?`,
     [req.session.userId, eventId],
     err => {
       if (err) return res.status(500).json({ error: "Cancel failed" });
@@ -1319,7 +1319,7 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
   const { eventId } = req.body;
 
   db.run(
-    `INSERT OR IGNORE INTO rsvps (member_id, event_id)
+    `INSERT OR IGNORE INTO rsvps (user_id, event_id)
      VALUES (?, ?)`,
     [req.session.userId, eventId],
     err => {
@@ -1330,7 +1330,7 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
 });
 
 document.getElementById("continueBtn").onclick = async () => {
-  const res = await fetch("/api/member/accept-waiver", {
+  const res = await fetch("/api/user/accept-waiver", {
     method: "POST",
     credentials: "include"
   });
@@ -1340,7 +1340,7 @@ document.getElementById("continueBtn").onclick = async () => {
   }
 };
 
-app.post("/api/member/accept-waiver", requireLogin, (req, res) => {
+app.post("/api/user/accept-waiver", requireLogin, (req, res) => {
   db.get(
     "SELECT name, email FROM users WHERE id = ?",
     [req.session.userId],
@@ -1396,7 +1396,7 @@ const transporter = nodemailer.createTransport({
 });
 
 document.getElementById("continueBtn").onclick = async () => {
-  const res = await fetch("/api/member/accept-waiver", {
+  const res = await fetch("/api/user/accept-waiver", {
     method: "POST",
     credentials: "include"
   });
@@ -1409,7 +1409,7 @@ document.getElementById("continueBtn").onclick = async () => {
 };
 
 app.get(
-  "/api/member/dashboard",
+  "/api/user/dashboard",
   requireLogin,
   requireWaiverAccepted,
   (req, res) => {
@@ -1493,7 +1493,7 @@ app.post("/api/user-selection", async (req, res) => {
     to: "admin@kelownaflowergardens.com",
     subject: "New Member Selection",
     text: `
-Member: ${name}
+User: ${name}
 Email: ${email}
 
 Selections:
@@ -1639,7 +1639,7 @@ const Database = require("better-sqlite3");
 const cors = require("cors");
 
 const app = express();
-const db = new Database("members.db");
+const db = new Database("users.db");
 
 app.use(cors({
   origin: "https://www.kelownaflowergardens.com",
@@ -1868,7 +1868,7 @@ app.use(session({
 }));
 
 // ------------------ DATABASE ------------------
-const db = new SQLite("members.db");
+const db = new SQLite("users.db");
 
 // Create table if it doesn't exist
 db.prepare(`
@@ -1978,7 +1978,7 @@ function requireAdmin(req, res, next){
   next();
 }
 
-app.get("/api/admin/members", requireAdmin, async (req, res) => {
+app.get("/api/admin/users", requireAdmin, async (req, res) => {
   const result = await db.query(`
     SELECT 
       name,
@@ -2258,7 +2258,7 @@ app.post("/api/password-reset-request", async (req, res) => {
   const expires = Date.now() + 3600000; // 1 hour
 
   db.prepare(`
-    UPDATE members
+    UPDATE users
     SET reset_token = ?, reset_expires = ?
     WHERE email = ?
   `).run(token, expires, email);
@@ -2503,7 +2503,7 @@ const io = new Server(server);
 
 app.use(express.static("public")); // serve HTML/CSS/JS files
 
-// Session setup (for member authentication)
+// Session setup (for user authentication)
 app.use(session({
   secret: "supersecretkey",
   resave: false,
@@ -2511,7 +2511,7 @@ app.use(session({
 }));
 
 // login check middleware
-function requireMember(req, res, next) {
+function requireUser(req, res, next) {
   if (req.session.user && req.session.user.paid) {
     next();
   } else {
@@ -2566,7 +2566,7 @@ app.get("/login/:username", (req, res) => {
       res.send("Logged in as " + req.params.username);
     });
     
-    // Middleware to protect members
+    // Middleware to protect users
     function requireUser(req, res, next) {
       if (req.session.user && req.session.user.paid) return next();
       res.status(401).send("Unauthorized");
@@ -2684,17 +2684,17 @@ app.use(express.json());
 // Dummy login route (replace with your real authentication)
 app.post("/api/login", (req, res) => {
   const { username } = req.body;
-  // Example: fetch member from your DB
+  // Example: fetch user from your DB
   const user = {
     username,
     paid: true,
-    avatar: "/avatars/default.png" // replace with member avatar from DB
+    avatar: "/avatars/default.png" // replace with user avatar from DB
   };
   req.session.user = user;
   res.json({ success: true, user: user });
 });
 
-// Middleware to protect members
+// Middleware to protect users
 function requireUser(req, res, next) {
   if
     
@@ -2716,8 +2716,8 @@ io.on("connection", (socket) => {
   const avatar = sessionUser.avatar;
 
   // Track online users
-  onlineMembers.set(socket.id, { username, avatar });
-  io.emit("updateUsers", Array.from(onlineUsers.values())); // broadcast member list
+  onlineUsers.set(socket.id, { username, avatar });
+  io.emit("updateUsers", Array.from(onlineUsers.values())); // broadcast user list
 
   // Join default "general" room
   const room = "general";
@@ -2731,7 +2731,7 @@ io.on("connection", (socket) => {
     timestamp: new Date().toLocaleTimeString()
   });
 
-  // Private chat: socket joins a room with another member
+  // Private chat: socket joins a room with another user
   socket.on("startPrivateChat", (targetUsername) => {
     const privateRoom = [username, targetUsername].sort().join("#");
     socket.join(privateRoom);
@@ -2779,7 +2779,7 @@ io.use((socket, next) => {
 });
 
 io.on("connection", socket => {
-  onlineMembers[socket.username] = { avatar: socket.avatar, socketId: socket.id };
+  onlineUsers[socket.username] = { avatar: socket.avatar, socketId: socket.id };
   io.emit("updateUsers", Object.keys(onlineUsers).map(u => ({ username:u, avatar:onlineUsers[u].avatar })));
 
   socket.on("chatMessage", ({ text, room }) => {
@@ -2801,14 +2801,14 @@ io.on("connection", socket => {
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
-const { ensureAuthenticated, updateMemberAvatar } = require("/routes/auth.js"); // your auth
+const { ensureAuthenticated, updateUserAvatar } = require("/routes/auth.js"); // your auth
 
 const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: "/public/uploads/avatars/",
   filename: (req, file, cb) => {
-    cb(null, req.member.id + path.extname(file.originalname));
+    cb(null, req.user.id + path.extname(file.originalname));
   }
 });
 
@@ -2840,30 +2840,30 @@ io.on("connection", (socket) => {
       username: s.username,
       avatar: s.avatar
     }));
-    io.emit("updateUsers", members);
+    io.emit("updateUsers", users);
   });
 
   // existing chat events...
 });
 socket.on("updateUsers", Users => {
-  membersContainer.innerHTML = "";
-  members.forEach(user => {
-    if (member.username === username) return;
+  usersContainer.innerHTML = "";
+  users.forEach(user => {
+    if (user.username === username) return;
     const div = document.createElement("div");
     div.className = "userItem";
     div.innerHTML = `<img src="${user.avatar || '/default-avatar.png'}" class="msgAvatar"> ${user.username}`;
     div.onclick = () => {
-      currentRoom = [username, member.username].sort().join("#");
-      socket.emit("startPrivateChat", member.username);
+      currentRoom = [username, user.username].sort().join("#");
+      socket.emit("startPrivateChat", user.username);
       messagesDiv.innerHTML = "";
     };
-    membersContainer.appendChild(div);
+    usersContainer.appendChild(div);
   });
 });
 const onlineUsers = new Map(); // userId → { username, avatar }
 io.on("connection", (socket) => {
 
-  socket.on("auth", ({ memberId, username, avatar }) => {
+  socket.on("auth", ({ userId, username, avatar }) => {
     socket.userId = userId;
     socket.username = username;
     socket.avatar = avatar;
@@ -2900,7 +2900,7 @@ io.on("connection", (socket) => {
   });
   const avatarCache = {};
   socket.on("updateUsers", users => {
-    members.forEach(m => {
+    users.forEach(m => {
       avatarCache[m.UserId] = m.avatar;
     });
   });
@@ -2956,16 +2956,16 @@ io.on("connection", (socket) => {
     });
   
     socket.on("disconnect", () => {
-      if (socket.memberId) {
-        onlineMembers.delete(socket.userId);
+      if (socket.userId) {
+        onlineUsers.delete(socket.userId);
         io.emit("updateUsers", Array.from(onlineUsers.values()));
       }
     });
   });
   socket.on("updateUsers", users => {
-    membersContainer.innerHTML = "";
+    usersContainer.innerHTML = "";
   
-    members.forEach(m => {
+    users.forEach(m => {
       const div = document.createElement("div");
       div.className = "userItem";
       div.innerHTML = `
@@ -2973,7 +2973,7 @@ io.on("connection", (socket) => {
         <img src="${m.avatar}" class="msgAvatar">
         ${m.username}
       `;
-      membersContainer.appendChild(div);
+      usersContainer.appendChild(div);
     });
   });
   let unreadCount = 0;
@@ -3094,9 +3094,9 @@ io.on("connection", (socket) => {
 
   const mutedUsers = new Set();
 
-socket.on("adminMuteMember", userId => {
+socket.on("adminMuteUser", userId => {
   if (socket.role !== "admin") return;
-  mutedMembers.add(userId);
+  mutedUsers.add(userId);
 });
 
 self.addEventListener("push", event => {
@@ -3482,11 +3482,11 @@ io.on("connection", socket => {
 
   // Typing indicator
   socket.on("typing", (room) => {
-    socket.to(room).emit("memberTyping", username);
+    socket.to(room).emit("userTyping", username);
   });
 
   socket.on("stopTyping", (room) => {
-    socket.to(room).emit("memberStopTyping", username);
+    socket.to(room).emit("userStopTyping", username);
   });
 
   // Mark room as read
@@ -3717,7 +3717,7 @@ server.listen(3000, () => {
 });
 
 app.use("/uploads", express.static("uploads"));
-app.post("/api/member-selection", (req, res) => {
+app.post("/api/user-selection", (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ error: "Not logged in" });
   }
@@ -3726,7 +3726,7 @@ app.post("/api/member-selection", (req, res) => {
   const { id, name } = req.session.user;
 
   const stmt = db.prepare(`
-    INSERT INTO member_selections (member_id, member_name, selection)
+    INSERT INTO user_selections (user_id, user_name, selection)
     VALUES (?, ?, ?)
   `);
 
