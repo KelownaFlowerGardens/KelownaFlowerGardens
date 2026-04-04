@@ -97,8 +97,10 @@ store: new SQLiteStore({
 db.prepare(`CREATE INDEX IF NOT EXISTS idx_rsvps_user ON rsvps(user_id)`).run();
 db.prepare(`CREATE INDEX IF NOT EXISTS idx_events_date ON events(event_date)`).run();
 
-  db.prepare(`
-CREATE TABLE IF NOT EXISTS rsvps (
+
+
+  db.prepare(
+CREATE TABLE rsvps (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   event_id INTEGER NOT NULL,
@@ -107,12 +109,13 @@ CREATE TABLE IF NOT EXISTS rsvps (
   checkin_token TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (event_id) REFERENCES events(id),
 
   UNIQUE(user_id, event_id)
-)
-`).run();
+);
+
+).run();
 
   db.prepare(`
 CREATE TABLE IF NOT EXISTS users (
