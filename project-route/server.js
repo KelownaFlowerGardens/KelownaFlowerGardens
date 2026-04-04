@@ -1,6 +1,88 @@
 // server.js
 
 
+
+const session = require("express-session");
+const SQLiteStore = require("connect-sqlite3")(session);
+
+app.use(session({
+  store: new SQLiteStore({
+    db: "sessions.db",
+    dir: "./"
+  }),
+  secret: "supersecretkey",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24
+  }
+}));
+
+const session = require("express-session");
+const SQLiteStore = require("connect-sqlite3")(session);
+
+app.use(session({
+  store: new SQLiteStore({
+    db: "sessions.db",
+    dir: "./"
+  }),
+  secret: "supersecretkey",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 // 24 hours
+  }
+}));
+
+CREATE TABLE sessions (
+  sid TEXT PRIMARY KEY,
+  sess TEXT NOT NULL,
+  expire INTEGER NOT NULL
+);
+
+
+app.post("/api/login", (req, res) => {
+
+  const { username } = req.body;
+
+  // after verifying password
+  req.session.user = {
+    username: username,
+    isAdmin: true
+  };
+
+  res.json({ success: true });
+
+});
+
+function requireAdmin(req, res, next) {
+
+  if (!req.session.user || !req.session.user.isAdmin) {
+    return res.status(403).json({ error: "Unauthorized" });
+  }
+
+  next();
+}
+
+app.post("/api/admin/messages/:id/delete", requireAdmin, (req,res)=>{
+   // admin action
+});
+
+app.post("/api/logout", (req, res) => {
+
+  req.session.destroy(err => {
+    if (err) return res.status(500).json({ error: "Logout failed" });
+
+    res.clearCookie("connect.sid");
+    res.json({ success: true });
+  });
+
+});
+
+store: new SQLiteStore({
+  db: "sessions.db",
+  dir: "./",
+  ttl: 86400
   db.prepare(`CREATE INDEX IF NOT EXISTS idx_rsvps_event ON rsvps(event_id)`).run();
 db.prepare(`CREATE INDEX IF NOT EXISTS idx_rsvps_user ON rsvps(user_id)`).run();
 db.prepare(`CREATE INDEX IF NOT EXISTS idx_events_date ON events(event_date)`).run();
