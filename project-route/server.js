@@ -13,7 +13,7 @@ app.get("/api/admin/members", (req,res)=>{
 });
 
 const session = require("express-session");
-const SQLiteStore = require("connect-sqlite3")(session);
+const SQLiteStore = require("better-sqlite3-session-store")(session);
 
 app.use(session({
   store: new SQLiteStore({
@@ -29,7 +29,7 @@ app.use(session({
 }));
 
 const session = require("express-session");
-const SQLiteStore = require("connect-sqlite3")(session);
+const SQLiteStore = require("better-sqlite3-session-store")(session);
 
 app.use(session({
   store: new SQLiteStore({
@@ -515,7 +515,7 @@ app.get("/Payment.html", requireAuth);
 app.get("/MembersDashboard.html", requireAuth, requirePayment);
 
 
-import SQLiteStore from "connect-sqlite3";
+import SQLiteStore from "better-sqlite3-session-store";
 
 app.use(
   session({
