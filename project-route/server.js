@@ -407,7 +407,7 @@ app.post("/api/admin/toggle-user", requireAdmin, (req, res) => {
 });
 
 app.get("/api/admin/users", requireAdmin, (req, res) => {
-  const members = db.prepare(`
+  const users = db.prepare(`
     SELECT id, name, email, username, active, paid, created_at
     FROM users
     ORDER BY created_at DESC
@@ -641,7 +641,7 @@ DB: pending = true, paid = false
     username: username.value,
     email: email.value,
     plan: plan.value
-  UPDATE members SET paid = true, pending = false WHERE id = ?
+  UPDATE users SET paid = true, pending = false WHERE id = ?
   }));
 
 
@@ -736,7 +736,7 @@ app.post("/api/reset-password", async (req, res) => {
   const { token, password } = req.body;
 
   const users = await db.query(
-    "SELECT * FROM members WHERE reset_token=? AND reset_expires > ?",
+    "SELECT * FROM users WHERE reset_token=? AND reset_expires > ?",
     [token, Date.now()]
   );
 
