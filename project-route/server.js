@@ -1048,7 +1048,7 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
   const userId = req.session.userId;
 
   db.get(
-    "SELECT waiverAccepted FROM members WHERE id = ?",
+    "SELECT waiverAccepted FROM users WHERE id = ?",
     [userId],
     (err, row) => {
       if (!row || !row.waiverAccepted) {
