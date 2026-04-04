@@ -2899,7 +2899,7 @@ io.on("connection", (socket) => {
     io.to(room).emit("message", msg);
   });
   const avatarCache = {};
-  socket.on("updateUsers", members => {
+  socket.on("updateUsers", users => {
     members.forEach(m => {
       avatarCache[m.UserId] = m.avatar;
     });
@@ -3092,7 +3092,7 @@ io.on("connection", (socket) => {
     io.emit("messageDeleted", messageId);
   });
 
-  const mutedMembers = new Set();
+  const mutedUsers = new Set();
 
 socket.on("adminMuteMember", userId => {
   if (socket.role !== "admin") return;
@@ -3355,7 +3355,7 @@ function openRoom(room){
 }
 
 div.onclick = () => {
-  const room = [username, member.username].sort().join("#");
+  const room = [username, user.username].sort().join("#");
   openRoom(room);
 };
 socket.on("chatHistory", messages => {
