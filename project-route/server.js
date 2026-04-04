@@ -772,7 +772,7 @@ app.post("/api/request-password-reset", async (req, res) => {
   const { email } = req.body;
 
   const user = await db.query(
-    "SELECT id FROM members WHERE email = ?",
+    "SELECT id FROM users WHERE email = ?",
     [email]
   );
 
@@ -785,7 +785,7 @@ app.post("/api/request-password-reset", async (req, res) => {
   const expires = Date.now() + 1000 * 60 * 30; // 30 mins
 
   await db.query(
-    "UPDATE members SET reset_token=?, reset_expires=? WHERE email=?",
+    "UPDATE users SET reset_token=?, reset_expires=? WHERE email=?",
     [token, expires, email]
   );
 
@@ -1095,7 +1095,7 @@ cron.schedule("0 10 * * *", () => {
   db.all(`
     SELECT m.phone, e.title, e.date
     FROM rsvps r
-    JOIN members m ON m.id = r.member_id
+    JOIN users m ON m.id = r.user_id
     JOIN events e ON e.id = r.event_id
     WHERE date(e.date) = date('now','+1 day')
   `, (err, rows) => {
@@ -1117,7 +1117,7 @@ function sendSMS(to, msg) {
 
 app.post("/api/sms/stop", (req,res)=>{
   db.run(
-    "UPDATE members SET sms_opt_in = 0 WHERE phone = ?",
+    "UPDATE users SET sms_opt_in = 0 WHERE phone = ?",
     [req.body.From]
   );
 });
@@ -1125,7 +1125,7 @@ app.post("/api/sms/stop", (req,res)=>{
 
 SELECT m.phone
 FROM rsvps r
-JOIN members m ON m.id = r.member_id
+JOIN users m ON m.id = r.member_id
 WHERE m.sms_opt_in = 1
   AND m.phone IS NOT NULL;
 
@@ -1134,7 +1134,7 @@ app.post("/api/profile", requireLogin, (req, res) => {
   const { phone, sms_opt_in } = req.body;
 
   db.run(
-    `UPDATE members
+    `UPDATE users
      SET phone = ?, sms_opt_in = ?
      WHERE id = ?`,
     [phone || null, sms_opt_in ? 1 : 0, req.session.userId],
@@ -1170,7 +1170,7 @@ app.get("/api/admin/events/:id/rsvps.csv", requireAdmin, (req, res) => {
   db.all(
     `SELECT m.name, m.email, r.created_at
      FROM rsvps r
-     JOIN members m ON m.id = r.member_id
+     JOIN users m ON m.id = r.user_id
      WHERE r.event_id = ?`,
     [req.params.id],
     (err, rows) => {
@@ -1250,10 +1250,10 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
   db.get(
     `SELECT name, email FROM users WHERE id = ?`,
     [req.session.userId],
-    (err, member) => {
+    (err, user) => {
 
       db.run(
-        `INSERT OR IGNORE INTO rsvps (member_id, event_id)
+        `INSERT OR IGNORE INTO rsvps (user_id, event_id)
          VALUES (?, ?)`,
         [req.session.userId, eventId],
         err => {
@@ -1265,8 +1265,8 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
             subject: "🌸 New RSVP Received",
             html: `
               <h3>New RSVP</h3>
-              <p><strong>Name:</strong> ${member.name}</p>
-              <p><strong>Email:</strong> ${member.email}</p>
+              <p><strong>Name:</strong> ${user.name}</p>
+              <p><strong>Email:</strong> ${user.email}</p>
               <p><strong>Event ID:</strong> ${eventId}</p>
             `
           });
@@ -1292,7 +1292,7 @@ app.get("/api/admin/rsvps/:eventId", requireAdmin, (req, res) => {
   db.all(
     `SELECT m.name, m.email, r.created_at
      FROM rsvps r
-     JOIN members m ON m.id = r.member_id
+     JOIN users m ON m.id = r.member_id
      WHERE r.event_id = ?`,
     [req.params.eventId],
     (err, rows) => {
@@ -1344,13 +1344,13 @@ app.post("/api/member/accept-waiver", requireLogin, (req, res) => {
   db.get(
     "SELECT name, email FROM users WHERE id = ?",
     [req.session.userId],
-    (err, member) => {
-      if (err || !member) {
+    (err, user) => {
+      if (err || !user) {
         return res.status(500).json({ error: "Member not found" });
       }
 
       db.run(
-        "UPDATE members SET waiverAccepted = 1 WHERE id = ?",
+        "UPDATE users SET waiverAccepted = 1 WHERE id = ?",
         [req.session.userId],
         async err => {
           if (err) {
@@ -1365,8 +1365,8 @@ app.post("/api/member/accept-waiver", requireLogin, (req, res) => {
               subject: "New Waiver Accepted",
               html: `
                 <h3>Waiver Accepted</h3>
-                <p><strong>Name:</strong> ${member.name}</p>
-                <p><strong>Email:</strong> ${member.email}</p>
+                <p><strong>Name:</strong> ${user.name}</p>
+                <p><strong>Email:</strong> ${user.email}</p>
                 <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
               `
             });
@@ -1446,7 +1446,7 @@ function requireWaiverAccepted(req, res, next) {
 
 
   db.prepare(`
-    UPDATE members
+    UPDATE users
     SET waiverAccepted = 1,
         waiverAcceptedAt = CURRENT_TIMESTAMP
     WHERE id = ?
@@ -1473,7 +1473,7 @@ app.post("/api/accept-waiver", requireAuth, (req, res) => {
   dashboardBtn.disabled = false;
 });
 
-app.post("/api/member-selection", async (req, res) => {
+app.post("/api/user-selection", async (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ error: "Login required" });
   }
@@ -1482,7 +1482,7 @@ app.post("/api/member-selection", async (req, res) => {
   const { id, name, email } = req.session.user;
 
   const stmt = db.prepare(`
-    INSERT INTO member_selections (member_id, member_name, selection)
+    INSERT INTO user_selections (user_id, user_name, selection)
     VALUES (?, ?, ?)
   `);
 
@@ -1508,14 +1508,14 @@ app.get("/api/my-selections", (req, res) => {
 
   const rows = db.prepare(`
     SELECT selection, created_at
-    FROM member_selections
-    WHERE member_id = ?
+    FROM user_selections
+    WHERE user_id = ?
   `).all(req.session.user.id);
 
   res.json(rows);
 });
 const exists = db.prepare(`
-  SELECT 1 FROM member_selections WHERE member_id = ?
+  SELECT 1 FROM user_selections WHERE user_id = ?
 `).get(id);
 
 if (exists) {
@@ -1533,7 +1533,7 @@ const transporter = nodemailer.createTransport({
     pass: "xpjp gylb kkmu eyet"
   }
 });
-app.post("/api/member-selection", async (req, res) => {
+app.post("/api/user-selection", async (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ error: "Not logged in" });
   }
@@ -1542,7 +1542,7 @@ app.post("/api/member-selection", async (req, res) => {
   const { id, name, email } = req.session.user;
 
   const stmt = db.prepare(`
-    INSERT INTO member_selections (member_id, member_name, selection)
+    INSERT INTO user_selections (user_id, user_name, selection)
     VALUES (?, ?, ?)
   `);
 
@@ -1662,7 +1662,7 @@ const cors = require("cors");
 const SQLite = require("better-sqlite3");
 
 db.prepare(`
-  CREATE TABLE IF NOT EXISTS members (
+  CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     email TEXT UNIQUE,
@@ -1797,7 +1797,7 @@ fetch("/api/me", { credentials: "include" })
   .then(user => {
     if (user) document.body.classList.add("logged-in");
   });
-  app.get("/api/member-only", (req, res) => {
+  app.get("/api/user-only", (req, res) => {
     if (!req.session.userId) return res.sendStatus(401);
     res.json({ ok: true });
   });
