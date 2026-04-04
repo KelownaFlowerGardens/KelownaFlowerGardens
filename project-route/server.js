@@ -2836,7 +2836,7 @@ io.on("connection", (socket) => {
   socket.on("updateAvatar", ({ avatarUrl }) => {
     socket.avatar = avatarUrl;
     // Broadcast updated User list to all clients
-    const members = Array.from(io.sockets.sockets.values()).map(s => ({
+    const users = Array.from(io.sockets.sockets.values()).map(s => ({
       username: s.username,
       avatar: s.avatar
     }));
@@ -2943,31 +2943,31 @@ io.on("connection", (socket) => {
   
     socket.emit("updateAvatar", { avatarUrl: data.avatarUrl });
   });
-  const onlineMembers = new Map();
+  const onlineUsers = new Map();
 
   io.on("connection", socket => {
     socket.on("auth", ({ userId, username, avatar }) => {
-      socket.memberId = memberId;
+      socket.userId = userId;
       socket.username = username;
       socket.avatar = avatar;
   
-      onlineUsers.set(memberId, { userId, username, avatar, online: true });
-      io.emit("updateMembers", Array.from(onlineMembers.values()));
+      onlineUsers.set(UserId, { userId, username, avatar, online: true });
+      io.emit("updateUsers", Array.from(onlineUsers.values()));
     });
   
     socket.on("disconnect", () => {
       if (socket.memberId) {
-        onlineMembers.delete(socket.memberId);
-        io.emit("updateMembers", Array.from(onlineMembers.values()));
+        onlineMembers.delete(socket.userId);
+        io.emit("updateUsers", Array.from(onlineUsers.values()));
       }
     });
   });
-  socket.on("updateMembers", members => {
+  socket.on("updateUsers", users => {
     membersContainer.innerHTML = "";
   
     members.forEach(m => {
       const div = document.createElement("div");
-      div.className = "memberItem";
+      div.className = "userItem";
       div.innerHTML = `
         <span class="status ${m.online ? 'online' : 'offline'}"></span>
         <img src="${m.avatar}" class="msgAvatar">
