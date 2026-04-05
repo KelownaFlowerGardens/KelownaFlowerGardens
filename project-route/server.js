@@ -2530,8 +2530,8 @@ app.get("/login/:username", (req, res) => {
     const http = require("http");
     const { Server } = require("socket.io");
     const session = require("express-session");
-    const sqlite3 = require("sqlite3").verbose();
-   const db = new sqlite3.Database("./database.sqlite");
+    const better-sqlite3 = require("better-sqlite3").verbose();
+   const db = new better-sqlite3.Database("./database.better-sqlite3");
   db.all("SELECT * FROM users", (err, rows) => {
   res.json(rows);
 });
@@ -2542,7 +2542,7 @@ app.get("/login/:username", (req, res) => {
     const io = new Server(server);
     
     // Setup SQLite database
-    const db = new sqlite3.Database("./chat.db");
+    const db = new better-sqlite3.Database("./chat.db");
     db.run(`CREATE TABLE IF NOT EXISTS messages (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT,
@@ -2649,7 +2649,7 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const session = require("express-session");
-const sqlite3 = require("sqlite3").verbose();
+const better-sqlite3 = require("better-sqlite3").verbose();
 const path = require("path");
 
 const app = express();
@@ -2657,7 +2657,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 // SQLite DB for messages
-const db = new sqlite3.Database("./chat.db");
+const db = new better-sqlite3.Database("./chat.db");
 db.run(`CREATE TABLE IF NOT EXISTS messages (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT,
