@@ -3019,7 +3019,7 @@ socket.on("updateUsers", Users => {
   });
 });
 const onlineUsers = new Map(); // userId → { username, avatar }
-io.on("connection", (socket) => {
+{
 
   socket.on("auth", ({ userId, username, avatar }) => {
     socket.userId = userId;
@@ -3328,7 +3328,7 @@ socket.on("messageRead", ({ messageId, username: reader }) => {
   }
 });
 
-io.on("connection", socket => {
+ {
 
   socket.on("typing:start", room => {
     socket.to(room).emit("typing:start", socket.username);
