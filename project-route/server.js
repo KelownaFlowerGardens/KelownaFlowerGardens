@@ -856,6 +856,163 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+
+   // ---------- SOCKET CHAT ----------
+io.on("connection", socket => {
+  const user = socket.request.session.user;
+  if (!user || !user.paid) return socket.disconnect();
+
+  const room = "general";
+  socket.join(room);
+
+  // Send history
+  const history = db.prepare(
+    "SELECT * FROM messages WHERE room=? ORDER BY id DESC LIMIT 50"
+  ).all(room).reverse();
+
+  socket.emit("history", history);
+
+  socket.on("chatMessage", text => {
+    db.prepare(
+      "INSERT INTO messages (room, username, text) VALUES (?, ?, ?)"
+    ).run(room, user.username, text);
+
+    io.to(room).emit("message", {
+      username: user.username,
+      text,
+      time: new Date().toLocaleTimeString()
+    });
+  });
+});
+{
+  socket.join("global");
+
+  socket.on("joinRoom", room => socket.join(room));
+
+  socket.on("chatMessage", async msg => {
+    const message = await Message.create({
+      room: msg.room,
+      senderId: socket.user.id,
+      senderName: socket.user.username,
+      avatar: socket.user.avatar,
+      content: msg.text,
+      type: msg.type,
+      readBy: [socket.user.id]
+    });
+    io.to(msg.room).emit("chatMessage", message);
+  });
+
+  socket.on("markRead", async ({room,userId})=>{
+    await Message.updateMany(
+      { room, readBy:{ $ne:userId }},
+      { $push:{ readBy:userId }}
+    );
+  });
+
+  socket.on("typing", room => {
+    socket.to(room).emit("typing", socket.user.username);
+  });
+
+  socket.on("stopTyping", room => {
+    socket.to(room).emit("stopTyping");
+  });
+
+  socket.on("disconnect", ()=>{/* update online status */});
+});
+socket.on("adminDeleteMessage", async id=>{
+  if(!socket.user.isAdmin) return;
+  await Message.findByIdAndDelete(id);
+  io.emit("deleteMessage", id);
+});
+if(msg.senderId === currentUserId){
+  const allRead = msg.readBy.length > 1;
+  receipt.textContent = allRead ? "✔✔" : "✔";
+}
+self.addEventListener("push", e=>{
+  const data = e.data.json();
+  self.registration.showNotification(data.title,{
+    body:data.body,
+    icon:"/icon.png"
+  });
+});
+webpush.sendNotification(user.subscription,{
+  title:"New Message",
+  body:`${sender}: ${text}`
+});
+if(navigator.vibrate) navigator.vibrate(10);
+// server.js
+const express = require("express");
+const http = require("http");
+const session = require("express-session");
+const SQLite = require("better-sqlite3");
+const { Server } = require("socket.io");
+const path = require("path");
+
+const app = express();
+const server = http.createServer(app);
+const io = require("socket.io")(server);
+{
+  const { username } = socket.auth;
+
+{
+
+ {
+    socket.on("auth", ({ userId, username, avatar }) => {
+      socket.userId = userId;
+      socket.username = username;
+      socket.avatar = avatar;
+  
+      onlineUsers.set(UserId, { userId, username, avatar, online: true });
+      io.emit("updateUsers", Array.from(onlineUsers.values()));
+    });
+module.exports = router;
+{
+  // Store avatar in socket session
+  socket.on("auth", ({ username, avatar }) => {
+    socket.username = username;
+    socket.avatar = avatar;
+  });
+
+{
+  onlineUsers[socket.username] = { avatar: socket.avatar, socketId: socket.id };
+  io.emit("updateUsers", Object.keys(onlineUsers).map(u => ({ username:u, avatar:onlineUsers[u].avatar })));
+
+ {
+  const sessionUser = socket.request.session.user;
+  if (!sessionUser || !sessionUser.paid) return socket.disconnect(true);
+
+  const username = sessionUser.username;
+  const avatar = sessionUser.avatar;
+
+ {
+      const room = socket.handshake.auth.room || "general";
+      socket.join(room);
+ {
+  const username = socket.handshake.auth?.username || `User${socket.id.slice(0,4)}`;
+
+  onlineUsers.set(socket.id, { username });
+  socket.join(username);
+
+  io.emit("users", getUsers());
+
+  socket.on("chatMessage", msg => {
+    io.to(msg.room).emit("chatMessage", msg);
+  });
+
+  socket.on("typing", (room, user) => {
+    socket.to(room).emit("typing", room, user);
+  });
+
+  socket.on("stopTyping", room => {
+    socket.to(room).emit("stopTyping", room);
+  });
+
+  socket.on("disconnect", () => {
+    onlineUsers.delete(socket.id);
+    io.emit("users", getUsers());
+  });
+});
+
 server.listen(3000, () => {
   console.log("Server running");
 });
@@ -897,8 +1054,6 @@ fetch("/api/me", { credentials: "include" })
 
 const onlineUsers = new Map();
 
-io.on("connection", socket => {
-  const session = socket.request.session;
 
   // 🚫 Block unauthenticated users
   if (!session || !session.user) {
@@ -957,34 +1112,6 @@ const io = require("socket.io")(server);
 
 const onlineUsers = new Map();
 
-/* =========================
-   SOCKET LOGIC
-========================= */
-io.on("connection", socket => {
-  const username = socket.handshake.auth?.username || `User${socket.id.slice(0,4)}`;
-
-  onlineUsers.set(socket.id, { username });
-  socket.join(username);
-
-  io.emit("users", getUsers());
-
-  socket.on("chatMessage", msg => {
-    io.to(msg.room).emit("chatMessage", msg);
-  });
-
-  socket.on("typing", (room, user) => {
-    socket.to(room).emit("typing", room, user);
-  });
-
-  socket.on("stopTyping", room => {
-    socket.to(room).emit("stopTyping", room);
-  });
-
-  socket.on("disconnect", () => {
-    onlineUsers.delete(socket.id);
-    io.emit("users", getUsers());
-  });
-});
 
 /* =========================
    HELPERS
@@ -2638,10 +2765,9 @@ app.get("/login/:username", (req, res) => {
       socket.avatar = avatar;
       next();
     });
-    
-    io.on("connection", (socket) => {
-      const room = socket.handshake.auth.room || "general";
-      socket.join(room);
+
+
+ 
     
       // Broadcast join
       socket.to(room).emit("message", {
@@ -2754,13 +2880,8 @@ function requireUser(req, res, next) {
 // Store online users in memory
 const onlineUsers = new Map(); // socket.id => { username, avatar }
 
-io.on("connection", (socket) => {
-  const sessionUser = socket.request.session.user;
-  if (!sessionUser || !sessionUser.paid) return socket.disconnect(true);
 
-  const username = sessionUser.username;
-  const avatar = sessionUser.avatar;
-
+   
   // Track online users
   onlineUsers.set(socket.id, { username, avatar });
   io.emit("updateUsers", Array.from(onlineUsers.values())); // broadcast user list
@@ -2824,10 +2945,7 @@ io.use((socket, next) => {
   next();
 });
 
-io.on("connection", socket => {
-  onlineUsers[socket.username] = { avatar: socket.avatar, socketId: socket.id };
-  io.emit("updateUsers", Object.keys(onlineUsers).map(u => ({ username:u, avatar:onlineUsers[u].avatar })));
-
+    
   socket.on("chatMessage", ({ text, room }) => {
     const timestamp = new Date().toLocaleTimeString();
     io.to(room).emit("message", { username: socket.username, avatar: socket.avatar, text, timestamp });
@@ -2870,13 +2988,7 @@ router.post("/api/upload-avatar", ensureAuthenticated, upload.single("avatar"), 
   }
 });
 
-module.exports = router;
-io.on("connection", (socket) => {
-  // Store avatar in socket session
-  socket.on("auth", ({ username, avatar }) => {
-    socket.username = username;
-    socket.avatar = avatar;
-  });
+
 
   // Handle avatar update
   socket.on("updateAvatar", ({ avatarUrl }) => {
@@ -2991,15 +3103,6 @@ io.on("connection", (socket) => {
   });
   const onlineUsers = new Map();
 
-  io.on("connection", socket => {
-    socket.on("auth", ({ userId, username, avatar }) => {
-      socket.userId = userId;
-      socket.username = username;
-      socket.avatar = avatar;
-  
-      onlineUsers.set(UserId, { userId, username, avatar, online: true });
-      io.emit("updateUsers", Array.from(onlineUsers.values()));
-    });
   
     socket.on("disconnect", () => {
       if (socket.userId) {
@@ -3169,8 +3272,7 @@ messengerModal.addEventListener("touchend", e => {
 
 const { v4: uuid } = require("uuid");
 
-io.on("connection", socket => {
-
+  
   socket.on("chatMessage", msg => {
     const message = {
       id: uuid(),
@@ -3192,9 +3294,6 @@ io.on("connection", socket => {
   });
 
 });
-
-
-
 
 
 function renderMessage(msg){
@@ -3523,9 +3622,6 @@ if (Notification.permission === "granted") {
   };
 }
 
-io.on("connection", socket => {
-  const { username } = socket.auth;
-
   // Typing indicator
   socket.on("typing", (room) => {
     socket.to(room).emit("userTyping", username);
@@ -3619,73 +3715,7 @@ io.use((socket,next)=>{
   next();
 });
 
-io.on("connection", socket => {
-  socket.join("global");
-
-  socket.on("joinRoom", room => socket.join(room));
-
-  socket.on("chatMessage", async msg => {
-    const message = await Message.create({
-      room: msg.room,
-      senderId: socket.user.id,
-      senderName: socket.user.username,
-      avatar: socket.user.avatar,
-      content: msg.text,
-      type: msg.type,
-      readBy: [socket.user.id]
-    });
-    io.to(msg.room).emit("chatMessage", message);
-  });
-
-  socket.on("markRead", async ({room,userId})=>{
-    await Message.updateMany(
-      { room, readBy:{ $ne:userId }},
-      { $push:{ readBy:userId }}
-    );
-  });
-
-  socket.on("typing", room => {
-    socket.to(room).emit("typing", socket.user.username);
-  });
-
-  socket.on("stopTyping", room => {
-    socket.to(room).emit("stopTyping");
-  });
-
-  socket.on("disconnect", ()=>{/* update online status */});
-});
-socket.on("adminDeleteMessage", async id=>{
-  if(!socket.user.isAdmin) return;
-  await Message.findByIdAndDelete(id);
-  io.emit("deleteMessage", id);
-});
-if(msg.senderId === currentUserId){
-  const allRead = msg.readBy.length > 1;
-  receipt.textContent = allRead ? "✔✔" : "✔";
-}
-self.addEventListener("push", e=>{
-  const data = e.data.json();
-  self.registration.showNotification(data.title,{
-    body:data.body,
-    icon:"/icon.png"
-  });
-});
-webpush.sendNotification(user.subscription,{
-  title:"New Message",
-  body:`${sender}: ${text}`
-});
-if(navigator.vibrate) navigator.vibrate(10);
-// server.js
-const express = require("express");
-const http = require("http");
-const session = require("express-session");
-const SQLite = require("better-sqlite3");
-const { Server } = require("socket.io");
-const path = require("path");
-
-const app = express();
-const server = http.createServer(app);
-const io = require("socket.io")(server);
+ 
 
 // ---------- DATABASE ----------
 const db = new SQLite("chat.db");
@@ -3729,33 +3759,7 @@ app.get("/api/session", (req, res) => {
   res.json({ loggedIn: true, user: req.session.user });
 });
 
-// ---------- SOCKET CHAT ----------
-io.on("connection", socket => {
-  const user = socket.request.session.user;
-  if (!user || !user.paid) return socket.disconnect();
 
-  const room = "general";
-  socket.join(room);
-
-  // Send history
-  const history = db.prepare(
-    "SELECT * FROM messages WHERE room=? ORDER BY id DESC LIMIT 50"
-  ).all(room).reverse();
-
-  socket.emit("history", history);
-
-  socket.on("chatMessage", text => {
-    db.prepare(
-      "INSERT INTO messages (room, username, text) VALUES (?, ?, ?)"
-    ).run(room, user.username, text);
-
-    io.to(room).emit("message", {
-      username: user.username,
-      text,
-      time: new Date().toLocaleTimeString()
-    });
-  });
-});
 
 // ---------- START ----------
 server.listen(3000, () => {
