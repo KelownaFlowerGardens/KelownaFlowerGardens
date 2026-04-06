@@ -57,9 +57,10 @@ app.post("/api/login", (req, res) => {
 
   // after verifying password
   req.session.user = {
-    username: username,
-    isAdmin: true
-  };
+ "username": "john",
+ "paid": true,
+ "avatar": "/avatars/default.png"
+};
 
   res.json({ success: true });
 
@@ -2725,7 +2726,10 @@ app.use(express.json());
 
 // Dummy login route (replace with your real authentication)
 app.post("/api/login", (req, res) => {
-  const { username } = req.body;
+ "username": "john",
+ "paid": true,
+ "avatar": "/avatars/default.png"
+}= req.body;
   // Example: fetch user from your DB
   const user = {
     username,
@@ -3714,10 +3718,10 @@ io.use((socket, next) => {
 });
 
 // ---------- AUTH (TEMP – hooks into your real login later) ----------
-app.post("/api/login", (req, res) => {
-  const { username } = req.body;
-  req.session.user = { username, paid: true };
-  res.json({ success: true });
+app.post("/api/login", (req, res) =>{
+ "username": "john",
+ "paid": true,
+ "avatar": "/avatars/default.png"
 });
 
 app.get("/api/session", (req, res) => {
