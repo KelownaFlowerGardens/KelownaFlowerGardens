@@ -1,6 +1,12 @@
 // database.sqlite
 
 
+fetch("/api/admin/messages")
+.then(r=>r.json())
+.then(data=>{
+ console.log(data)
+})
+
 ALTER TABLE rsvps ADD COLUMN waitlisted INTEGER DEFAULT 0;
 
 
