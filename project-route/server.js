@@ -1050,12 +1050,12 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
   const { eventId } = req.body;
   const userId = req.session.userId;
 
-  db.get(
+  db.prepare(
     "SELECT waiverAccepted FROM users WHERE id = ?",
     [userId],
     (err, row) => {
       if (!row || !row.waiverAccepted) {
-        return res.status(403).json({ error: "Waiver required" });
+        return res.status(403).json({ error: "Waiver required" }).get(id);
       }
 
       db.prepare(
@@ -1074,9 +1074,9 @@ fetch("/api/rsvp", { credentials: "include" })
 
 app.get("/api/events/:id/calendar.ics", requireLogin, (req, res) => {
 
-  db.get(`SELECT * FROM events WHERE id=?`, [req.params.id], (err, e) => {
+  db.prepare("SELECT * FROM events WHERE id=?", [req.params.id], (err, e) => {
 
-    const ics = `
+    const ics = "
 BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
@@ -1085,7 +1085,7 @@ DTSTART:${e.date.replace(/[-:]/g,"")}
 DESCRIPTION:${e.description}
 END:VEVENT
 END:VCALENDAR
-    `;
+    ";
 
     res.header("Content-Type", "text/calendar");
     res.send(ics);
@@ -1221,10 +1221,10 @@ if (res.status === 403) {
 app.post("/api/rsvp", requireLogin, (req, res) => {
   const { eventId } = req.body;
 
-  db.get(
-    `SELECT capacity,
+  db.prepare(
+    "SELECT capacity,
       (SELECT COUNT(*) FROM rsvps WHERE event_id = ?) AS count
-     FROM events WHERE id = ?`,
+     FROM events WHERE id = ?",
     [eventId, eventId],
     (err, event) => {
 
@@ -1250,7 +1250,7 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
 app.post("/api/rsvp", requireLogin, (req, res) => {
   const { eventId } = req.body;
 
-  db.get(
+  db.prepare(
     "SELECT name, email FROM users WHERE id = ?",
     [req.session.userId],
     (err, user) => {
@@ -1344,7 +1344,7 @@ document.getElementById("continueBtn").onclick = async () => {
 };
 
 app.post("/api/user/accept-waiver", requireLogin, (req, res) => {
-  db.get(
+  db.prepare(
     "SELECT name, email FROM users WHERE id = ?",
     [req.session.userId],
     (err, user) => {
@@ -2075,7 +2075,7 @@ app.use((err, req, res, next) => {
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
 
-  db.get(
+  db.prepare(
     "SELECT * FROM users WHERE username = ?",
     [username],
     async (err, user) => {
