@@ -285,7 +285,7 @@ app.post("/api/admin/rsvps/:id/checkin", async (req, res) => {
     const rsvpId = req.params.id;
 
     // Update the RSVP as checked in
-    const result = await db.run(
+    const result = await db.prepare(
       "UPDATE rsvps SET checked_in = 1 WHERE id = ?",
       [rsvpId]
     );
@@ -446,7 +446,7 @@ app.post("/api/host-signup", upload.single("image"), (req, res) => {
   
 
 app.post("/api/user/accept-waiver", requireLogin, (req, res) => {
-  db.run(
+  db.prepare(
     "UPDATE users SET waiverAccepted = 1 WHERE id = ?",
     [req.session.userId],
     err => {
@@ -455,7 +455,7 @@ app.post("/api/user/accept-waiver", requireLogin, (req, res) => {
       }
       res.json({ success: true });
     }
-  );
+  ).get(id);
 });
 
 if (!user.waiverAccepted) {
@@ -1058,12 +1058,12 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
         return res.status(403).json({ error: "Waiver required" });
       }
 
-      db.run(
+      db.prepare(
         `INSERT OR IGNORE INTO rsvps (user_id, event_id)
          VALUES (?, ?)`,
         [userId, eventId],
         () => res.json({ success: true })
-      );
+      ).get(id);
     }
   );
 });
@@ -1119,10 +1119,10 @@ function sendSMS(to, msg) {
 }
 
 app.post("/api/sms/stop", (req,res)=>{
-  db.run(
+  db.prepare(
     "UPDATE users SET sms_opt_in = 0 WHERE phone = ?",
     [req.body.From]
-  );
+  ).get(id);
 });
 
 
@@ -1136,13 +1136,13 @@ WHERE m.sms_opt_in = 1
 app.post("/api/profile", requireLogin, (req, res) => {
   const { phone, sms_opt_in } = req.body;
 
-  db.run(
+  db.prepare(
     `UPDATE users
      SET phone = ?, sms_opt_in = ?
      WHERE id = ?`,
     [phone || null, sms_opt_in ? 1 : 0, req.session.userId],
     () => res.json({ success: true })
-  );
+  ).get(id);
 });
 
 
@@ -1199,11 +1199,11 @@ if (res.status === 202) {
 
 if (event.capacity > 0 && event.count >= event.capacity) {
 
-  db.run(
+  db.prepare(
     `INSERT OR IGNORE INTO waitlist (user_id, event_id)
      VALUES (?, ?)`,
     [req.session.userId, eventId]
-  );
+  ).get(id);
 
   return res.status(202).json({
     waitlisted: true,
@@ -1234,15 +1234,15 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
         return res.status(403).json({ error: "Event is full" });
       }
 
-      db.run(
-        `INSERT OR IGNORE INTO rsvps (user_id, event_id)
-         VALUES (?, ?)`,
+      db.prepare(
+        "INSERT OR IGNORE INTO rsvps (user_id, event_id)
+         VALUES (?, ?)",
         [req.session.userId, eventId],
         err => {
           if (err) return res.status(500).json({ error: "RSVP failed" });
           res.json({ success: true });
         }
-      );
+      ).get(id);
     }
   );
 });
@@ -1251,13 +1251,13 @@ app.post("/api/rsvp", requireLogin, (req, res) => {
   const { eventId } = req.body;
 
   db.get(
-    `SELECT name, email FROM users WHERE id = ?`,
+    "SELECT name, email FROM users WHERE id = ?",
     [req.session.userId],
     (err, user) => {
 
-      db.run(
-        `INSERT OR IGNORE INTO rsvps (user_id, event_id)
-         VALUES (?, ?)`,
+      db.prepare(
+        "INSERT OR IGNORE INTO rsvps (user_id, event_id)
+         VALUES (?, ?)",
         [req.session.userId, eventId],
         err => {
           if (err) return res.status(500).json({ error: "RSVP failed" });
@@ -1308,7 +1308,7 @@ app.get("/api/admin/rsvps/:eventId", requireAdmin, (req, res) => {
 app.post("/api/rsvp/cancel", requireLogin, (req, res) => {
   const { eventId } = req.body;
 
-  db.run(
+  db.prepare(
     `DELETE FROM rsvps WHERE user_id = ? AND event_id = ?`,
     [req.session.userId, eventId],
     err => {
@@ -1321,7 +1321,7 @@ app.post("/api/rsvp/cancel", requireLogin, (req, res) => {
 app.post("/api/rsvp", requireLogin, (req, res) => {
   const { eventId } = req.body;
 
-  db.run(
+  db.prepare(
     `INSERT OR IGNORE INTO rsvps (user_id, event_id)
      VALUES (?, ?)`,
     [req.session.userId, eventId],
@@ -1352,12 +1352,12 @@ app.post("/api/user/accept-waiver", requireLogin, (req, res) => {
         return res.status(500).json({ error: "Member not found" });
       }
 
-      db.run(
+      db.prepare(
         "UPDATE users SET waiverAccepted = 1 WHERE id = ?",
         [req.session.userId],
         async err => {
           if (err) {
-            return res.status(500).json({ error: "Failed to save waiver" });
+            return res.status(500).json({ error: "Failed to save waiver" }).get(id);
           }
 
           /* EMAIL ADMIN */
@@ -2543,14 +2543,14 @@ app.get("/login/:username", (req, res) => {
     
     // Setup SQLite database
     const db = new better-sqlite3.Database("./chat.db");
-    db.run(`CREATE TABLE IF NOT EXISTS messages (
+    db.prepare("CREATE TABLE IF NOT EXISTS messages (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT,
       avatar TEXT,
       room TEXT,
       text TEXT,
       timestamp TEXT
-    )`);
+    )");
     
     // Session middleware
     app.use(session({
@@ -2627,7 +2627,7 @@ app.get("/login/:username", (req, res) => {
           room: room,
           timestamp: new Date().toLocaleTimeString()
         };
-        db.run("INSERT INTO messages(username, avatar, room, text, timestamp) VALUES(?,?,?,?,?)",
+        db.prepare("INSERT INTO messages(username, avatar, room, text, timestamp) VALUES(?,?,?,?,?)",
           [msg.username, msg.avatar, msg.room, msg.text, msg.timestamp]
         );
         io.to(room).emit("message", msg);
@@ -2658,14 +2658,14 @@ const io = new Server(server);
 
 // SQLite DB for messages
 const db = new better-sqlite3.Database("./chat.db");
-db.run(`CREATE TABLE IF NOT EXISTS messages (
+db.prepare("CREATE TABLE IF NOT EXISTS messages (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT,
   avatar TEXT,
   room TEXT,
   text TEXT,
   timestamp TEXT
-)`);
+)");
 
 // Session middleware
 const sessionMiddleware = session({
@@ -2751,7 +2751,7 @@ io.on("connection", (socket) => {
       timestamp: new Date().toLocaleTimeString()
     };
 
-    db.run(
+    db.prepare(
       "INSERT INTO messages(username, avatar, room, text, timestamp) VALUES(?,?,?,?,?)",
       [msg.username, msg.avatar, msg.room, msg.text, msg.timestamp]
     );
