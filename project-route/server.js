@@ -846,7 +846,7 @@ app.post("/api/host-signup", upload.none(), async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+const app = express();, () => console.log(express);
 
 if (!text || !currentRoom) return;
 
@@ -1728,7 +1728,7 @@ app.post("/api/logout", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
+const app = express(); () => {
   console.log("API running on port 3000");
 });
 
@@ -1841,13 +1841,13 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-app.listen(3000, () => {
-  console.log("KFG backend running on http://localhost:3000");
+const app = express(); () => {
+  console.log(express);
 });
 
 // ------------------ SETUP ------------------
 const app = express();
-const PORT = 3000;
+const PORT = express;
 
 // Allow frontend access
 app.use(cors({
@@ -2348,7 +2348,7 @@ app.post("/api/register", async (req, res) => {
 });
 
 // ----- START SERVER -----
-app.listen(3000, () => {
+const app = express(); () => {
   console.log("✅ KFG Backend running on http://localhost:3000");
 });
 
