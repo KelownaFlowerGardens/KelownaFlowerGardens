@@ -846,7 +846,18 @@ app.post("/api/host-signup", upload.none(), async (req, res) => {
   }
 });
 
-const app = express();, () => console.log(express);
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+
+const app = express();
+
+const server = http.createServer(app);
+const io = new Server(server);
+
+server.listen(3000, () => {
+  console.log("Server running");
+});
 
 if (!text || !currentRoom) return;
 
@@ -1728,8 +1739,17 @@ app.post("/api/logout", (req, res) => {
   });
 });
 
-const app = express(); () => {
-  console.log("API running on port 3000");
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+
+const app = express();
+
+const server = http.createServer(app);
+const io = new Server(server);
+
+server.listen(3000, () => {
+  console.log("Server running");
 });
 
 fetch("https://api.kelownaflowergardens.com/api/register", {
@@ -1840,14 +1860,22 @@ app.use("/api", paypalRoutes);
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
 
-const app = express(); () => {
-  console.log(express);
+const app = express();
+
+const server = http.createServer(app);
+const io = new Server(server);
+
+server.listen(3000, () => {
+  console.log("Server running");
 });
 
 // ------------------ SETUP ------------------
 const app = express();
-const PORT = express;
+const PORT = 3000;
 
 // Allow frontend access
 app.use(cors({
@@ -2348,8 +2376,19 @@ app.post("/api/register", async (req, res) => {
 });
 
 // ----- START SERVER -----
-const app = express(); () => {
-  console.log("✅ KFG Backend running on http://localhost:3000");
+
+const express = require("express");
+ console.log("✅ KFG Backend running on http://localhost:3000");
+const http = require("http");
+const { Server } = require("socket.io");
+
+const app = express();
+
+const server = http.createServer(app);
+const io = new Server(server);
+
+server.listen(3000, () => {
+  console.log("Server running");
 });
 
 app.post("/api/paypal/webhook1", express.json(), (req, res) => {
