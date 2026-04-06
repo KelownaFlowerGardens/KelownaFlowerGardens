@@ -953,7 +953,7 @@ const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = require("socket.io")(server);
 
 const onlineUsers = new Map();
 
@@ -2542,7 +2542,7 @@ const session = require("express-session");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = require("socket.io")(server);
 
 app.use(express.static("public")); // serve HTML/CSS/JS files
 
@@ -2579,7 +2579,7 @@ app.get("/login/:username", (req, res) => {
     
     const app = express();
     const server = http.createServer(app);
-    const io = new Server(server);
+   const io = require("socket.io")(server);
     
     // Setup SQLite database
     const db = new better-sqlite3.Database("./chat.db");
@@ -2694,7 +2694,7 @@ const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = require("socket.io")(server);
 
 // SQLite DB for messages
 const db = new better-sqlite3.Database("./chat.db");
@@ -3685,7 +3685,7 @@ const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = require("socket.io")(server);
 
 // ---------- DATABASE ----------
 const db = new SQLite("chat.db");
