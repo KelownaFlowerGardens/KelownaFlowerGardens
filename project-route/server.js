@@ -488,10 +488,10 @@ app.post("/api/paypal/capture", async (req, res) => {
   const order = await capturePayPalOrder(req.body.orderID);
 
   if (order.status === "COMPLETED") {
-    await db.query(
+    await db.prepare(
       "UPDATE users SET payment_status='paid' WHERE id=?",
       [req.session.userId]
-    );
+    ).get(id);
 
     req.session.paymentStatus = "paid";
     res.json({ success: true });
@@ -570,10 +570,10 @@ app.post("/api/register", async (req, res) => {
 
   const hashed = await bcrypt.hash(password, 10);
 
-  const result = await db.query(
+  const result = await db.prepare(
     "INSERT INTO users (username, email, password, plan, payment_status) VALUES (?, ?, ?, ?, 'pending')",
     [username, email, hashed, plan]
-  );
+  ).run(email);
 
   req.session.userId = result.insertId;
   req.session.paymentStatus = "pending";
@@ -682,11 +682,11 @@ app.get("/api/payment/session", (req, res) => {
 });
 
 app.get("/api/users", async (req,res)=>{
-  const [rows] = await db.query(`
+  const [rows] = await db.prepare("
     SELECT username, full_name, location, bio, avatar
     FROM users
     WHERE profile_complete=1 AND show_public=1
-  `);
+  ").get(id);
   res.json(rows);
 });
 
@@ -738,10 +738,10 @@ app.post('/api/paypal-verify', async (req, res) => {
 app.post("/api/reset-password", async (req, res) => {
   const { token, password } = req.body;
 
-  const users = await db.query(
+  const users = await db.prepare(
     "SELECT * FROM users WHERE reset_token=? AND reset_expires > ?",
     [token, Date.now()]
-  );
+  ).get(id);
 
   if (!users.length) {
     return res.status(400).json({ error: "Invalid or expired token" });
@@ -750,10 +750,10 @@ app.post("/api/reset-password", async (req, res) => {
   const user = users[0];
   const hash = await bcrypt.hash(password, 12);
 
-  await db.query(
-    `UPDATE users
+  await db.prepare(
+    :UPDATE users
      SET password=?, reset_token=NULL, reset_expires=NULL
-     WHERE id=?`,
+     WHERE id=?",
     [hash, user.id]
   );
 
@@ -774,10 +774,10 @@ const bcrypt = require("bcrypt");
 app.post("/api/request-password-reset", async (req, res) => {
   const { email } = req.body;
 
-  const user = await db.query(
+  const user = await db.prepare(
     "SELECT id FROM users WHERE email = ?",
     [email]
-  );
+  ).run(email);
 
   if (!user.length) {
     // Always respond OK (prevent email enumeration)
@@ -787,10 +787,10 @@ app.post("/api/request-password-reset", async (req, res) => {
   const token = crypto.randomBytes(32).toString("hex");
   const expires = Date.now() + 1000 * 60 * 30; // 30 mins
 
-  await db.query(
+  await db.prepare(
     "UPDATE users SET reset_token=?, reset_expires=? WHERE email=?",
     [token, expires, email]
-  );
+  ).run(email);
 
   // SEND EMAIL HERE (example link)
   console.log(`Reset link:
@@ -1002,30 +1002,30 @@ app.post("/api/rsvp", async (req, res) => {
   const { eventId } = req.body;
 
   // Count current RSVPs
-  const count = await db.query(
+  const count = await db.prepare(
     "SELECT COUNT(*) FROM rsvps WHERE event_id = ?",
     [eventId]
-  );
+  ).get(id);
 
   if (count[0]["COUNT(*)"] >= MAX_CAPACITY) {
     return res.status(409).send("Event full");
   }
 
   // Prevent duplicate RSVP
-  const existing = await db.query(
+  const existing = await db.prepare(
     "SELECT id FROM rsvps WHERE event_id = ? AND user_id = ?",
     [eventId, userId]
-  );
+  ).get(id);
 
   if (existing.length) {
     return res.status(200).send("Already RSVP'd");
   }
 
   // Insert RSVP
-  await db.query(
+  await db.prepare(
     "INSERT INTO rsvps (event_id, user_id) VALUES (?, ?)",
     [eventId, userId]
-  );
+  ).run(event_id, user_id);
 
   // Optional: notify admin
   await notifyAdmin({
@@ -1982,7 +1982,7 @@ function requireAdmin(req, res, next){
 }
 
 app.get("/api/admin/users", requireAdmin, async (req, res) => {
-  const result = await db.query(`
+  const result = await db.prepare("
     SELECT 
       name,
       email,
@@ -1992,12 +1992,12 @@ app.get("/api/admin/users", requireAdmin, async (req, res) => {
       created_at
     FROM users
     ORDER BY created_at DESC
-  `);
+  ").get(id);
   res.json(result.rows);
 });
 
 app.get("/api/admin/users.csv", requireAdmin, async (req, res) => {
-  const result = await db.query(`
+  const result = await db.prepare("
     SELECT 
       name,
       email,
@@ -2007,7 +2007,7 @@ app.get("/api/admin/users.csv", requireAdmin, async (req, res) => {
       created_at
     FROM users
     ORDER BY created_at DESC
-  `);
+  ").get(id);
 
   let csv = "Name,Email,Paid,Active,PayPal Transaction,Joined\n";
   result.rows.forEach(u => {
@@ -3023,17 +3023,17 @@ io.on("connection", (socket) => {
     messages.appendChild(div);
   }
   socket.on("chatMessage", async msg => {
-    await db.query(
+    await db.prepare(
       "INSERT INTO messages (room, sender_id, text, image) VALUES ($1,$2,$3,$4)",
       [msg.room, socket.userId, msg.text, msg.image]
-    );
+    ).run(room, sender_id, text, image);
   });
   socket.on("joinRoom", async room => {
     socket.join(room);
-    const history = await db.query(
+    const history = await db.prepare(
       "SELECT * FROM messages WHERE room=$1 ORDER BY created_at ASC",
       [room]
-    );
+    ).get(id);
     socket.emit("chatHistory", history.rows);
   });
   socket.on("chatHistory", msgs => {
@@ -3048,16 +3048,16 @@ io.on("connection", (socket) => {
     chatBadge.textContent = "";
   };
   socket.on("messageDelivered", async ({ messageId }) => {
-    await db.query(
+    await db.prepare(
       "UPDATE messages SET delivered=true WHERE id=$1",
       [messageId]
-    );
+    ).get(id);
   });
   socket.on("messagesRead", async ({ room, readerId }) => {
-    await db.query(
+    await db.prepare(
       "UPDATE messages SET read=true WHERE room=$1 AND sender_id != $2",
       [room, readerId]
-    );
+    ).get(id);
   
     io.to(room).emit("readReceipt", { readerId });
   });
@@ -3091,8 +3091,8 @@ io.on("connection", (socket) => {
   socket.on("adminDeleteMessage", async ({ messageId }) => {
     if (socket.role !== "admin") return;
   
-    await db.query("DELETE FROM messages WHERE id=$1", [messageId]);
-    io.emit("messageDeleted", messageId);
+    await db.prepare("DELETE FROM messages WHERE id=$1", [messageId]);
+    io.emit("messageDeleted", messageId).get(id);
   });
 
   const mutedUsers = new Set();
@@ -3320,7 +3320,7 @@ socket.on("chatMessage", async msg => {
     readBy: [socket.username]
   };
 
-  await db.query(
+  await db.prepare(
     `INSERT INTO messages
      (id, room, sender, avatar, text, image, timestamp, read_by)
      VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
@@ -3340,13 +3340,13 @@ socket.on("chatMessage", async msg => {
 });
 
 socket.on("loadHistory", async room => {
-  const result = await db.query(
+  const result = await db.prepare(
     `SELECT * FROM messages
      WHERE room = $1
      ORDER BY timestamp ASC
      LIMIT 50`,
     [room]
-  );
+  ).all;
 
   socket.emit("chatHistory", result.rows);
 });
@@ -3366,7 +3366,7 @@ socket.on("chatHistory", messages => {
 });
 socket.on("messageRead", async ({ messageId, room, username }) => {
 
-  await db.query(
+  await db.prepare(
     `UPDATE messages
      SET read_by = read_by || $1
      WHERE id = $2 AND NOT read_by @> $1`,
@@ -3413,12 +3413,12 @@ toggleBtn.onclick = () => {
 
 
 socket.on("markRoomRead", async room => {
-  await db.query(
+  await db.prepare(
     `UPDATE messages
      SET read_by = array_append(read_by, $1)
      WHERE room = $2 AND NOT read_by @> ARRAY[$1]::varchar[]`,
     [socket.username, room]
-  );
+  ).get(id);
 });
 
 
