@@ -495,7 +495,9 @@ async function deleteMsg(id) {
     console.error("Mute error:", err);
     alert("Server error while muting user");
   }
-}</script>
+}
+
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
@@ -520,6 +522,14 @@ async function deleteMsg(id) {
 
   <button onclick="setHostStatus(3, 'approved')">Approve</button>
 <button onclick="setHostStatus(3, 'rejected')">Reject</button>
+
+  <script> 
+    
+app.get("/api/admin/messages", (req,res)=>{
+ const rows = db.prepare("SELECT * FROM messages").all();
+ res.json(rows);
+});
+  </script>
   
     '<td>
   <canvas id="qr-${r.id}"></canvas>
