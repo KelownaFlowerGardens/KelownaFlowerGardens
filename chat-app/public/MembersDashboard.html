@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Member Dashboard Chat</title>
+<link rel="stylesheet" href="style.css">
+<script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+
+<div class="dashboard">
+  <h1>Welcome, <span id="username">Member</span></h1>
+
+  <div class="card" id="messengerCard">
+    <h3>Members Chat</h3>
+    <div id="chatWindow"><div id="messages"></div></div>
+    <input type="text" id="chatInput" placeholder="Type a message...">
+    <button id="sendBtn">Send</button>
+  </div>
+</div>
+
+<script>
+// Dummy: Replace with session username & avatar
+const username = "Member_" + Math.floor(Math.random()*100);
+const avatar = "/avatars/default.png";
+const room = "general";
+
+// Update username on dashboard
+document.getElementById("username").textContent = username;
+
+const socket = io({
+  auth: { username, avatar, room }
+});
+
+const messagesDiv = document.getElementById("messages");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+
+function renderMessage(msg) {
+  const div = document.createElement("div");
+  div.className = "message " + (msg.username === username ? "self" : "other");
+  div.innerHTML = `
+    ${msg.avatar ? `<img src="${msg.avatar}" class="msgAvatar">` : ""}
+    <span class="msgText"><strong>${msg.username}</strong> [${msg.timestamp}]: ${msg.text}</span>
+  `;
+  messagesDiv.appendChild(div);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+// Receive messages
+socket.on("message", msg => renderMessage(msg));
+
+// Send messages
+sendBtn.addEventListener("click", () => {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  socket.emit("chatMessage", text);
+  chatInput.value = "";
+});
+
+chatInput.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendBtn.click();
+});
+</script>
+</body>
+</html>
