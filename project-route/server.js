@@ -100,15 +100,15 @@ db.prepare(`CREATE INDEX IF NOT EXISTS idx_events_date ON events(event_date)`).r
 
 
   db.prepare(
-CREATE TABLE rsvps (
+    CREATE TABLE events (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER NOT NULL,
-  event_id INTEGER NOT NULL,
-  waitlisted INTEGER DEFAULT 0,
-  checked_in INTEGER DEFAULT 0,
-  checkin_token TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-
+  title TEXT,
+  description TEXT,
+  event_date DATETIME,
+  location TEXT,
+  capacity INTEGER DEFAULT 0,
+  waitlist_enabled INTEGER DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (event_id) REFERENCES events(id),
 
@@ -117,7 +117,7 @@ CREATE TABLE rsvps (
 
 ).run();
 
-  db.prepare(`
+  db.prepare("
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT,
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS users (
   is_admin INTEGER DEFAULT 0,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 )
-`).run();
+").run();
 
 
 const dbPath = process.env.RENDER === "true"
@@ -428,17 +428,17 @@ POST /api/admin/hosts/:id/status
 app.post("/api/host-signup", upload.single("image"), (req, res) => {
     const { name, location, preferredDate, venueSize, description } = req.body;
   
-    db.prepare(`
-      INSERT INTO hosts
-      (name, location, preferred_date, venue_size, description, image_path)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `).run(
-      name,
-      location,
-      preferredDate,
-      venueSize,
-      description,
-      req.file ? req.file.path : null
+    db.prepare("
+
+              CREATE TABLE hosts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  location TEXT,
+  preferred_date TEXT,
+  venue_size TEXT,
+  description TEXT,
+  image_path TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   
     res.json({ success: true });
@@ -1211,8 +1211,8 @@ if (res.status === 202) {
 if (event.capacity > 0 && event.count >= event.capacity) {
 
   db.prepare(
-    `INSERT OR IGNORE INTO waitlist (user_id, event_id)
-     VALUES (?, ?)`,
+    "INSERT OR IGNORE INTO waitlist (user_id, event_id)
+     VALUES (?, ?)",
     [req.session.userId, eventId]
   ).get(id);
 
