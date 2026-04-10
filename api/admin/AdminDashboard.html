@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard | Kelowna Flower Gardens</title>
+
+  <link rel="stylesheet" href="/admin/admin.css">
+<link rel="icon" href="KFGL.jpg">
+
+<style>
+:root{
+  --pink:#F68686;
+  --radius:14px;
+}
+
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#fafafa;
+}
+
+header{
+  background:var(--pink);
+  color:white;
+  padding:1rem;
+  text-align:center;
+}
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:1rem;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+
+th, td{
+  padding:.75rem;
+  border-bottom:1px solid #eee;
+}
+
+th{
+  background:#f5f5f5;
+}
+
+button{
+  border:none;
+  padding:.4rem .8rem;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.enable{background:#2ecc71;color:white}
+.disable{background:#e67e22;color:white}
+.delete{background:#e74c3c;color:white}
+
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+  .wrapper{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    position:fixed;
+    top:0;
+    right:-280px;
+    height:100vh;
+    z-index:1500;
+    transition:.3s;
+  }
+
+  .sidebar.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+}
+ 
+/* ---------- MEMBER AVATAR ---------- */
+.member-avatar{
+  position:relative;
+  margin-left:auto;
+}
+
+.avatar-btn{
+  border:none;
+  background:none;
+  cursor:pointer;
+  padding:0;
+}
+
+.avatar-btn img{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #F68686;
+}
+
+/* Dropdown Menu */
+.member-dropdown{
+  display:none;
+  position:absolute;
+  right:0;
+  top:120%;
+  background:#fff;
+  width:220px;
+  border-radius:14px;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+  overflow:hidden;
+  z-index:2000;
+}
+
+.member-name{
+  padding:.75rem 1rem;
+  font-weight:600;
+  color:#F68686;
+  border-bottom:1px solid #eee;
+  text-align:center;
+}
+
+.member-dropdown a{
+  display:block;
+  padding:.7rem 1rem;
+  text-decoration:none;
+  color:#444;
+  font-size:.9rem;
+}
+
+.member-dropdown a:hover{
+  background:#F68686;
+  color:white;
+}
+
+.member-dropdown .logout{
+  color:#c0392b;
+}
+
+.member-dropdown .logout:hover{
+  background:#c0392b;
+  color:white;
+}
+
+/* Mobile Friendly */
+@media (max-width:768px){
+  .member-avatar{
+    margin:0 auto;
+  }
+}
+body { font-family: system-ui; padding: 30px; background: #f7f7f7; }
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+img {
+  max-width: 300px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+button {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.approve { background: #4CAF50; color: white; }
+.reject { background: #e74c3c; color: white; }
+</style>
+</head>
+
+    <script>
+function toggleMemberMenu(){
+  const menu = document.getElementById("memberMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+/* Close menu when clicking elsewhere */
+document.addEventListener("click", function(e){
+  const avatar = document.querySelector(".member-avatar");
+  if (avatar && !avatar.contains(e.target)) {
+    document.getElementById("memberMenu").style.display = "none";
+  }
+});
+</script>
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+
+  </head>
+<body>
+
+<script src="/admin/admin.js"></script>
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+  <h1>Kelowna Flower Gardens</h1>
+  <p>Kelowna’s Flower Garden Club</p>
+
+<nav>
+  <a href="MemberHome.html">Main</a>
+    <a href="MemberGardenDesign.html">Garden Design</a>
+      <a href="MemberAbout.html">About</a>
+    <a href="MemberRegional Species.html">Regional Species</a>
+      <a href="MemberAwards.html">Awards</a>
+    <a href="MemberRoses.html">Roses</a>
+      <a href="MemberValley Art.html">Valley Art</a>
+    <a href="MemberBridal Bouquets.html">Bridal Bouquets</a>
+         <a href="MemberEvents.html">Events</a>
+    <a href="MemberResources.html">Resources</a>
+      <a href="MemberCalendar.html">Calendar</a>
+    <a href="MembersDashboard.html">Members</a>
+    <a href="MemberContact.html">Contact</a>
+</nav>
+</header>
+
+  
+    <div class="login-avatar">...</div>  <!-- logged out -->
+<div class="member-avatar">...</div> <!-- logged in -->
+
+     <!-- LOGGED IN AVATAR -->
+<div class="member-avatar">
+  <button class="avatar-btn" onclick="toggleMemberMenu()">
+    <img src="KFGL.jpg" alt="Member Avatar">
+  </button>
+
+  <div class="member-dropdown" id="memberMenu">
+    <div class="member-name">Welcome, Member</div>
+
+    <a href="MembersDashboard.html">🌸 Dashboard</a>
+    <a href="Profile.html">👤 Profile</a>
+    <a href="Calendar.html">📅 Calendar</a>
+    <a href="Logout.html" class="logout">🚪 Log Out</a>
+  </div>
+</div>
+
+<div class="wrapper">
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#FDD7D7;
+}
+.dashboard{
+  max-width:900px;
+  margin:auto;
+  padding:2rem;
+}
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:1.5rem;
+  margin-bottom:1rem;
+}
+h1{color:#F68686}
+a.button{
+  display:inline-block;
+  padding:.6rem 1.2rem;
+  border-radius:25px;
+  background:#F68686;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+<div class="dashboard">
+
+<title>Admin Dashboard | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --radius:14px;
+}
+
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#fafafa;
+}
+
+header{
+  padding:1rem;
+  background:var(--pink);
+  color:white;
+  text-align:center;
+}
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:1rem;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+
+th, td{
+  padding:.7rem;
+  text-align:left;
+  border-bottom:1px solid #eee;
+}
+
+th{
+  background:#f5f5f5;
+}
+
+button{
+  border:none;
+  padding:.4rem .6rem;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.btn-danger{background:#e74c3c;color:white}
+.btn-ok{background:#2ecc71;color:white}
+
+@media(max-width:700px){
+  table, thead, tbody, th, td, tr{
+    display:block;
+  }
+  tr{
+    margin-bottom:1rem;
+    border:1px solid #eee;
+    border-radius:12px;
+    padding:.6rem;
+  }
+  th{display:none}
+  td::before{
+    font-weight:700;
+    display:block;
+    margin-bottom:.2rem;
+    color:#666;
+  }
+}
+  </div>
+  </div>
+</style>
+</head>
+
+<body>
+
+  <div class="admin-container">
+
+  <aside class="sidebar">
+    <h2>Admin</h2>
+    <button onclick="loadSection('members')">Members</button>
+    <button onclick="loadSection('events')">Events</button>
+    <button onclick="loadSection('rsvps')">RSVPs</button>
+    <button onclick="loadSection('payments')">Payments</button>
+    <button onclick="loadSection('analytics')">Analytics</button>
+  </aside>
+</div>
+
+<script src="/admin/admin.js"></script>
+
+
+<main>
+
+<h2>Members</h2>
+
+<table id="membersTable">
+
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Username</th>
+      <th>Status</th>
+      <th>Paid</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+  <h2>Event RSVPs</h2>
+
+<select id="eventSelect"></select>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>RSVP Date</th>
+      <th>Checked In</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="rsvpTable"></tbody>
+</table>
+
+<a id="downloadCsv" href="#" class="btn">
+  ⬇ Download RSVP CSV
+</a>
+
+<td>${r.checked_in ? "✅ Checked In" : "⏳ Not Arrived"}</td>
+
+  <a href="/api/admin/events/3/rsvps.csv" class="btn">
+  ⬇ Download RSVP List
+</a>
+
+    <h1>Member Payments</h1>
+
+<a href="/api/admin/members.csv" class="btn">
+  ⬇ Download CSV
+</a>
+
+    <button onclick="deleteMsg(id)">🗑</button>
+  <script>
+async function deleteMsg(id) {
+  if (!confirm("Delete this message?")) return;
+
+  try {
+    const res = await fetch(`/api/admin/messages/${id}`, {
+      method: "DELETE",
+      credentials: "include"
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Failed to delete message");
+      return;
+    }
+
+    // Remove message from UI
+    const msgEl = document.getElementById(`msg-${id}`);
+    if (msgEl) msgEl.remove();
+
+  } catch (err) {
+    console.error("Delete error:", err);
+    alert("Server error while deleting message");
+  }
+}
+  </script>
+<button onclick="muteUser(userId)">🔇</button>
+<script>
+  async function muteUser(userId) {
+  if (!confirm("Mute this user?")) return;
+
+  try {
+    const res = await fetch(`/api/admin/users/${userId}/mute`, {
+      method: "POST",
+      credentials: "include"
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Failed to mute user");
+      return;
+    }
+
+    alert("User muted successfully");
+
+  } catch (err) {
+    console.error("Mute error:", err);
+    alert("Server error while muting user");
+  }
+}
+
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+
+<h1>Admin Dashboard</h1>
+<table id="membersTable">
+  <thead>
+    <tr>
+      <th>Name</th><th>Email</th><th>Status</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+<div id="list"></div>
+    <tr>
+  <td>
+    <a href="Success.html?id=12">New Member</a>
+  </td>
+  <td>Check</td>
+  <td>Date</td>
+</tr>
+
+  <button onclick="setHostStatus(3, 'approved')">Approve</button>
+<button onclick="setHostStatus(3, 'rejected')">Reject</button>
+
+  <script> 
+    
+app.get("/api/admin/messages", (req,res)=>{
+ const rows = db.prepare("SELECT * FROM messages").all();
+ res.json(rows);
+});
+  </script>
+  
+    '<td>
+  <canvas id="qr-${r.id}"></canvas>
+    </td>
+  <script>
+    QRCode.toCanvas(
+      document.getElementById("qr-${r.id}"),
+      `${window.location.origin}/api/checkin?rsvp=${r.id}&token=${r.checkin_token}`
+    );
+
+
+async function loadEvents() {
+  const res = await fetch("/api/admin/events", {
+    credentials: "include"
+  });
+
+  if (!res.ok) return;
+
+  const events = await res.json();
+  const select = document.getElementById("eventSelect");
+
+  select.innerHTML = "";
+
+  events.forEach(e => {
+    const option = document.createElement("option");
+    option.value = e.id;
+    option.textContent = e.title;
+    select.appendChild(option);
+  });
+
+  if (events.length) {
+    loadRSVPs(events[0].id);
+  }
+}
+
+async function loadRSVPs(eventId) {
+  const res = await fetch(`/api/admin/events/${eventId}/rsvps`, {
+    credentials: "include"
+  });
+
+  if (!res.ok) return;
+
+  const data = await res.json();
+  const table = document.getElementById("rsvpTable");
+  table.innerHTML = "";
+
+  data.forEach(r => {
+    table.innerHTML += `
+      <tr>
+        <td>${r.name}</td>
+        <td>${r.email}</td>
+        <td>${new Date(r.created_at).toLocaleString()}</td>
+        <td>${r.checked_in ? "✅" : "⏳"}</td>
+        <td>
+          ${!r.checked_in ? 
+            `<button onclick="checkIn(${r.id})">Check In</button>` 
+            : ""}
+        </td>
+      </tr>
+    `;
+  });
+<script>
+  document.getElementById("downloadCsv").href =
+    `/api/admin/events/${eventId}/rsvps.csv`;
+}
+
+async function checkIn(rsvpId) {
+  await fetch(`/api/admin/rsvps/${rsvpId}/checkin`, {
+    method: "POST",
+    credentials: "include"
+  });
+
+  const eventId = document.getElementById("eventSelect").value;
+  loadRSVPs(eventId);
+}
+
+document.getElementById("eventSelect")
+  .addEventListener("change", e => {
+    loadRSVPs(e.target.value);
+  });
+
+loadEvents();
+
+<div id="content"></div>
+
+async function loadSection(section) {
+  const res = await fetch(`/admin/sections/${section}.html`);
+  const html = await res.text();
+
+  document.getElementById("content").innerHTML = html;
+  
+  if (window[`init_${section}`]) {
+    window[`init_${section}`]();
+  }
+}
+
+async function setHostStatus(id, status) {
+  const res = await fetch(`/api/admin/hosts/${id}/status`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ status })
+  });
+
+  if (!res.ok) {
+    alert("Failed to update host status");
+    return;
+  }
+
+  loadHosts(); // refresh list
+}
+  async function loadHosts() {
+  const res = await fetch("/api/admin/hosts", {
+    method: "GET",
+    credentials: "include"
+  });
+
+  if (res.status === 401) {
+    location.href = "LoggedOut.html";
+    return;
+  }
+
+  const hosts = await res.json();
+  console.log(hosts); // render into UI
+}
+
+  const members = await res.json();
+  const tbody = document.querySelector("#membersTable tbody");
+  tbody.innerHTML = "";
+
+  members.forEach(m => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.email}</td>
+        <td>${m.username}</td>
+        <td>${m.active ? "Active" : "Inactive"}</td>
+        <td>${m.paid ? "Yes" : "No"}</td>
+        <td>
+          <button class="${m.active ? "disable" : "enable"}"
+            onclick="toggleMember(${m.id})">
+            ${m.active ? "Disable" : "Enable"}
+          </button>
+          <button class="delete"
+            onclick="deleteMember(${m.id})">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+async function toggleMember(id){
+  await fetch("/api/admin/toggle-member", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    credentials:"include",
+    body: JSON.stringify({ id })
+  });
+  loadMembers();
+}
+
+async function deleteMember(id){
+  if(confirm("Delete this member?")){
+    await fetch("/api/admin/delete-member", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      credentials:"include",
+      body: JSON.stringify({ id })
+    });
+    loadMembers();
+  }
+}
+
+loadMembers();
+</script>
+
+<script>
+  
+ async function loadMembers(){
+
+   const res = await fetch("/api/admin/members", {
+  credentials: "include"
+});
+
+  const members = await res.json();
+
+  const tbody = document.querySelector("#membersTable tbody");
+  tbody.innerHTML = "";
+
+  members.forEach(m => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.email}</td>
+        <td>${m.username}</td>
+        <td>${m.active ? "Active" : "Inactive"}</td>
+        <td>${m.paid ? "Yes" : "No"}</td>
+      </tr>
+    `;
+  });
+
+} 
+
+  const hosts = await res.json();
+
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  hosts.forEach(h => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `
+      <h3>${h.name} (${h.status})</h3>
+      <p><strong>Location:</strong> ${h.location}</p>
+      <p><strong>Date:</strong> ${h.preferred_date}</p>
+      <p><strong>Venue Size:</strong> ${h.venue_size}</p>
+      <p>${h.description}</p>
+      ${h.image_path ? `<img src="http://localhost:3000/${h.image_path}">` : ""}
+      <br><br>
+      <button class="approve" onclick="setStatus(${h.id}, 'approved')">Approve</button>
+      <button class="reject" onclick="setStatus(${h.id}, 'rejected')">Reject</button>
+    `;
+    list.appendChild(div);
+  });
+}
+
+async function setStatus(id, status) {
+  await fetch(`/api/admin/hosts/${id}/status`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ status })
+  });
+  loadHosts();
+}
+
+loadHosts();
+    async function toggleMember(id){
+  await fetch("/api/admin/toggle-member", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ id })
+  });
+  loadMembers();
+}
+
+async function deleteMember(id){
+  if(confirm("Delete this member?")){
+    await fetch("/api/admin/delete-member", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ id })
+    });
+    loadMembers();
+  }
+}
+
+</script>
+</main>
+
+
+<script src="AdminControls.js"></script>
+</div>
+</body>
+</html>
