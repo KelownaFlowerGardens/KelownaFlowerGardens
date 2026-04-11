@@ -285,8 +285,33 @@ toggleBtn.onclick = () => modal.style.display = "flex";
 closeBtn.onclick = () => modal.style.display = "none";
 
 </script>
-<script>
- 
+
+  <!-- Messenger Modal -->
+<div id="messengerModal">
+  <div class="messengerHeader">
+    Members Chat
+    <span id="closeMessenger">×</span>
+      <div id="typingIndicator" style="font-size:13px;color:#999;padding:0 8px;"></div>
+  </div>
+
+  <div id="membersList"></div>
+
+  <div id="chatMessages"></div>
+
+  <div class="chatInputBar">
+    <input type="text" id="chatInput" placeholder="Type a message…">
+    <button id="emojiBtn">😊</button>
+    <input type="file" id="imageInput" accept="image/*">
+    <button id="sendBtn">➤</button>
+  </div>
+
+    <input type="file" id="imageInput" accept="image/*" hidden>
+<button id="imageBtn">📸</button>
+    <button id="emojiBtn">😊</button>
+
+</div>
+
+
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 <button id="messengerToggle">💬
   <span id="chatBadge" class="badge"></span>
