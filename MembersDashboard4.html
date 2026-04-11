@@ -225,17 +225,20 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
       </ul>
     </div>
 <div class="card">
-  <h3> Upcoming Events</h3>
-  <ul></ul>
-  <li </li> 
-    <li -  </li>
-</ul>
+  
+      <!-- RSVP / Events Section -->
+    <div class="card" id="eventsSection">
+      <h3>Upcoming Events & RSVP</h3>
+      <ul id="eventsList"></ul>
+    </div>
+
+    <div class="card">
+      <a class="button" href="MemberRoses.html">View Rose Database</a>
+      <a class="button" href="MemberCalendar.html">Events Calendar</a>
+      <a class="button" href="MyAccount.html">My Account</a>
+    </div>
+  </div>
 </div>
-    <img id="qr">
-<script>
-fetch("/api/rsvp/12/qrcode")
-  .then(r => r.json())
-  .then(d => qr.src = d.qr);
 
   // EVENTS LIST (now RSVP only)
 const events = [
