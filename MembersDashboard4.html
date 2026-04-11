@@ -286,22 +286,7 @@ closeBtn.onclick = () => modal.style.display = "none";
 
 </script>
 <script>
-  <script>
-(async () => {
-  const res = await fetch("/api/member/dashboard", {
-    credentials: "include"
-  });
-
-  if (res.status === 401) {
-    location.href = "Login.html";
-  }
-
-  if (res.status === 403) {
-    location.href = "Success.html"; // waiver popup page
-  }
-})();
-</script>
-
+ 
 <button class="menu-btn" onclick="toggleMenu()">☰</button>
 <button id="messengerToggle">💬
   <span id="chatBadge" class="badge"></span>
