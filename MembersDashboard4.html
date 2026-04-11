@@ -236,6 +236,182 @@ a.button{ display:inline-block; padding:.6rem 1.2rem; border-radius:25px; backgr
 fetch("/api/rsvp/12/qrcode")
   .then(r => r.json())
   .then(d => qr.src = d.qr);
+
+  // EVENTS LIST (now RSVP only)
+const events = [
+  {
+    id: "spring-garden-party",
+    name: "Spring Garden Party",
+    date: "2026-05-31"
+  },
+  {
+    id: "rose-competition",
+    name: "Rose Competition",
+    date: "2026-06-15"
+  },
+  {
+    id: "autumn-flower-show",
+    name: "Autumn Flower Show",
+    date: "2026-08-26"
+  }
+];
+
+const eventsList = document.getElementById("eventsList");
+
+events.forEach(event => {
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <strong>${event.name}</strong><br>
+    <small>${new Date(event.date).toDateString()}</small><br>
+    <button class="rsvp-btn"
+      onclick="openRSVP(
+        '${event.name}',
+        '${event.date}',
+        '${event.id}'
+      )">
+      🌸 RSVP
+    </button>
+  `;
+  eventsList.appendChild(li);
+});
+;
+</script>
+
+  <!-- RSVP POPUP -->
+<div id="rsvpOverlay" style="display:none;">
+  <div id="rsvpPopup">
+    <h3 id="popupTitle"></h3>
+    <p id="popupDate"></p>
+
+    <a id="calendarLink" target="_blank" class="calendar-btn">
+      ➕ Add to Calendar
+    </a>
+
+    <label class="rsvp-label">
+      RSVP Status
+      <select id="rsvpSelect">
+        <option value="yes">Yes, attending</option>
+        <option value="maybe">Maybe</option>
+        <option value="no">Not attending</option>
+      </select>
+    </label>
+
+    <div class="popup-actions">
+      <button onclick="submitPopupRSVP()" class="confirm-btn">Confirm RSVP</button>
+      <button onclick="closeRSVP()" class="cancel-btn">Cancel</button>
+    </div>
+
+    <div id="popupStatus"></div>
+  </div>
+</div>
+
+  <script>
+app.post("/api/register", async (req, res) => {
+
+  const { username, email, password, plan } = req.body;
+
+  console.log(username, email);
+
+  // save to database
+});
+    app.post("/api/events/:id/rsvp", requireLogin, (req, res) => {
+  const eventId = req.params.id;
+
+  const event = db.prepare(`
+    SELECT capacity FROM events WHERE id = ?
+  `).get(eventId);
+
+  const currentCount = db.prepare(`
+    SELECT COUNT(*) as count
+    FROM rsvps
+    WHERE event_id = ? AND waitlisted = 0
+  `).get(eventId).count;
+
+  let waitlisted = 0;
+
+  if (event.capacity && currentCount >= event.capacity) {
+    waitlisted = 1;
+  }
+
+  db.prepare(`
+    INSERT INTO rsvps (user_id, event_id, waitlisted)
+    VALUES (?, ?, ?)
+  `).run(req.session.userId, eventId, waitlisted);
+
+  res.json({
+    success: true,
+    waitlisted
+  });
+});
+
+let selectedEventId = null;
+
+/* OPEN POPUP */
+    
+function openRSVP(title, date, eventId){
+  selectedEventId = eventId;
+
+  document.getElementById("popupTitle").textContent = title;
+  document.getElementById("popupDate").textContent =
+    "Event Date: " + new Date(date).toDateString();
+
+  /* Google Calendar link */
+  const start = date.replace(/-/g,"") + "T180000";
+  const end   = date.replace(/-/g,"") + "T210000";
+
+  document.getElementById("calendarLink").href =
+    `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}`;
+
+  document.getElementById("rsvpOverlay").style.display="flex";
+  document.getElementById("popupStatus").textContent="";
+}
+
+/* CLOSE POPUP */
+function closeRSVP(){
+  document.getElementById("rsvpOverlay").style.display="none";
+}
+
+/* SUBMIT RSVP */
+async function submitPopupRSVP() {
+  const msg = document.getElementById("rsvpPopupMsg");
+  msg.textContent = "Submitting RSVP...";
+
+  try {
+    const res = await fetch("/api/rsvp", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        eventId: window.activeEventId
+      })
+    });
+
+    if (res.status === 409) {
+      msg.textContent = "❌ This event is fully booked (35 attendees).";
+      msg.style.color = "red";
+      return;
+    }
+
+    if (res.status === 401) {
+      msg.textContent = "Please log in to RSVP.";
+      return;
+    }
+
+    if (!res.ok) {
+      msg.textContent = "RSVP failed. Please try again.";
+      return;
+    }
+
+    msg.textContent = "✅ RSVP confirmed!";
+    msg.style.color = "green";
+
+  } catch (err) {
+    msg.textContent = "Network error. Please try again.";
+  }
+}
+
+
+}
 </script>
 
     <div class="card">
