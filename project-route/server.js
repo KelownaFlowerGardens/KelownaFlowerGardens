@@ -1,5 +1,40 @@
 // server.js
 
+app.get("/api/session", (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ loggedIn: false });
+  }
+
+  res.json(req.session.user);
+});
+
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = db.prepare(`
+    SELECT * FROM users WHERE email = ?
+  `).get(email);
+
+  if (!user) {
+    return res.status(401).json({ error: "User not found" });
+  }
+
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) {
+    return res.status(401).json({ error: "Wrong password" });
+  }
+
+  // 🔥 THIS is the key
+  req.session.user = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    plan: user.plan,
+    paid: true
+  };
+
+  res.json({ success: true });
+});
 const bcrypt = require("bcrypt");
 
 // REGISTER
