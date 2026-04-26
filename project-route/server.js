@@ -1,5 +1,30 @@
 // server.js
+app.post("/api/register", async (req, res) => {
 
+  const { username, email, password, plan } = req.body;
+
+  console.log(username, email);
+
+  // save to database
+});
+    app.post("/api/events/:id/rsvp", requireLogin, (req, res) => {
+  const eventId = req.params.id;
+
+  const event = db.prepare("
+    SELECT capacity FROM events WHERE id = ?
+  ").get(eventId);
+
+  const currentCount = db.prepare("
+    SELECT COUNT(*) as count
+    FROM rsvps
+    WHERE event_id = ? AND waitlisted = 0
+  ").get(eventId).count;
+
+  let waitlisted = 0;
+
+  if (event.capacity && currentCount >= event.capacity) {
+    waitlisted = 1;
+  }
 app.get("/api/session", (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ loggedIn: false });
