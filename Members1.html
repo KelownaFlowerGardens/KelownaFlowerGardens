@@ -343,6 +343,37 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
     box.style.display = box.style.display === "block" ? "none" : "block";
   });
 });
+
+  <form id="registerForm">
+  <input name="username" required>
+  <input name="email" required>
+  <input name="password" type="password" required>
+  <button>Register</button>
+</form>
+
+document.getElementById("registerForm").onsubmit = async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+
+  const res = await fetch("/api/register", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: form.username.value,
+      email: form.email.value,
+      password: form.password.value
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    alert("Account Created - Continue to Payment");
+    window.location.href = "Payment.html";
+  }
+};
+</script>
 </script>
 </body>
 </html>
