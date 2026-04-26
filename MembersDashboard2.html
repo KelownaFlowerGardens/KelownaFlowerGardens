@@ -316,15 +316,15 @@ app.post("/api/register", async (req, res) => {
     app.post("/api/events/:id/rsvp", requireLogin, (req, res) => {
   const eventId = req.params.id;
 
-  const event = db.prepare(`
+  const event = db.prepare("
     SELECT capacity FROM events WHERE id = ?
-  `).get(eventId);
+  ").get(eventId);
 
-  const currentCount = db.prepare(`
+  const currentCount = db.prepare("
     SELECT COUNT(*) as count
     FROM rsvps
     WHERE event_id = ? AND waitlisted = 0
-  `).get(eventId).count;
+  ").get(eventId).count;
 
   let waitlisted = 0;
 
@@ -332,10 +332,10 @@ app.post("/api/register", async (req, res) => {
     waitlisted = 1;
   }
 
-  db.prepare(`
+  db.prepare("
     INSERT INTO rsvps (user_id, event_id, waitlisted)
     VALUES (?, ?, ?)
-  `).run(req.session.userId, eventId, waitlisted);
+  ").run(req.session.userId, eventId, waitlisted);
 
   res.json({
     success: true,
@@ -514,37 +514,6 @@ closeBtn.onclick = () => modal.style.display = "none";
   </div>
     
 <script>
-
-  app.post("/api/events/:id/rsvp", requireLogin, (req, res) => {
-  const eventId = req.params.id;
-
-  const event = db.prepare(`
-    SELECT capacity FROM events WHERE id = ?
-  `).get(eventId);
-
-  const currentCount = db.prepare(`
-    SELECT COUNT(*) as count
-    FROM rsvps
-    WHERE event_id = ? AND waitlisted = 0
-  `).get(eventId).count;
-
-  let waitlisted = 0;
-
-  if (event.capacity && currentCount >= event.capacity) {
-    waitlisted = 1;
-  }
-
-  db.prepare(`
-    INSERT INTO rsvps (user_id, event_id, waitlisted)
-    VALUES (?, ?, ?)
-  `).run(req.session.userId, eventId, waitlisted);
-
-  res.json({
-    success: true,
-    waitlisted
-  });
-});
-
 
 // Toggle modal
 toggleBtn.onclick = () => {
