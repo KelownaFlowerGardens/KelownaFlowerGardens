@@ -1,5 +1,30 @@
 // server.js
 
+const bcrypt = require("bcrypt");
+
+// REGISTER
+app.post("/api/register", async (req, res) => {
+  const { username, email, password, plan } = req.body;
+
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: "Missing fields" });
+  }
+
+  const hashed = await bcrypt.hash(password, 10);
+
+  try {
+    db.prepare(`
+      INSERT INTO users (username, email, password, plan)
+      VALUES (?, ?, ?, ?)
+    `).run(username, email, hashed, plan || "basic");
+
+    res.json({ success: true });
+
+  } catch (err) {
+    res.status(500).json({ error: "User already exists" });
+  }
+});
+
 app.get("/api/admin/members", (req,res)=>{
 
   const users = db.prepare(`
