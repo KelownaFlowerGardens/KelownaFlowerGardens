@@ -224,12 +224,6 @@ form.addEventListener("submit", async (e) => {
   <h2>Create Member Account</h2>
 
   <form id="signupForm">
-    <label>
-      Full Name
-      <input type="text" name="name" required>
-    </label>
-    
-
 
 <script>
 document.getElementById("registerForm").onsubmit = async (e) => {
@@ -243,34 +237,41 @@ document.getElementById("registerForm").onsubmit = async (e) => {
     body: JSON.stringify({
         
       username: form.username.value,
+
        email: form.email.value,
       password: form.password.value
-        
-       <label>
+  
+
+  <form id="registerForm">
+
+            <label>
+      Full Name
+      <input type="text" name="name" required>
+    </label>
+     
+
+  <input name="username" required>
+
+            <label>
       Username
       <input type="text" name="username" required>
     </label>
-    <label>
+
+
+            <label>
       Email
       <input type="email" name="email" required>
     </label>
-    <label>
+  
+  <input name="email" required>
+          <label>
       Password
       <input type="password" name="password" required>
     </label>
-    <button type="submit" class="btn-outline">
-      Create Account
-    </button>
-
-    <p id="signupMessage" class="muted"></p>
-  </form>
-</section>
-
-  <form id="registerForm">
-  <input name="username" required>
-  <input name="email" required>
   <input name="password" type="password" required>
   <button>Register</button>
+
+    <p id="signupMessage" class="muted"></p>
 </form>
 
     })
@@ -303,6 +304,9 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
   });
 });
 </script>
+      </form>
+</section>
+
 
 </body>
 </html>
