@@ -223,7 +223,12 @@ form.addEventListener("submit", async (e) => {
 <section class="content-section form-section">
   <h2>Create Member Account</h2>
 
-  <form id="signupForm">
+<form id="registerForm">
+  <input name="username" required>
+  <input name="email" required>
+  <input name="password" type="password" required>
+  <button>Register</button>
+</form>
 
 <script>
 document.getElementById("registerForm").onsubmit = async (e) => {
@@ -235,45 +240,9 @@ document.getElementById("registerForm").onsubmit = async (e) => {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({
-        
       username: form.username.value,
-
-       email: form.email.value,
+      email: form.email.value,
       password: form.password.value
-  
-
-  <form id="registerForm">
-
-            <label>
-      Full Name
-      <input type="text" name="name" required>
-    </label>
-     
-
-  <input name="username" required>
-
-            <label>
-      Username
-      <input type="text" name="username" required>
-    </label>
-
-
-            <label>
-      Email
-      <input type="email" name="email" required>
-    </label>
-  
-  <input name="email" required>
-          <label>
-      Password
-      <input type="password" name="password" required>
-    </label>
-  <input name="password" type="password" required>
-  <button>Register</button>
-
-    <p id="signupMessage" class="muted"></p>
-</form>
-
     })
   });
 
@@ -284,7 +253,6 @@ document.getElementById("registerForm").onsubmit = async (e) => {
     window.location.href = "login.html";
   }
 };
-  
 </script>
     
 
