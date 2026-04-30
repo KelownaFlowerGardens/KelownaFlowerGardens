@@ -228,6 +228,7 @@ form.addEventListener("submit", async (e) => {
       Full Name
       <input type="text" name="name" required>
     </label>
+    
 
 
 <script>
@@ -240,28 +241,23 @@ document.getElementById("registerForm").onsubmit = async (e) => {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({
-     
-                            <label>
+        
+      username: form.username.value,
+       email: form.email.value,
+      password: form.password.value
+        
+       <label>
       Username
       <input type="text" name="username" required>
     </label>
-      username: form.username.value,
-
-      
     <label>
       Email
       <input type="email" name="email" required>
     </label>
-
- 
-      email: form.email.value,
-
-
     <label>
       Password
       <input type="password" name="password" required>
     </label>
-
     <button type="submit" class="btn-outline">
       Create Account
     </button>
@@ -276,7 +272,7 @@ document.getElementById("registerForm").onsubmit = async (e) => {
   <input name="password" type="password" required>
   <button>Register</button>
 </form>
-      password: form.password.value
+
     })
   });
 
