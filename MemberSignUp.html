@@ -152,6 +152,9 @@ button{
 
 </style>
 </head>
+  <p> Full Name</p>
+  <p>Email</p>
+  <p>Password</p>
 <script>
 const form = document.getElementById("signupForm");
 const message = document.getElementById("signupMessage");
@@ -182,7 +185,7 @@ form.addEventListener("submit", async (e) => {
       message.style.color = "green";
       message.textContent = "Account created successfully. Proceed to payment.";
       form.reset();
-    } else {
+    } else (result.failure) {
       message.style.color = "red";
       message.textContent = result.error || "Signup failed.";
     }
