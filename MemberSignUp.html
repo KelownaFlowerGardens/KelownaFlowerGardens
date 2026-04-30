@@ -229,15 +229,33 @@ form.addEventListener("submit", async (e) => {
       <input type="text" name="name" required>
     </label>
 
+
+<script>
+document.getElementById("registerForm").onsubmit = async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+
+  const res = await fetch("/api/register", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+     
+                            <label>
+      Username
+      <input type="text" name="username" required>
+    </label>
+      username: form.username.value,
+
+      
     <label>
       Email
       <input type="email" name="email" required>
     </label>
 
-    <label>
-      Username
-      <input type="text" name="username" required>
-    </label>
+ 
+      email: form.email.value,
+
 
     <label>
       Password
@@ -258,19 +276,6 @@ form.addEventListener("submit", async (e) => {
   <input name="password" type="password" required>
   <button>Register</button>
 </form>
-
-<script>
-document.getElementById("registerForm").onsubmit = async (e) => {
-  e.preventDefault();
-
-  const form = e.target;
-
-  const res = await fetch("/api/register", {
-    method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({
-      username: form.username.value,
-      email: form.email.value,
       password: form.password.value
     })
   });
