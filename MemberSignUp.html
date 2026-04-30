@@ -252,6 +252,38 @@ form.addEventListener("submit", async (e) => {
   </form>
 </section>
 
+  <form id="registerForm">
+  <input name="username" required>
+  <input name="email" required>
+  <input name="password" type="password" required>
+  <button>Register</button>
+</form>
+
+<script>
+document.getElementById("registerForm").onsubmit = async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+
+  const res = await fetch("/api/register", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: form.username.value,
+      email: form.email.value,
+      password: form.password.value
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    alert("Account created!");
+    window.location.href = "login.html";
+  }
+};
+</script>
+
 </main>
 
 <footer style="text-align:center;padding:2rem;color:var(--muted)">
