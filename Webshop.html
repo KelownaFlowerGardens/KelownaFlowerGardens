@@ -176,7 +176,7 @@ header{
 </div>
 
 <!-- PAYPAL SDK (LOAD ONCE) -->
-<script src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&currency=CAD&currency=USD"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&currency=CAD&currency=CAD"></script>
 
 <script>
 let cart = [];
@@ -235,17 +235,17 @@ paypal.Buttons({
     return actions.order.create({
       purchase_units:[{
         amount:{
-          currency_code:"USD",
+          currency_code:"CAD",
           value:total.toFixed(2),
           breakdown:{
-            item_total:{value:subtotal.toFixed(2),currency_code:"USD"},
-            tax_total:{value:tax.toFixed(2),currency_code:"USD"},
-            shipping:{value:SHIPPING.toFixed(2),currency_code:"USD"}
+            item_total:{value:subtotal.toFixed(2),currency_code:"CAD"},
+            tax_total:{value:tax.toFixed(2),currency_code:"CAD"},
+            shipping:{value:SHIPPING.toFixed(2),currency_code:"CAD"}
           }
         },
         items:cart.map(i=>({
           name:i.name,
-          unit_amount:{value:i.price.toFixed(2),currency_code:"USD"},
+          unit_amount:{value:i.price.toFixed(2),currency_code:"CAD"},
           quantity:i.qty
         }))
       }]
