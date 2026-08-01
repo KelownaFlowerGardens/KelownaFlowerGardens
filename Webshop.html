@@ -160,7 +160,7 @@ header{
   <div class="summary">
     Subtotal: $<span id="subtotal">0.00</span><br>
     Tax (12%): $<span id="tax">0.00</span><br>
-    Shipping: $<span id="shipping">15.00</span>
+    Shipping: $<span id="shipping">16.00</span>
   </div>
 
   <div class="total">
@@ -174,7 +174,7 @@ header{
   </div>
 
 </div>
-
+<div>
 <!-- PAYPAL SDK (LOAD ONCE) -->
 <script src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&currency=CAD&currency=CAD"></script>
 
@@ -265,6 +265,7 @@ paypal.Buttons({
     alert("Payment failed");
   }
 }).render("#paypal-button-container");
+    </div>
 </script>
 
 </body>
