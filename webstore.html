@@ -159,7 +159,7 @@ header{
 
   <div class="summary">
     Subtotal: $<span id="subtotal">0.00</span><br>
-    Tax (12%): $<span id="tax">0.00</span><br>
+    Tax (12%): $<span id="tax">0.12</span><br>
     Shipping: $<span id="shipping">16.00</span>
   </div>
 
@@ -175,13 +175,23 @@ header{
 
 </div>
 
-<!-- PAYPAL SDK (LOAD ONCE) -->
-<script src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&currency=CAD&currency=CAD"></script>
+ <!-- PayPal Hosted Button -->
+    <script 
+      src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&currency=CAD">
+    </script>
+
+    <div id="paypal-container-SZFUHL3JY6LUJ"></div>
+    <script>
+      paypal.HostedButtons({
+        hostedButtonId: "SZFUHL3JY6LUJ"
+      }).render("#paypal-container-SZFUHL3JY6LUJ");
+    </script>
+  </section>
 
 <script>
 let cart = [];
 const TAX_RATE = 0.12;
-const SHIPPING = 15.00;
+const SHIPPING = 16.00;
 
 function addToCart(name, price){
   const item = cart.find(i => i.name === name);
