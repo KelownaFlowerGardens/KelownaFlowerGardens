@@ -122,11 +122,16 @@ header{
 
 <div class="wrapper">
 
-      <!-- SHOP -->
-     <div class="cart-button">
-<div>
+      <div class="cart-button">
+    <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
 
-<paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
+    <script>
+      cartPaypal.Cart({ id: "pp-view-cart" })
+    </script>
+  </div>
+    
+      <!-- SHOP -->
+     
 <script>
   cartPaypal.Cart({ id: "pp-view-cart" })
 </script>
