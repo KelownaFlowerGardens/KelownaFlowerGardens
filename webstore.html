@@ -1,4 +1,4 @@
-<!doctype html>
+ok great, now all I want to do is to get the shopping cart button to the far right: <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -92,23 +92,6 @@ header{
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
-        .wrapper{
-  width:100%;
-  padding:30px 50px;
-}
-
-.cart-button{
-  width:100%;
-  display:flex;
-  justify-content:flex-end;
-  margin-bottom:30px;
-}
-
-.products{
-  display:flex;
-  flex-wrap:wrap;
-  gap:30px;
-}
 </style>
 <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="WU5FT446TYZVC"></script>
 </head>
@@ -121,17 +104,15 @@ header{
 
 
 <div class="wrapper">
-
-
-  <!-- SHOPPING CART - FAR RIGHT -->
-  <div class="cart-button">
-    <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
-
-    <script>
-      cartPaypal.Cart({ id: "pp-view-cart" })
-    </script>
-  </div>
-
+    
+  <!-- SHOP -->
+ 
+<div>
+    
+<paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
+<script>
+  cartPaypal.Cart({ id: "pp-view-cart" })
+</script>
 <paypal-add-to-cart-button data-id="N5XDT6PDEGBGJ"></paypal-add-to-cart-button>
 <script>
   cartPaypal.AddToCart({ id: "N5XDT6PDEGBGJ" })
@@ -149,13 +130,6 @@ header{
   cartPaypal.AddToCart({ id: "PJJBX6XEYPJF2" })
     
 </script>
-
-         <paypal-add-to-cart-button data-id="PJJBX6XEYPJF2"></paypal-add-to-cart-button>
-
-    <script>
-      cartPaypal.AddToCart({ id: "PJJBX6XEYPJF2" })
-    </script>
-    
 </div>
 
 
