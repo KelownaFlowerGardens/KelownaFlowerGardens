@@ -135,9 +135,7 @@ header{
       <p>$35.00</p>
       <button onclick="addToCart('HouseRose30',20)">Add to Cart</button>
     </div>
-<script 
-  src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&disable-funding=venmo&currency=CAD">
-</script>
+<script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="WU5FT446TYZVC"></script>
     <div class="product">
       <img src="AD8.jpeg">
       <h3>House Rose 50mL</h3>
@@ -180,11 +178,9 @@ header{
 
 </div>
 
-<div id="paypal-container-N8M6NHANSJFDW"></div>
+<paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
 <script>
-  paypal.HostedButtons({
-    hostedButtonId: "N8M6NHANSJFDW",
-  }).render("#paypal-container-N8M6NHANSJFDW")
+  cartPaypal.Cart({ id: "pp-view-cart" })
 </script>
     <div id="paypal-container-RDXLYTLN8JSSN"></div>
 <script>
