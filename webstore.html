@@ -34,7 +34,7 @@ header{
 /* SHOP */
 .shop{
   flex:1;
-  padding:30px;
+  padding:300px;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:25px;
@@ -54,7 +54,7 @@ header{
 @media(max-width:900px){
   .cart{
     width:100%;
-    height:auto;
+    height:500px;
     position:relative;
     border-left:none;
     border-top:1px solid #ddd;
@@ -70,7 +70,6 @@ header{
 
 </style>
 <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="WU5FT446TYZVC"></script>
-
 </head>
 
 <body>
@@ -84,6 +83,7 @@ header{
   <!-- SHOP -->
  
 <div>
+    
 <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
 <script>
   cartPaypal.Cart({ id: "pp-view-cart" })
