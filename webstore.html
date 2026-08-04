@@ -7,7 +7,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style> 
-        <style> :root{ --pink:#F68686; --light:#FDD7D7; --radius:14px; } *{ box-sizing:border-box; } body{ margin:0; font-family:system-ui, Arial, sans-serif; background:#fafafa; color:#333; } /* HEADER */ header{ background:var(--pink); padding:30px 20px; } h1{ text-align:center; color:white; margin:0; font-size:clamp(28px, 4vw, 48px); font-weight:700; } /* MAIN LAYOUT */ .container{ display:flex; flex-wrap:wrap; align-items:flex-start; max-width:1600px; margin:0 auto; padding:40px; gap:40px; } /* SHOP */ .shop{ flex:1 1 700px; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:35px; padding:20px; } /* INDIVIDUAL PRODUCT */ .product{ background:white; padding:30px; border-radius:var(--radius); box-shadow:0 5px 18px rgba(0,0,0,0.12); text-align:center; min-height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center; } /* PAYPAL PRODUCT BUTTON */ .product paypal-add-to-cart-button{ transform:scale(1.15); transform-origin:center; margin:25px 0; } /* CART */ .cart{ flex:0 1 350px; background:white; padding:30px; border-radius:var(--radius); box-shadow:0 5px 18px rgba(0,0,0,0.12); font-size:18px; } .cart h2{ font-size:28px; margin-top:0; color:var(--pink); } .summary{ font-size:18px; margin-top:10px; } .total{ font-weight:bold; font-size:20px; margin:15px 0; } /* PAYPAL CART BUTTON */ paypal-cart-button{ display:block;transform:scale(1.15); transform-origin:left center; margin:20px 0; } /* PAYPAL CONTAINER */ #paypal-button-container{ margin-top:20px; padding:15px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.12); } /* MOBILE */ @media(max-width:900px){ .container{ padding:20px; gap:25px; } .shop{ width:100%; padding:10px; grid-template-columns:1fr; gap:25px; } .cart{ width:100%; flex:1 1 100%; padding:25px; } h1{ font-size:30px; } } @media(max-width:500px){ header{ padding:22px 15px; } h1{ font-size:25px; } .container{ padding:15px; } .shop{ padding:0; } .product{ padding:25px 15px; } } </style>
+        <style> :root{ --pink:#F68686; --light:#FDD7D7; --radius:14px; } *{ box-sizing:border-box; } 
+        body{ margin:0; font-family:system-ui, Arial, sans-serif; background:#fafafa; color:#333; } 
+        /* HEADER */ header{ background:var(--pink); padding:300px 20px; } 
+        h1{ text-align:center; color:white; margin:0; font-size:clamp(100px, 4vw, 48px); font-weight:700; } 
+        /* MAIN LAYOUT */ .container{ display:flex; flex-wrap:wrap; align-items:flex-start; max-width:1600px; 
+        margin:0 auto; padding:100px; gap:100px; } 
+        /* SHOP */ .shop{ flex:1 1 700px; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:305px; padding:200px; } 
+        /* INDIVIDUAL PRODUCT */ .product{ background:white; padding:300px; border-radius:var(--radius); 
+                            box-shadow:0 5px 18px rgba(0,0,0,0.12); text-align:center; min-height:300px; display:flex; 
+                                          flex-direction:column; justify-content:center; align-items:center; } 
+        /* PAYPAL PRODUCT BUTTON */ .product paypal-add-to-cart-button{ transform:scale(1.15); transform-origin:center; margin:25px 0; } 
+        /* CART */ .cart{ flex:0 1 350px; background:white; padding:30px; border-radius:var(--radius); box-shadow:0 5px 18px rgba(0,0,0,0.12); font-size:18px; }
+        .cart h2{ font-size:28px; margin-top:0; color:var(--pink); } .summary{ font-size:18px; margin-top:10px; } .total{ font-weight:bold; font-size:20px; margin:15px 0; } 
+        /* PAYPAL CART BUTTON */ paypal-cart-button{ display:block;transform:scale(1.15); transform-origin:left center; margin:20px 0; } 
+        /* PAYPAL CONTAINER */ #paypal-button-container{ margin-top:20px; padding:15px; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.12); } 
+        /* MOBILE */ @media(max-width:900px){ .container{ padding:20px; gap:25px; } .shop{ width:100%; padding:10px; grid-template-columns:1fr; gap:25px; } 
+                .cart{ width:100%; flex:1 1 100%; padding:25px; } h1{ font-size:30px; } } @media(max-width:500px){ header{ padding:22px 15px; } 
+                h1{ font-size:25px; } .container{ padding:15px; } .shop{ padding:0; } .product{ padding:25px 15px; } } </style>
 <style>
 :root{
   --pink:#F68686;
@@ -41,18 +58,14 @@ header{
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:25px;
 }
-
-
 .summary{
   font-size:14px;
   margin-top:10px;
 }
-
 .total{
   font-weight:bold;
   margin:10px 0;
 }
-
 @media(max-width:900px){
   .cart{
     width:100%;
@@ -69,8 +82,8 @@ header{
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
-
 </style>
+    
 <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="WU5FT446TYZVC"></script>
 </head>
 
@@ -116,13 +129,7 @@ header{
     
 </script>
 </div>
-    
-  <!-- CART -->
-<div class="cart">
-  <h2>Cart</h2>
 
-  <div id="cartItems"></div>
-</div>
 
 </body>
 </html>
