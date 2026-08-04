@@ -40,54 +40,6 @@ header{
   gap:25px;
 }
 
-.product{
-  background:white;
-  padding:15px;
-  border-radius:var(--radius);
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
-  text-align:center;
-}
-
-.product img{
-  width:100%;
-  height:350px;
-  object-fit:cover;
-  border-radius:12px;
-}
-
-.product button{
-  margin-top:10px;
-  padding:10px 16px;
-  border:none;
-  background:var(--pink);
-  color:white;
-  border-radius:20px;
-  cursor:pointer;
-}
-
-/* CART */
-.cart{
-  width:320px;
-  background:white;
-  border-left:1px solid #ddd;
-  padding:20px;
-  position:sticky;
-  top:0;
-  height:100vh;
-}
-
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:8px;
-}
-
-.cart-item button{
-  background:none;
-  border:none;
-  color:red;
-  cursor:pointer;
-}
 
 .summary{
   font-size:14px;
@@ -128,13 +80,7 @@ header{
 <div class="container">
 
   <!-- SHOP -->
-  <div class="shop">
-    <div class="product">
-      <img src="AD12.jpeg">
-      <h3>House Rose 30mL</h3>
-      <p>$35.00</p>
-      <button onclick="addToCart('HouseRose30',20)">Add to Cart</button>
-       </div>
+ 
 <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="WU5FT446TYZVC">
     
 </script>
@@ -143,13 +89,7 @@ header{
   cartPaypal.AddToCart({ id: "8JKWQV7R5275J" })
 </script>
  
-        
-    <div class="product">
-      <img src="AD8.jpeg">
-      <h3>House Rose 50mL</h3>
-      <p>$50.00</p>
-      <button onclick="addToCart('HouseRose50',35)">Add to Cart</button>
- </div>
+
       
  <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="WU5FT446TYZVC"></script>
         <paypal-add-to-cart-button data-id="8JKWQV7R5275J"></paypal-add-to-cart-button>
@@ -157,14 +97,6 @@ header{
   cartPaypal.AddToCart({ id: "8JKWQV7R5275J" })
 </script>
       
-      
-    <div class="product">
-      <img src="AD10.jpeg">
-      <h3>House Rose 30ml, 50mL duo</h3>
-      <p>$77.00</p>
-      <button onclick="addToCart('HouseRosex2',15)">Add to Cart</button>
-    </div>
-  </div>
 
     <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="WU5FT446TYZVC"></script>
     <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
@@ -182,21 +114,6 @@ header{
 
   <div id="cartItems"></div>
 
-  <div class="summary">
-    Subtotal: $<span id="subtotal">0.00</span><br>
-    Tax (12%): $<span id="tax">0.12</span><br>
-    Shipping: $<span id="shipping">16.00</span>
-  </div>
-
-  <div class="total">
-    Total: $<span id="total">0.00</span>
-  </div>
-
-  <!-- PAYPAL BUTTON -->
-  <div id="paypal-button-container"></div>
-</div>
-    <div id="paypal-button-container"></div>
-  </div>
 
 </div>
 
