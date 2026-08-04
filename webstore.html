@@ -92,6 +92,10 @@ header{
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
+        .cart-button{
+  display:flex;
+  justify-content:flex-end;
+}
 </style>
 <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="WU5FT446TYZVC"></script>
 </head>
@@ -104,11 +108,11 @@ header{
 
 
 <div class="wrapper">
-    
-  <!-- SHOP -->
+
+      <!-- SHOP -->
  
 <div>
-    
+    <div class="cart-button">
 <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
 <script>
   cartPaypal.Cart({ id: "pp-view-cart" })
