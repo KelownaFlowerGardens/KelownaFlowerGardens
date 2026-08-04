@@ -142,9 +142,7 @@ header{
       <p>$50.00</p>
       <button onclick="addToCart('HouseRose50',35)">Add to Cart</button>
     </div>
-      <script 
-  src="https://www.paypal.com/sdk/js?client-id=BAABt31XKfi_Sc52eW1bJojVytw5FEgtMbgrf8Z0s_blZep2UEB82b0uhFyRd2do8HHlMpHm8My_en5PO4&components=hosted-buttons&disable-funding=venmo&currency=CAD">
-</script>
+ <script src="https://www.paypalobjects.com/ncp/cart/cart.js" data-merchant-id="WU5FT446TYZVC"></script>
 
     <div class="product">
       <img src="AD10.jpeg">
@@ -182,11 +180,10 @@ header{
 <script>
   cartPaypal.Cart({ id: "pp-view-cart" })
 </script>
-    <div id="paypal-container-RDXLYTLN8JSSN"></div>
+
+    <paypal-cart-button data-id="pp-view-cart"></paypal-cart-button>
 <script>
-  paypal.HostedButtons({
-    hostedButtonId: "RDXLYTLN8JSSN",
-  }).render("#paypal-container-RDXLYTLN8JSSN")
+  cartPaypal.Cart({ id: "pp-view-cart" })
 </script>
     </script>
   </section>
