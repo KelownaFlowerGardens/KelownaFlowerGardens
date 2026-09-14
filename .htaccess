@@ -1,1 +1,18 @@
+RewriteEngine On
 
+# -------------------------------------------------------
+# Remove .html extension from URLs
+# Example:
+# /roman-garden-design.html
+# becomes:
+# /roman-garden-design
+# -------------------------------------------------------
+
+# Redirect requests containing .html to the clean URL
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^(.+)\.html$ /$1 [R=301,L,NE]
+
+# Internally add .html when a clean URL is requested
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
