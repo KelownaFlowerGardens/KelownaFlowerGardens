@@ -383,6 +383,76 @@ document.querySelectorAll(".dropdown-btn").forEach(btn=>{
   });
 });
 </script>
+    
+<!-- FullCalendar library -->
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.19/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.19/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.19/index.global.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const calendarElement = document.getElementById('calendar');
+
+  const calendar = new FullCalendar.Calendar(calendarElement, {
+    plugins: [
+      FullCalendar.DayGrid,
+      FullCalendar.GoogleCalendar
+    ],
+
+    initialView: 'dayGridMonth',
+    initialDate: '2026-11-01',
+    firstDay: 0,
+    height: 'auto',
+
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth'
+    },
+
+    buttonText: {
+      today: 'Today',
+      month: 'Month'
+    },
+
+    googleCalendarApiKey: 'AIzaSyAEaYyzAHir3MIMRAr-7LUdhZ1HBiTA-mQ',
+
+    events: {
+      googleCalendarId: 'kelownaflowergardens@gmail.com'
+    },
+
+    eventClick: function(info) {
+      info.jsEvent.preventDefault();
+
+      alert(
+        info.event.title +
+        (info.event.start
+          ? '\n\nDate: ' + info.event.start.toLocaleString()
+          : '') +
+        (info.event.extendedProps.description
+          ? '\n\n' + info.event.extendedProps.description
+          : '')
+      );
+    },
+
+    loading: function(isLoading) {
+      if (!isLoading) {
+        console.log('Google Calendar events loaded.');
+      }
+    },
+
+    eventSourceFailure: function(error) {
+      console.error('Calendar loading error:', error);
+      alert('The calendar could not load. Please check the Google Calendar API connection.');
+    }
+  });
+
+  calendar.render();
+
+});
+</script>
+
 
 </body>
 </html>
