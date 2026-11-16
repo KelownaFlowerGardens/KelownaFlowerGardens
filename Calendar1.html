@@ -203,6 +203,98 @@ nav a:hover {
   }
 }
 
+/* WINTER INTERACTIVE CALENDAR */
+
+.winter-calendar {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 25px;
+  background: linear-gradient(145deg, #eaf3fa, #ffffff);
+  border: 1px solid #d5e3ef;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(70, 100, 130, .12);
+}
+
+.winter-calendar-heading {
+  text-align: center;
+  padding: 25px 10px;
+  background: #f7fbff;
+  border-radius: 14px;
+  margin-bottom: 25px;
+}
+
+.winter-calendar-heading h1 {
+  font-family: Georgia, serif;
+  color: #496783;
+  font-size: 2.2rem;
+}
+
+.winter-calendar-heading h2 {
+  font-family: Georgia, serif;
+  color: #7896b0;
+}
+
+.winter-calendar-heading p {
+  color: #71869a;
+}
+
+#calendar {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+}
+
+#calendar .fc-toolbar-title {
+  font-family: Georgia, serif;
+  color: #496783;
+}
+
+#calendar .fc-button {
+  background: #7896b0;
+  border-color: #7896b0;
+}
+
+#calendar .fc-button:hover {
+  background: #496783;
+}
+
+#calendar .fc-daygrid-day-number {
+  color: #496783;
+}
+
+#calendar .fc-col-header-cell {
+  background: #eaf3fa;
+  padding: 10px 0;
+}
+
+#calendar .fc-event {
+  background: #7896b0;
+  border-color: #7896b0;
+  cursor: pointer;
+}
+
+.calendar-footer {
+  text-align: center;
+  color: #71869a;
+  padding-top: 20px;
+  font-family: Georgia, serif;
+}
+
+@media (max-width: 600px) {
+  .winter-calendar {
+    padding: 8px;
+  }
+
+  #calendar {
+    padding: 5px;
+  }
+
+  #calendar .fc-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
 </style>
 </head>
 
@@ -236,11 +328,20 @@ nav a:hover {
 <main class="page-content">
 
   
-<section class="calendar-heading">
-  <h1>Kelowna Flower Gardens</h1>
-  <h2>Club Calendar</h2>
-  <p>Meetings, Garden Tours, Workshops &amp; Special Events</p>
+<section class="winter-calendar">
+  <div class="winter-calendar-heading">
+    <h1>Kelowna Flower Gardens</h1>
+    <h2>Club Calendar</h2>
+    <p>Meetings • Garden Tours • Workshops • Special Events</p>
+  </div>
+
+  <div id="calendar"></div>
+
+  <p class="calendar-footer">
+    Kelowna Flower Gardens
+  </p>
 </section>
+
 
 <section class="calendar-art">
   <img
