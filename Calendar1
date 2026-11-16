@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.kelownaflowergardens.com/Calendar">
+  <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="KFGL.jpg">
+<title>Garden Design | Kelowna Flower Gardens</title>
+
+<style>
+:root{
+  --pink:#F68686;
+  --light:#FDD7D7;
+  --muted:#666;
+  --radius:14px;
+  --max:1200px;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,var(--pink),#fff);
+  color:#333;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  text-align:center;
+  padding:1rem;
+}
+
+header img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  border-radius:var(--radius);
+}
+
+header h1{
+  color:var(--pink);
+  margin:1rem 0 .25rem;
+}
+
+header p{
+  color:var(--muted);
+  margin:0;
+}
+
+/* ---------- TOP NAV ---------- */
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0;
+}
+
+nav a{
+  text-decoration:none;
+  padding:.5rem .9rem;
+  background:#fff;
+  color:var(--pink);
+  border-radius:20px;
+  font-weight:600;
+  font-size:.95rem;
+}
+
+nav a:hover{
+  background:var(--pink);
+  color:#fff;
+}
+
+/* ---------- LAYOUT ---------- */
+.wrapper{
+  display:flex;
+  max-width:var(--max);
+  margin:auto;
+  padding:1rem;
+  gap:1.5rem;
+}
+
+/* ---------- CONTENT ---------- */
+.content{
+  flex:1;
+}
+
+.content img{
+  max-width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  margin:1rem 0;
+}
+
+
+/* ---------- MOBILE MENU ---------- */
+.menu-btn{
+  display:none;
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:2000;
+  font-size:24px;
+  padding:.4rem .7rem;
+  border:none;
+  background:var(--pink);
+  color:#fff;
+  border-radius:6px;
+}
+
+/* ---------- WINTER CALENDAR DESIGN ---------- */
+
+:root {
+  --pink: #8FAFC8;
+  --light: #EAF2F8;
+  --muted: #647589;
+  --max: 1200px;
+}
+
+body {
+  background: linear-gradient(180deg, #DCEAF5, #FFFFFF 65%);
+  color: #34465A;
+}
+
+header h1 {
+  color: #526F8A;
+}
+
+nav a {
+  color: #526F8A;
+}
+
+nav a:hover {
+  background: #526F8A;
+  color: white;
+}
+
+/* Calendar heading */
+
+.calendar-heading {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(145deg, #EDF5FB, #FFFFFF);
+  border-radius: 16px;
+  margin-bottom: 2rem;
+}
+
+.calendar-heading h1 {
+  color: #526F8A;
+  font-family: Georgia, serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.calendar-heading p {
+  color: #71869A;
+  font-size: 1.05rem;
+}
+
+/* Calendar artwork */
+
+.calendar-art {
+  max-width: 750px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.calendar-art img {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(50, 75, 100, .12);
+}
+
+/* Google Calendar */
+
+.google-calendar {
+  width: 100%;
+  overflow: hidden;
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 5px 20px rgba(50, 75, 100, .10);
+  margin-bottom: 2rem;
+}
+
+.google-calendar iframe {
+  display: block;
+  width: 100%;
+  height: 700px;
+  border: 0;
+  border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+  .google-calendar {
+    padding: 4px;
+  }
+
+  .google-calendar iframe {
+    height: 600px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header>
+  <img src="01126.jpg" alt="Flowers of the Okanagan">
+
+  <nav>
+    <a href="/Home">Main</a>
+       <a href="/webstore">Store</a>
+    <a href="/GardenDesign">Garden Design</a>
+      <a href="/About">About</a>
+    <a href="/RegionalSpecies">Regional Species</a>
+      <a href="/Awards">Awards</a>
+    <a href="/Roses">Roses</a>
+      <a href="/ValleyArt">Valley Art</a>
+    <a href="/BridalBouquets">Bridal Bouquets</a>
+    <a href="/Resources">Resources</a>
+      <a href="/Calendar">Calendar</a>
+    <a href="/Members">Members</a>
+    <a href="/Contact">Contact</a>
+  </nav>
+</header>
+
+<div class="wrapper">
+
+  <main class="content">
+
+<main class="page-content">
+
+  
+<section class="calendar-heading">
+  <h1>Kelowna Flower Gardens</h1>
+  <h2>Club Calendar</h2>
+  <p>Meetings, Garden Tours, Workshops &amp; Special Events</p>
+</section>
+
+<section class="calendar-art">
+  <img
+    src="November2026.png"
+    alt="November 2026 winter calendar with frosted branches"
+  >
+</section>
+
+<section class="google-calendar">
+  <iframe
+    src="https://calendar.google.com/calendar/embed?src=kelownaflowergardens%40gmail.com&ctz=America%2FVancouver&mode=MONTH&showTitle=0&showPrint=0&showTabs=1&showCalendars=0"
+    title="Kelowna Flower Gardens Club Events Calendar"
+    loading="lazy"
+    frameborder="0"
+    scrolling="no">
+  </iframe>
+</section>
+
+</main>
+
+
+<footer style="text-align:center;padding:2rem;color:var(--muted)">
+  <div class="scroll-container">
+  <img src="RoseTheFairy.jpg" alt="Rose">
+</div>
+
+  © Kelowna Flower Gardens
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+document.querySelectorAll(".dropdown-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const box = btn.nextElementSibling;
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
